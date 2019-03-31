@@ -13,6 +13,7 @@ sp-admin项目是包含对**用户**、**组织**、**角色**、**菜单**、**
 ## 构建项目所用框架
 
 sp-admin项目是基于springboot 框架以及shiro安全框架、mybatis-plus持久层框架、redis、rabbitmq消息中间件、se搜索引擎框架和log4j2日志框架构建！
+
 springboot：
 - 官网：https://spring.io/projects/spring-boot/
 - Github：https://github.com/spring-projects/spring-boot

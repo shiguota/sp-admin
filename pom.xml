@@ -49,6 +49,11 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
+        <!--RIBBTMQ-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
         <!--AOP-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
