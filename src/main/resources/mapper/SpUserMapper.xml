@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evo.sp.basis.mapper.SpUserMapper">
+
+    <!--通过用户名称获取用户信息-->
+    <select id="userByname" resultType="com.evo.sp.basis.entity.vo.SpUserVo" parameterType="java.lang.String">
+        select * from sp_user u where u.name =#{name}
+    </select>
+</mapper>

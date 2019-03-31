@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evo.sp.basis.mapper.SpPermissionsMapper">
+
+    <!--根据角色获取权限-->
+    <select id="getPermissionsByRName" parameterType="java.lang.String" resultType="com.evo.sp.basis.entity.SpPermissions">
+        select p.permissions_tag from sp_role r
+        JOIN sp_role_permissions rp on r.id = rp.role_id
+        JOIN sp_permissions p on rp.permissions_id = p.id
+        where r.role_name = #{name}
+    </select>
+</mapper>
