@@ -18,8 +18,4 @@ import com.evo.sp.common.BaseController;
 @RequestMapping("/basis/sp-log")
 public class SpLogController extends BaseController {
 
-    public void a(){
-
-    }
-
 }
