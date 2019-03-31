@@ -6,9 +6,13 @@ import com.evo.sp.basis.entity.vo.SpUserVo;
 import com.evo.sp.basis.service.ISpUserService;
 import com.evo.sp.common.SpAssert;
 import com.evo.sp.common.SpConstantInter;
+import com.evo.sp.common.annotations.SpController;
 import com.evo.sp.common.annotations.SpLogController;
 import com.evo.sp.common.result.Result;
 import com.evo.sp.common.result.ResultEnum;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemover;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -41,6 +45,8 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("basis/sp-user")
+@Api(tags="用户操作接口")
+ //@SpController(value = "basis/sp-user",tags = {"用户操作接口"})
 public class SpUserController extends BaseController<SpUser> {
 
     @Autowired
@@ -54,6 +60,8 @@ public class SpUserController extends BaseController<SpUser> {
      * @Date: 2019-03-28
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ApiOperation(value = "通过用户名密码登陆", notes = "根据用户名查询用户信息进行密码匹配")
+   // @ApiImplicitParam(name = "name", value = "学生ID", paramType = "path", required = true, dataType = "Integer")
     public Result login(@RequestBody SpUserVo spUserVo) {
         Result result = null;
         SpAssert.isNullParamsObj(spUserVo);

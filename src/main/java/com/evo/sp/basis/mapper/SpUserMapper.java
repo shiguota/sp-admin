@@ -20,6 +20,6 @@ import java.util.Map;
  */
 public interface SpUserMapper extends BaseMapper<SpUser> {
 
-    SpUserVo userByname(String name) throws BaseException;
+    SpUser userByname(String name) throws BaseException;
 
 }

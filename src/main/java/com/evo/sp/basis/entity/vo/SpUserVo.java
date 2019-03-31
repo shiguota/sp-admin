@@ -6,7 +6,7 @@ import com.evo.sp.basis.entity.SpUser;
 import java.io.Serializable;
 import java.util.List;
 
-public class SpUserVo extends SpUser implements Serializable{
+public class SpUserVo implements Serializable{
     /**
      * 用户名
      */

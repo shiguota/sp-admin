@@ -3,7 +3,7 @@
 <mapper namespace="com.evo.sp.basis.mapper.SpUserMapper">
 
     <!--通过用户名称获取用户信息-->
-    <select id="userByname" resultType="com.evo.sp.basis.entity.vo.SpUserVo" parameterType="java.lang.String">
+    <select id="userByname" resultType="com.evo.sp.basis.entity.SpUser" parameterType="java.lang.String">
         select * from sp_user u where u.name =#{name}
     </select>
 </mapper>

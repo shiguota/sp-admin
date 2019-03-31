@@ -73,20 +73,22 @@ public class SpShiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(securityManager);
-        //配置访问权限*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,
+        //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/basis/sp-user/login", "anon");
-        filterChainDefinitionMap.put("/druid/*", "anon");
-        filterChainDefinitionMap.put("/**/*.js", "anon");
-        filterChainDefinitionMap.put("/**/*.gif", "anon");
-        filterChainDefinitionMap.put("/**/*.jpg", "anon");
-        filterChainDefinitionMap.put("/**/*.bmp", "anon");
-        filterChainDefinitionMap.put("/**/*.png", "anon");
-        filterChainDefinitionMap.put("/**/*.css", "anon");
-        filterChainDefinitionMap.put("/**/*.ico", "anon");
-        filterChainDefinitionMap.put("/*", "authc");//表示需要认证才可以访问
-        filterChainDefinitionMap.put("/**", "authc");
-        filterChainDefinitionMap.put("/*.*", "authc");
+        filterChainDefinitionMap.put("/basis/sp-user/*", "authc");
+//        filterChainDefinitionMap.put("/druid/*", "anon");
+//        filterChainDefinitionMap.put("/**/*.js", "anon");
+//        filterChainDefinitionMap.put("/**/*.gif", "anon");
+//        filterChainDefinitionMap.put("/**/*.jpg", "anon");
+//        filterChainDefinitionMap.put("/**/*.bmp", "anon");
+//        filterChainDefinitionMap.put("/**/*.png", "anon");
+//        filterChainDefinitionMap.put("/**/*.css", "anon");
+//        filterChainDefinitionMap.put("/**/*.ico", "anon");
+//        filterChainDefinitionMap.put("/**/*.*", "anon");
+//        //filterChainDefinitionMap.put("/*", "authc");//表示需要认证才可以访问
+//        //filterChainDefinitionMap.put("/**", "authc");
+//        filterChainDefinitionMap.put("/**", "authc");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return bean;
     }

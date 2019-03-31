@@ -33,9 +33,9 @@ public class SpUserServiceImpl extends ServiceImpl<SpUserMapper, SpUser> impleme
 
     @Override
     @SpLogService(description = "这是一个测试")
-    public SpUserVo userByname(String name) throws BaseException {
+    public SpUser userByname(String name) throws BaseException {
         SpAssert.isNull(name);
-        SpUserVo spUserVo = spUserMapper.userByname(name);
-        return spUserVo;
+        SpUser spUser = spUserMapper.userByname(name);
+        return spUser;
     }
 }
