@@ -1,9 +1,9 @@
 package com.evo.sp.common.aop;
 
 import com.alibaba.fastjson.JSON;
-import com.evo.sp.basis.entity.SpLog;
-import com.evo.sp.basis.entity.SpUser;
-import com.evo.sp.basis.service.ISpLogService;
+import com.evo.sp.business.system.entity.SpLog;
+import com.evo.sp.business.system.entity.SpUser;
+import com.evo.sp.business.system.service.ISpLogService;
 import com.evo.sp.common.IpUtil;
 import com.evo.sp.common.SpAssert;
 import com.evo.sp.common.SpConstantInter;
@@ -26,7 +26,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 

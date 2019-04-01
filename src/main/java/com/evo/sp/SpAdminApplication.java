@@ -7,7 +7,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@MapperScan("com.evo.sp.basis.mapper")
+@MapperScan("com.evo.sp.**.mapper")
 public class SpAdminApplication {
 
     public static void main(String[] args) {

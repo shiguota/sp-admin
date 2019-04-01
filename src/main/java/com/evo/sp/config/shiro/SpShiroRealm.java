@@ -1,13 +1,12 @@
 package com.evo.sp.config.shiro;
 
-import com.evo.sp.basis.entity.SpPermissions;
-import com.evo.sp.basis.entity.SpRole;
-import com.evo.sp.basis.entity.SpUser;
-import com.evo.sp.basis.entity.vo.SpUserVo;
-import com.evo.sp.basis.service.ISpPermissionsService;
-import com.evo.sp.basis.service.ISpRoleService;
-import com.evo.sp.basis.service.ISpUserService;
-import com.evo.sp.common.SpAssert;
+import com.evo.sp.business.system.entity.SpPermissions;
+import com.evo.sp.business.system.entity.SpRole;
+import com.evo.sp.business.system.entity.SpUser;
+import com.evo.sp.business.system.entity.vo.SpUserVo;
+import com.evo.sp.business.system.service.ISpPermissionsService;
+import com.evo.sp.business.system.service.ISpRoleService;
+import com.evo.sp.business.system.service.ISpUserService;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.BaseException;
 import org.apache.shiro.SecurityUtils;

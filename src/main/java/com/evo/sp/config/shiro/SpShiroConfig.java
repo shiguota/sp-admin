@@ -23,8 +23,6 @@ public class SpShiroConfig {
 
     /**
     * @Description:自定义Realm加入容器 
-    * @Param:  
-    * @return:  
     * @Author: 史国涛
     * @Date: 2019-03-29 
     */
@@ -37,8 +35,6 @@ public class SpShiroConfig {
 
     /**
     * @Description:加密（MD5） 
-    * @Param:  
-    * @return:  
     * @Author: 史国涛
     * @Date: 2019-03-29 
     */
@@ -51,8 +47,6 @@ public class SpShiroConfig {
 
     /**
     * @Description:权限管理，配置主要是Realm的管理认证
-    * @Param:  
-    * @return:  
     * @Author: 史国涛
     * @Date: 2019-03-29 
     */
@@ -64,8 +58,6 @@ public class SpShiroConfig {
     }
     /**
     * @Description:shiro过滤器
-    * @Param:  
-    * @return:  
     * @Author: 史国涛
     * @Date: 2019-03-29 
     */
@@ -76,27 +68,20 @@ public class SpShiroConfig {
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/basis/sp-user/login", "anon");
-        filterChainDefinitionMap.put("/basis/sp-user/*", "authc");
-//        filterChainDefinitionMap.put("/druid/*", "anon");
-//        filterChainDefinitionMap.put("/**/*.js", "anon");
-//        filterChainDefinitionMap.put("/**/*.gif", "anon");
-//        filterChainDefinitionMap.put("/**/*.jpg", "anon");
-//        filterChainDefinitionMap.put("/**/*.bmp", "anon");
-//        filterChainDefinitionMap.put("/**/*.png", "anon");
-//        filterChainDefinitionMap.put("/**/*.css", "anon");
-//        filterChainDefinitionMap.put("/**/*.ico", "anon");
-//        filterChainDefinitionMap.put("/**/*.*", "anon");
-//        //filterChainDefinitionMap.put("/*", "authc");//表示需要认证才可以访问
-//        //filterChainDefinitionMap.put("/**", "authc");
-//        filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/druid/*", "anon");
+        filterChainDefinitionMap.put("/**/*.*", "anon");
+        //filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        filterChainDefinitionMap.put("/webjars/**", "anon");
+        filterChainDefinitionMap.put("/v2/**", "anon");
+        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+        filterChainDefinitionMap.put("/*", "authc");
+        filterChainDefinitionMap.put("/**", "authc");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return bean;
     }
 
     /**
     * @Description:开启APO注解
-    * @Param:  
-    * @return:  
     * @Author: 史国涛
     * @Date: 2019-03-29 
     */
@@ -109,9 +94,7 @@ public class SpShiroConfig {
 
 
     /**
-     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
-     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator和AuthorizationAttributeSourceAdvisor)即可实现此功能
-     *
+     * 开启Shiro的注解
      * @return
      */
     @Bean
