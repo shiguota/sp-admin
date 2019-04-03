@@ -9,6 +9,8 @@ import org.springframework.data.redis.connection.RedisSubscribedConnectionExcept
 
 import java.io.Serializable;
 import java.security.SecureRandom;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @Description: controller Base类
@@ -79,6 +81,7 @@ public class BaseController<T> {
         return result;
 
     }
+
     /**
     * @Description:通过id查询
     * @Param:
@@ -86,12 +89,26 @@ public class BaseController<T> {
     * @Date: 2019-04-03
     */
     public Result queryById(Serializable id,IService<T> tiService){
-        Result result = null;
-        SpAssert.isNullParams();
+        SpAssert.isNull(id);
+        SpAssert.isNull(tiService);
         T byId = tiService.getById(id);
-
-
-        return result;
+        return new Result(byId);
     }
+
+    /**
+    * @Description:根据id查询（批量）
+    * @Param:  
+    * @return:  
+    * @Date: 2019-04-03 
+    */
+    public Result queryByIds(Collection<? extends Serializable> idList,IService<T> tiService){
+        SpAssert.isNull(idList);
+        SpAssert.isNull(tiService);
+        Collection<T> ts = tiService.listByIds(idList);
+        return new Result(ts);
+    }
+
+
+
 
 }

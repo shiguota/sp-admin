@@ -43,7 +43,7 @@ public abstract class SpAssert {
     }
 
     /**
-     * @Description:判断数据中是否有null值
+     * @Description:判断数组中是否有null值
      * @Param:
      * @return:
      * @Author: 史国涛

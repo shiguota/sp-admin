@@ -25,6 +25,8 @@ public class Result implements Serializable {
 
     public Result(Object date) {
         this.date = date;
+        this.code = ResultEnum.OPERATION_SUCCESS.getValue();
+        this.msg = ResultEnum.OPERATION_SUCCESS.getName();
     }
 
     public Result(Integer code, Object msg) {
