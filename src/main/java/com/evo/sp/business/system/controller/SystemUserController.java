@@ -47,7 +47,6 @@ public class SystemUserController extends BaseController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ApiOperation(value = "通过用户名密码登陆", notes = "根据用户名查询用户信息进行密码匹配")
-    // @ApiImplicitParam(name = "name", value = "学生ID", paramType = "path", required = true, dataType = "Integer")
     public Result login(@RequestBody SystemUserVo spUserVo) {
         Result result = null;
         SpAssert.isNullParamsObj(spUserVo);

@@ -25,7 +25,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     private SystemUserMapper spUserMapper;
 
     @Override
-    @SpLogService(description = "这是一个测试")
+    @SpLogService(description = "通过用户名获取用户信息")
     public SystemUser userByname(String name) throws BaseException {
         SpAssert.isNull(name);
         SystemUser spUser = spUserMapper.userByname(name);

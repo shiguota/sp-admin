@@ -27,7 +27,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 //页面标题
-                .title("SP-ADMIN PROJECT API 测试平台")
+                .title("SP-ADMIN 项目 API 测试平台")
                 //创建人
                 .contact(new Contact("sgt", "", "754782339@qq.com"))
                 //版本号
