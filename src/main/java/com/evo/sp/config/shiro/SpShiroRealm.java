@@ -1,12 +1,13 @@
 package com.evo.sp.config.shiro;
 
-import com.evo.sp.business.system.entity.SpPermissions;
-import com.evo.sp.business.system.entity.SpRole;
-import com.evo.sp.business.system.entity.SpUser;
-import com.evo.sp.business.system.entity.vo.SpUserVo;
-import com.evo.sp.business.system.service.ISpPermissionsService;
-import com.evo.sp.business.system.service.ISpRoleService;
-import com.evo.sp.business.system.service.ISpUserService;
+import com.evo.sp.business.system.entity.SystemPermissions;
+import com.evo.sp.business.system.entity.SystemRole;
+import com.evo.sp.business.system.entity.SystemUser;
+import com.evo.sp.business.system.entity.vo.SystemUserVo;
+import com.evo.sp.business.system.service.ISystemPermissionsService;
+import com.evo.sp.business.system.service.ISystemRoleService;
+import com.evo.sp.business.system.service.ISystemUserService;
+import com.evo.sp.common.SpAssert;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.BaseException;
 import org.apache.shiro.SecurityUtils;
@@ -30,11 +31,11 @@ import java.util.List;
 public class SpShiroRealm extends AuthorizingRealm {
 
     @Autowired
-    private ISpUserService iSpUserService;
+    private ISystemUserService iSpUserService;
     @Autowired
-    private ISpRoleService iSpRoleService;
+    private ISystemRoleService iSpRoleService;
     @Autowired
-    private ISpPermissionsService iSpPermissionsService;
+    private ISystemPermissionsService iSpPermissionsService;
 
     /**
      * @Description:授权
@@ -46,18 +47,18 @@ public class SpShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //获取登录用户名
-        SpUserVo loginUser = (SpUserVo) principalCollection.getPrimaryPrincipal();
+        SystemUserVo loginUser = (SystemUserVo) principalCollection.getPrimaryPrincipal();
         //查询用户名称
-        SpUser user = new SpUser();
+        SystemUser user = new SystemUser();
         //添加角色和权限
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         try {
-            List<SpRole> roleByUname = iSpRoleService.getRoleByUname(loginUser.getName());
-            for (SpRole spRole : roleByUname) {
+            List<SystemRole> roleByUname = iSpRoleService.getRoleByUname(loginUser.getName());
+            for (SystemRole spRole : roleByUname) {
                 //添加角色
                 simpleAuthorizationInfo.addRole(spRole.getRoleName());
-                List<SpPermissions> permissionsByRName = iSpPermissionsService.getPermissionsByRName(spRole.getRoleName());
-                for (SpPermissions spPermissions : permissionsByRName) {
+                List<SystemPermissions> permissionsByRName = iSpPermissionsService.getPermissionsByRName(spRole.getRoleName());
+                for (SystemPermissions spPermissions : permissionsByRName) {
                     //添加权限
                     simpleAuthorizationInfo.addStringPermission(spPermissions.getPermissionsTag());
                 }
@@ -81,14 +82,10 @@ public class SpShiroRealm extends AuthorizingRealm {
         //获取用户输入的token
         UsernamePasswordToken utoken = (UsernamePasswordToken) token;
         String username = utoken.getUsername();
-        SpUser spUser = null;
-        try {
-            spUser = iSpUserService.userByname(username);
-            if (spUser != null) {
-               // SpAssert
-            }
-        } catch (BaseException e) {
-            e.printStackTrace();
+        SystemUser spUser = null;
+        spUser = iSpUserService.userByname(username);
+        if (!SpAssert.isNotNull(spUser)) {
+            throw new UnknownAccountException();
         }
         //盐值
         ByteSource credentialsSalt = ByteSource.Util.bytes(spUser.getName());
@@ -98,7 +95,7 @@ public class SpShiroRealm extends AuthorizingRealm {
                 this.getClass().getName());
         Subject currentUser = SecurityUtils.getSubject();
         Session session = currentUser.getSession();
-        session.setAttribute(SpConstantInter.USER,spUser);
+        session.setAttribute(SpConstantInter.USER, spUser);
         return simpleAuthenticationInfo;
     }
 

@@ -5,6 +5,10 @@ import com.baomidou.mybatisplus.extension.service.additional.query.impl.QueryCha
 import com.evo.sp.common.result.Result;
 import com.evo.sp.common.result.ResultEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisSubscribedConnectionException;
+
+import java.io.Serializable;
+import java.security.SecureRandom;
 
 /**
  * @Description: controller Base类
@@ -75,4 +79,19 @@ public class BaseController<T> {
         return result;
 
     }
+    /**
+    * @Description:通过id查询
+    * @Param:
+    * @return:
+    * @Date: 2019-04-03
+    */
+    public Result queryById(Serializable id,IService<T> tiService){
+        Result result = null;
+        SpAssert.isNullParams();
+        T byId = tiService.getById(id);
+
+
+        return result;
+    }
+
 }

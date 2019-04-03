@@ -67,7 +67,7 @@ public class SpShiroConfig {
         bean.setSecurityManager(securityManager);
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/basis/sp-user/login", "anon");
+        filterChainDefinitionMap.put("/system/user/login", "anon");
         filterChainDefinitionMap.put("/druid/*", "anon");
         filterChainDefinitionMap.put("/**/*.*", "anon");
         //filterChainDefinitionMap.put("/swagger-ui.html", "anon");

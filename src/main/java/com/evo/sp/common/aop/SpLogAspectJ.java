@@ -1,9 +1,9 @@
 package com.evo.sp.common.aop;
 
 import com.alibaba.fastjson.JSON;
-import com.evo.sp.business.system.entity.SpLog;
-import com.evo.sp.business.system.entity.SpUser;
-import com.evo.sp.business.system.service.ISpLogService;
+import com.evo.sp.business.system.entity.SystemLog;
+import com.evo.sp.business.system.entity.SystemUser;
+import com.evo.sp.business.system.service.ISystemLogService;
 import com.evo.sp.common.IpUtil;
 import com.evo.sp.common.SpAssert;
 import com.evo.sp.common.SpConstantInter;
@@ -36,7 +36,7 @@ public class SpLogAspectJ {
 
     //注入Service用于把日志保存数据库，实际项目入库采用队列做异步
     @Resource
-    private ISpLogService iSpLogService;
+    private ISystemLogService iSpLogService;
 
     //本地异常日志记录对象
     private static final Logger logger = LoggerFactory.getLogger(SpLogAspectJ.class);
@@ -66,8 +66,8 @@ public class SpLogAspectJ {
         Session session = subject.getSession();
         try {
             if (SpAssert.isNotNull(session)) {
-                SpUser user = (SpUser) session.getAttribute(SpConstantInter.USER);
-                SpLog spLog = new SpLog();
+                SystemUser user = (SystemUser) session.getAttribute(SpConstantInter.USER);
+                SystemLog spLog = new SystemLog();
                 spLog.setId(SpUtilClass.UUID());
                 spLog.setUserName(user.getName());
                 spLog.setUserId(user.getId());
@@ -98,8 +98,8 @@ public class SpLogAspectJ {
         Session session = subject.getSession();
         try {
             if (SpAssert.isNotNull(session)) {
-                SpUser user = (SpUser) session.getAttribute(SpConstantInter.USER);
-                SpLog spLog = new SpLog();
+                SystemUser user = (SystemUser) session.getAttribute(SpConstantInter.USER);
+                SystemLog spLog = new SystemLog();
                 spLog.setId(SpUtilClass.UUID());
                 spLog.setUserName(user.getName());
                 spLog.setUserId(user.getId());
