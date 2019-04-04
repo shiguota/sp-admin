@@ -6,7 +6,23 @@ public class BaseException extends RuntimeException {
 
     private String msg;
 
+    /**
+     * Constructs a new runtime exception with {@code null} as its
+     * detail message.  The cause is not initialized, and may subsequently be
+     * initialized by a call to {@link #initCause}.
+     */
+    public BaseException(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
 
+    /**
+     * Constructs a new runtime exception with {@code null} as its
+     * detail message.  The cause is not initialized, and may subsequently be
+     * initialized by a call to {@link #initCause}.
+     */
+    public BaseException() {
+    }
 
     public BaseException(String message) {
         super(message);

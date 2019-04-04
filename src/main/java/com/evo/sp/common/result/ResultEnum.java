@@ -26,6 +26,8 @@ public enum ResultEnum implements EnumValue {
     LOGIN_FAIL_USER_IS_LOCKED(2006,"登录失败，当前用户被冻结"),
     LOGIN_OUT_SUCCESS(2007,"注销用户成功"),
     LOGIN_OUT_FAIL(2008,"注销用户失败"),
+    REGISTER_FAIL(2009,"当前用户名已存在"),
+    SESSION_IS_NULL(2010,"回话不存在或已过期，请重新登录"),
 
 
 

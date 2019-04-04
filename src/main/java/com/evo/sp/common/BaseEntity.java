@@ -1,5 +1,10 @@
 package com.evo.sp.common;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import org.apache.ibatis.annotations.SelectKey;
+import org.springframework.data.annotation.Id;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -8,6 +13,7 @@ public class BaseEntity implements Serializable {
     /**
      * id
      */
+    @TableId(type = IdType.UUID,value="id")
     private String id;
 
     /**

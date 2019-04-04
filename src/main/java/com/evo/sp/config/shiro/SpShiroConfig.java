@@ -1,6 +1,8 @@
 package com.evo.sp.config.shiro;
 
 
+import com.evo.sp.common.filter.SpCheckLoginFilter;
+import org.apache.commons.collections.FastHashMap;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.credential.Md5CredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
@@ -11,7 +13,9 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @Description:shiro配置类
@@ -64,20 +68,28 @@ public class SpShiroConfig {
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
-        bean.setSecurityManager(securityManager);
+        Map<String, Filter> mapFilter = new FastHashMap();
+        mapFilter.put("spCheckLoginFilter",getSpCheckLoginFilter());
+        bean.setFilters(mapFilter);
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/system/user/login", "anon");
         filterChainDefinitionMap.put("/druid/*", "anon");
         filterChainDefinitionMap.put("/**/*.*", "anon");
-        //filterChainDefinitionMap.put("/swagger-ui.html", "anon");
         filterChainDefinitionMap.put("/webjars/**", "anon");
         filterChainDefinitionMap.put("/v2/**", "anon");
         filterChainDefinitionMap.put("/swagger-resources/**", "anon");
         filterChainDefinitionMap.put("/*", "authc");
         filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/system/user/*", "spCheckLoginFilter");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        bean.setSecurityManager(securityManager);
         return bean;
+    }
+
+    @Bean(name = "spCheckLoginFilter")
+    public SpCheckLoginFilter getSpCheckLoginFilter(){
+        return new SpCheckLoginFilter();
     }
 
     /**

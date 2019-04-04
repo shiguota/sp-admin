@@ -2,7 +2,7 @@ package com.evo.sp.util;
 
 import java.util.UUID;
 
-public class SpUtilClass {
+public class SpStringUtils {
     /**
      * @Description:UUID
      * @Param:

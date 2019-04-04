@@ -9,7 +9,7 @@ import com.evo.sp.common.SpAssert;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.annotations.SpLogController;
 import com.evo.sp.common.annotations.SpLogService;
-import com.evo.sp.util.SpUtilClass;
+import com.evo.sp.util.SpStringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -68,7 +68,7 @@ public class SpLogAspectJ {
             if (SpAssert.isNotNull(session)) {
                 SystemUser user = (SystemUser) session.getAttribute(SpConstantInter.USER);
                 SystemLog spLog = new SystemLog();
-                spLog.setId(SpUtilClass.UUID());
+                spLog.setId(SpStringUtils.UUID());
                 spLog.setUserName(user.getName());
                 spLog.setUserId(user.getId());
                 spLog.setRespTime(LocalDateTime.now());
@@ -100,7 +100,7 @@ public class SpLogAspectJ {
             if (SpAssert.isNotNull(session)) {
                 SystemUser user = (SystemUser) session.getAttribute(SpConstantInter.USER);
                 SystemLog spLog = new SystemLog();
-                spLog.setId(SpUtilClass.UUID());
+                spLog.setId(SpStringUtils.UUID());
                 spLog.setUserName(user.getName());
                 spLog.setUserId(user.getId());
                 spLog.setErrorCode(e.getClass().getName());

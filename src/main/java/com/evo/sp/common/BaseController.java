@@ -1,5 +1,6 @@
 package com.evo.sp.common;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.additional.query.impl.QueryChainWrapper;
 import com.evo.sp.common.result.Result;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: controller Base类
@@ -18,9 +20,6 @@ import java.util.List;
  * @Date: 2019-03-27
  */
 public class BaseController<T> {
-
-
-
 
     /**
      * @Description: 新增
@@ -108,7 +107,25 @@ public class BaseController<T> {
         return new Result(ts);
     }
 
+    /**
+    * @Description:根据条件查询（批量）
+    * @Param:
+    * @return:
+    * @Date: 2019-04-04
+    */
+    public Result queryListsByCloumn(Map<String, Object> columnMap,IService<T> tiService){
+        Collection<T> ts = tiService.listByMap(columnMap);
+        return new Result(ts);
+    }
 
-
-
+    /**
+    * @Description:根据条件查询一条记录
+    * @Param:
+    * @return:
+    * @Date: 2019-04-04
+    */
+    public Result queryOne(Wrapper<T> queryWrapper, boolean throwEx,IService<T> tiService){
+        T one = tiService.getOne(queryWrapper, throwEx);
+        return new Result(one);
+    }
 }

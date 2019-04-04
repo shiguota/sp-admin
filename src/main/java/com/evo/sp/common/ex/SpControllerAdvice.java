@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,4 +65,18 @@ public class SpControllerAdvice {
         return map;
     }
 
+
+    /**
+     * 拦截捕捉自定义异常 SpParameterException.class
+     * @param ex
+     * @return
+     */
+    @ResponseBody
+    @ExceptionHandler(value = SpSessionException.class)
+    public Map SpSessionExceptionHandler(SpSessionException ex) {
+        Map map = new HashMap();
+        map.put(EXCEPTION_CODE, ex.getCode());
+        map.put(EXCEPTION_MSG, ex.getMsg());
+        return map;
+    }
 }
