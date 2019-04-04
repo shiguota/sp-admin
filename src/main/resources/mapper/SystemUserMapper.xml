@@ -3,7 +3,7 @@
 <mapper namespace="com.evo.sp.business.system.mapper.SystemUserMapper">
     <!--通过用户名称获取用户信息-->
     <select id="userByname" resultType="com.evo.sp.business.system.entity.SystemUser" parameterType="java.lang.String">
-        select * from sp_user u where u.name =#{name}
+        select * from system_user u where u.name =#{name}
     </select>
 </mapper>
 
