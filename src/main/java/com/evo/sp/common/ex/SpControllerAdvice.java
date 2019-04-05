@@ -2,6 +2,10 @@ package com.evo.sp.common.ex;
 
 
 import com.evo.sp.common.result.ResultEnum;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,32 +37,27 @@ public class SpControllerAdvice {
     @ExceptionHandler(value = Exception.class)
     public Map ExceptionHandler(Exception ex) {
         Map map = new HashMap();
-        if(ex instanceof SpParameterException){
+        if(ex instanceof SpParameterException){//参数错误
             SpParameterException spParameterException = (SpParameterException) ex;
             map.put(EXCEPTION_CODE, spParameterException.getCode());
             map.put(EXCEPTION_MSG, spParameterException.getMsg());
             map.put(EXCEPTION_MSG_DETAIL, spParameterException.getDtail());
-        }else if(ex instanceof UnauthorizedException){
+        }else if(ex instanceof UnauthorizedException){//未授权
             map.put(EXCEPTION_CODE,ResultEnum.PERMISSION_UNAUTHORIZED.getValue());
             map.put(EXCEPTION_MSG, ResultEnum.PERMISSION_UNAUTHORIZED.getName());
+        }else if(ex instanceof UnknownAccountException || ex instanceof IncorrectCredentialsException ){//用户名密码错误
+            map.put(EXCEPTION_CODE,ResultEnum.LOGIN_FAIL_SUER_NOT_AND_PASSWORD_ERORR.getValue());
+            map.put(EXCEPTION_MSG, ResultEnum.LOGIN_FAIL_SUER_NOT_AND_PASSWORD_ERORR.getName());
+        }else if(ex instanceof LockedAccountException){//用户被锁定
+            map.put(EXCEPTION_CODE,ResultEnum.LOGIN_FAIL_USER_IS_LOCKED.getValue());
+            map.put(EXCEPTION_MSG, ResultEnum.LOGIN_FAIL_USER_IS_LOCKED.getName());
+        }else if(ex instanceof AuthenticationException){//登陆（其他）错误
+            map.put(EXCEPTION_CODE,ResultEnum.LOGIN_FAIL.getValue());
+            map.put(EXCEPTION_MSG, ResultEnum.LOGIN_FAIL.getName());
         }else{
             map.put(EXCEPTION_CODE, 100);
             map.put(EXCEPTION_MSG, ex.getMessage());
         }
-        return map;
-    }
-
-    /**
-     * 拦截捕捉自定义异常 SpParameterException.class
-     * @param ex
-     * @return
-     */
-    @ResponseBody
-    @ExceptionHandler(value = SpSessionException.class)
-    public Map SpSessionExceptionHandler(SpSessionException ex) {
-        Map map = new HashMap();
-        map.put(EXCEPTION_CODE, ex.getCode());
-        map.put(EXCEPTION_MSG, ex.getMsg());
         return map;
     }
 }
