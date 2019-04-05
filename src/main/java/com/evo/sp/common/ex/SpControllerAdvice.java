@@ -1,6 +1,8 @@
 package com.evo.sp.common.ex;
 
 
+import com.evo.sp.common.result.ResultEnum;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,27 +38,15 @@ public class SpControllerAdvice {
             map.put(EXCEPTION_CODE, spParameterException.getCode());
             map.put(EXCEPTION_MSG, spParameterException.getMsg());
             map.put(EXCEPTION_MSG_DETAIL, spParameterException.getDtail());
+        }else if(ex instanceof UnauthorizedException){
+            map.put(EXCEPTION_CODE,ResultEnum.PERMISSION_UNAUTHORIZED.getValue());
+            map.put(EXCEPTION_MSG, ResultEnum.PERMISSION_UNAUTHORIZED.getName());
+        }else{
+            map.put(EXCEPTION_CODE, 100);
+            map.put(EXCEPTION_MSG, ex.getMessage());
         }
-        map.put(EXCEPTION_CODE, 100);
-        map.put(EXCEPTION_MSG, ex.getMessage());
         return map;
     }
-//
-//    /**
-//     * 拦截捕捉自定义异常 SpParameterException.class
-//     * @param ex
-//     * @return
-//     */
-//    @ResponseBody
-//    @ExceptionHandler(value = SpParameterException.class)
-//    public Map SpParameterExceptionHandler(SpParameterException ex) {
-//        Map map = new HashMap();
-//        map.put(EXCEPTION_CODE, ex.getCode());
-//        map.put(EXCEPTION_MSG, ex.getMsg());
-//        map.put(EXCEPTION_MSG_DETAIL, ex.getDtail());
-//        return map;
-//    }
-
 
     /**
      * 拦截捕捉自定义异常 SpParameterException.class

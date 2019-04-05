@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
@@ -39,6 +40,9 @@ import com.evo.sp.common.BaseController;
 @RequestMapping(SpConstantInter.SYSTEM_USER)
 @Api(tags = "用户")
 public class SystemUserController extends BaseController {
+
+    private final String USER_PERMISSIONS = "permission";
+
     @Autowired
     private ISystemUserService iSpUserService;
 
@@ -61,6 +65,7 @@ public class SystemUserController extends BaseController {
             result = new Result(true, ResultEnum.LOGIN_SUCCESS.getValue(),ResultEnum.LOGIN_SUCCESS.getName());
             try {
                 currentUser.login( token );
+                currentUser.isPermitted(USER_PERMISSIONS);
             } catch ( UnknownAccountException uae) {
                 result = new Result(ResultEnum.LOGIN_FAIL_SUER_NOT_AND_PASSWORD_ERORR.getValue(),ResultEnum.LOGIN_FAIL_SUER_NOT_AND_PASSWORD_ERORR.getName());
             } catch ( IncorrectCredentialsException ice ) {
@@ -115,8 +120,8 @@ public class SystemUserController extends BaseController {
         QueryWrapper<SystemUser> systemUserQueryWrapper = new QueryWrapper<>();
         systemUserQueryWrapper.setEntity(new SystemUser());
         systemUserQueryWrapper.eq(SpConstantInter.SYSTEM_USER_NAME,user.getName());
-        if (!SpAssert.isNotNull(queryOne(systemUserQueryWrapper
-                ,false  , iSpUserService))) {
+        Result result = queryOne(systemUserQueryWrapper,false, iSpUserService);
+        if (!SpAssert.isNotNull(result.getDate())) {
             return save(user, iSpUserService);
         }else{
             return new Result(false,ResultEnum.REGISTER_FAIL.getValue(),ResultEnum.REGISTER_FAIL.getName());

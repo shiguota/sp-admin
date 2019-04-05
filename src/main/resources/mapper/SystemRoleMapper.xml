@@ -3,9 +3,9 @@
 <mapper namespace="com.evo.sp.business.system.mapper.SystemRoleMapper">
     <!--根据用户名获取当前用户拥有的角色-->
     <select id="getRoleByUname" parameterType="java.lang.String" resultType="com.evo.sp.business.system.entity.SystemRole">
-        select r.role_name from sp_user u
-        JOIN sp_user_role ur on u.id = ur.user_id
-        JOIN sp_role r on ur.role_id = r.id
+        select r.role_name from system_user u
+        JOIN system_user_role ur on u.id = ur.user_id
+        JOIN system_role r on ur.role_id = r.id
         WHERE u.name = #{name} GROUP BY r.role_name
     </select>
 </mapper>

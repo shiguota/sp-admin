@@ -4,9 +4,9 @@
 
     <!--根据角色获取权限-->
     <select id="getPermissionsByRName" parameterType="java.lang.String" resultType="com.evo.sp.business.system.entity.SystemPermissions">
-        select p.permissions_tag from sp_role r
-        JOIN sp_role_permissions rp on r.id = rp.role_id
-        JOIN sp_permissions p on rp.permissions_id = p.id
+        select p.permissions_tag from system_role r
+        JOIN system_role_permissions rp on r.id = rp.role_id
+        JOIN system_permissions p on rp.permissions_id = p.id
         where r.role_name = #{name}
     </select>
 </mapper>

@@ -30,6 +30,8 @@ import java.util.Map;
 @Configuration
 public class SpShiroConfig {
 
+    private static final String FILTER_NAME = "spFilter";
+
     @Autowired
     private ISystemFilterPathService iSystemFilterPathService;
     /**
@@ -76,7 +78,7 @@ public class SpShiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         Map<String, Filter> mapFilter = new FastHashMap();
-        mapFilter.put("spFilter",getSpCheckLoginFilter());
+        mapFilter.put(FILTER_NAME,getSpCheckLoginFilter());
         bean.setFilters(mapFilter);
         LinkedList<SystemFilterPath> systemFilterPaths = iSystemFilterPathService.queryFilePath();
         //配置访问权限

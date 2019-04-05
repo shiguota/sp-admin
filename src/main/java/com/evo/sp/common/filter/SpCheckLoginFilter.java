@@ -45,7 +45,8 @@ public class SpCheckLoginFilter extends HttpMethodPermissionFilter {
             String id = httpServletRequest.getSession().getId();
             //是否已登陆
             if (isAuthenticated(id, httpServletRequest,httpServletResponse)) {
-                return isAuthorization(httpServletRequest,httpServletResponse);
+                //是否已授权
+               return super.isAccessAllowed(request,response,mappedValue);
             } else {
                 httpServletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
                 return false;
@@ -67,12 +68,14 @@ public class SpCheckLoginFilter extends HttpMethodPermissionFilter {
             Result result = new Result(false, ResultEnum.LOGIN_HELP.getValue(), ResultEnum.LOGIN_HELP.getName());
             httpServletResponse.setCharacterEncoding(SpConstantInter.CHARACTER_ENCODING);
             httpServletResponse.getWriter().write(JSON.toJSONString(result));
-            //未授权
-        } else if (status == HttpServletResponse.SC_UNAUTHORIZED) {
-            Result result = new Result(false, ResultEnum.PERMISSION_UNAUTHORIZED.getValue(), ResultEnum.PERMISSION_UNAUTHORIZED.getName());
-            httpServletResponse.setCharacterEncoding(SpConstantInter.CHARACTER_ENCODING);
-            httpServletResponse.getWriter().write(JSON.toJSONString(result));
+
         }
+            //未授权
+//        else if (status == HttpServletResponse.SC_UNAUTHORIZED) {
+//            Result result = new Result(false, ResultEnum.PERMISSION_UNAUTHORIZED.getValue(), ResultEnum.PERMISSION_UNAUTHORIZED.getName());
+//            httpServletResponse.setCharacterEncoding(SpConstantInter.CHARACTER_ENCODING);
+//            httpServletResponse.getWriter().write(JSON.toJSONString(result));
+//        }
         return false;
     }
 
