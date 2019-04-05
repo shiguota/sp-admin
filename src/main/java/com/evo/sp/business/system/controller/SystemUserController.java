@@ -104,7 +104,7 @@ public class SystemUserController extends BaseController {
      * @Date: 2019-03-28
      */
     @ApiOperation(SwaggerConstantInter.SWAGGER_SYSTEM_SUER_SAVE_VLUES)
-   // @RequiresPermissions(value = SpConstantInter.PERMISSION_SYSTEM_USER_SAVE)
+    @RequiresPermissions(value = SpConstantInter.PERMISSION_SYSTEM_USER_SAVE)
     @RequestMapping(value = SpConstantInter.SYSTEM_USER_SAVE, method = RequestMethod.POST)
     public Result saveUser(@RequestBody SystemUser user) {
         SpAssert.isNull(user.getName());
@@ -131,7 +131,7 @@ public class SystemUserController extends BaseController {
      * @Date: 2019-03-28
      */
     @ApiOperation(SwaggerConstantInter.SWAGGER_SYSTEM_SUER_DEL_VLUES)
-    //@RequiresPermissions(value = SpConstantInter.PERMISSION_SYSTEM_USER_DEL)
+    @RequiresPermissions(value = SpConstantInter.PERMISSION_SYSTEM_USER_DEL)
     @RequestMapping(value = SpConstantInter.SYSTEM_USER_DEL,method = RequestMethod.POST)
     public Result delUser(String id){
         return del(id,iSpUserService);
@@ -146,7 +146,7 @@ public class SystemUserController extends BaseController {
      */
     @SuppressWarnings("all")
     @ApiOperation(SwaggerConstantInter.SWAGGER_SYSTEM_SUER_MODIFY_VLUES)
-   // @RequiresPermissions(value = SpConstantInter.PERMISSION_SYSTEM_USER_MODIFY)
+    @RequiresPermissions(value = SpConstantInter.PERMISSION_SYSTEM_USER_MODIFY)
     @RequestMapping(value = SpConstantInter.SYSTEM_USER_MODIFY,method = RequestMethod.POST)
     public Result modifyUser(@RequestBody SystemUser user){
         SpAssert.isNull(user.getId());

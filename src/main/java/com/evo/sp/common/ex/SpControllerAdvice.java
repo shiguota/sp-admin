@@ -31,39 +31,31 @@ public class SpControllerAdvice {
     @ExceptionHandler(value = Exception.class)
     public Map ExceptionHandler(Exception ex) {
         Map map = new HashMap();
+        if(ex instanceof SpParameterException){
+            SpParameterException spParameterException = (SpParameterException) ex;
+            map.put(EXCEPTION_CODE, spParameterException.getCode());
+            map.put(EXCEPTION_MSG, spParameterException.getMsg());
+            map.put(EXCEPTION_MSG_DETAIL, spParameterException.getDtail());
+        }
         map.put(EXCEPTION_CODE, 100);
         map.put(EXCEPTION_MSG, ex.getMessage());
         return map;
     }
-
-    /**
-     * 拦截捕捉自定义异常 BaseException.class
-     * @param ex
-     * @return
-     */
-    @ResponseBody
-    @ExceptionHandler(value = BaseException.class)
-    public Map BaseExceptionHandler(BaseException ex) {
-        Map map = new HashMap();
-        map.put(EXCEPTION_CODE, ex.getCode());
-        map.put(EXCEPTION_MSG, ex.getMsg());
-        return map;
-    }
-
-    /**
-     * 拦截捕捉自定义异常 SpParameterException.class
-     * @param ex
-     * @return
-     */
-    @ResponseBody
-    @ExceptionHandler(value = SpParameterException.class)
-    public Map SpParameterExceptionHandler(SpParameterException ex) {
-        Map map = new HashMap();
-        map.put(EXCEPTION_CODE, ex.getCode());
-        map.put(EXCEPTION_MSG, ex.getMsg());
-        map.put(EXCEPTION_MSG_DETAIL, ex.getDtail());
-        return map;
-    }
+//
+//    /**
+//     * 拦截捕捉自定义异常 SpParameterException.class
+//     * @param ex
+//     * @return
+//     */
+//    @ResponseBody
+//    @ExceptionHandler(value = SpParameterException.class)
+//    public Map SpParameterExceptionHandler(SpParameterException ex) {
+//        Map map = new HashMap();
+//        map.put(EXCEPTION_CODE, ex.getCode());
+//        map.put(EXCEPTION_MSG, ex.getMsg());
+//        map.put(EXCEPTION_MSG_DETAIL, ex.getDtail());
+//        return map;
+//    }
 
 
     /**

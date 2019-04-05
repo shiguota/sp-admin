@@ -7,6 +7,8 @@ public class SpConstantInter {
     public static final String USER_NAME = "userName";
     public static final String USER = "user";
     public static final String ENCRYPTION_TYPE = "MD5";
+    public static final String CHARACTER_ENCODING = "UTF-8";
+
 
 
     /**

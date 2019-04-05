@@ -1,121 +1,140 @@
 package com.evo.sp.common.filter;
 
 
-import com.evo.sp.common.SpAssert;
+import com.alibaba.fastjson.JSON;
 import com.evo.sp.common.SpConstantInter;
-import com.evo.sp.common.ex.SpParameterException;
-import com.evo.sp.common.ex.SpSessionException;
+import com.evo.sp.common.result.Result;
 import com.evo.sp.common.result.ResultEnum;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
-import org.apache.shiro.web.filter.AccessControlFilter;
-import org.apache.shiro.web.servlet.AdviceFilter;
+import org.apache.shiro.util.StringUtils;
+import org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter;
 import org.apache.shiro.web.session.mgt.WebSessionKey;
+import org.apache.shiro.web.util.WebUtils;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
  * <p>
- *  过滤器
+ * 过滤器
  * </p>
  *
  * @author sgt
  * @since 2019-04-04 14:15
  */
-public class SpCheckLoginFilter extends AccessControlFilter {
+public class SpCheckLoginFilter extends HttpMethodPermissionFilter {
 
     /**
-     * Returns <code>true</code> if the request is allowed to proceed through the filter normally, or <code>false</code>
-     * if the request should be handled by the
-     * {@link #onAccessDenied(ServletRequest, ServletResponse, Object) onAccessDenied(request,response,mappedValue)}
-     * method instead.
-     *
-     * @param request     the incoming <code>ServletRequest</code>
-     * @param response    the outgoing <code>ServletResponse</code>
-     * @param mappedValue the filter-specific config value mapped to this filter in the URL rules mappings.
-     * @return <code>true</code> if the request should proceed through the filter normally, <code>false</code> if the
-     * request should be processed by this filter's
-     * {@link #onAccessDenied(ServletRequest, ServletResponse, Object)} method instead.
-     * @throws Exception if an error occurs during processing.
+     * 是否允许继续访问
      */
     @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
-        System.out.println("isAccessAllowed："+mappedValue);
+    public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
+        //设置登陆路径
+        setLoginUrl(SpConstantInter.SYSTEM_USER + SpConstantInter.SYSTEM_USER_LOGIN);
+        //判断当前请求是否是登陆请求或注销请求
+        if (!isLoginRequest(request, response)) {
+            HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
+            HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
+            String id = httpServletRequest.getSession().getId();
+            //是否已登陆
+            if (isAuthenticated(id, httpServletRequest,httpServletResponse)) {
+                return isAuthorization(httpServletRequest,httpServletResponse);
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * 访问被拒绝
+     **/
+    @Override
+    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
+        HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
+        int status = httpServletResponse.getStatus();
+            //未登录
+        if (status == HttpServletResponse.SC_ACCEPTED) {
+            Result result = new Result(false, ResultEnum.LOGIN_HELP.getValue(), ResultEnum.LOGIN_HELP.getName());
+            httpServletResponse.setCharacterEncoding(SpConstantInter.CHARACTER_ENCODING);
+            httpServletResponse.getWriter().write(JSON.toJSONString(result));
+            //未授权
+        } else if (status == HttpServletResponse.SC_UNAUTHORIZED) {
+            Result result = new Result(false, ResultEnum.PERMISSION_UNAUTHORIZED.getValue(), ResultEnum.PERMISSION_UNAUTHORIZED.getName());
+            httpServletResponse.setCharacterEncoding(SpConstantInter.CHARACTER_ENCODING);
+            httpServletResponse.getWriter().write(JSON.toJSONString(result));
+        }
         return false;
     }
 
-    /**
-     * Processes requests where the subject was denied access as determined by the
-     * {@link #isAccessAllowed(ServletRequest, ServletResponse, Object) isAccessAllowed}
-     * method.
-     *
-     * @param request  the incoming <code>ServletRequest</code>
-     * @param response the outgoing <code>ServletResponse</code>
-     * @return <code>true</code> if the request should continue to be processed; false if the subclass will
-     * handle/render the response directly.
-     * @throws Exception if there is an error processing the request.
-     */
-    @Override
-    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        System.out.println("onAccessDenied：");
-        Subject subject = getSubject(request, response);
-        Session session = subject.getSession(false);
-        if (!SpAssert.isNotNull(session)) {
-               throw new SpParameterException(ResultEnum.SESSION_IS_NULL.getValue(),ResultEnum.SESSION_IS_NULL.getName());
-        }
-        return true;
-    }
-
-    /**
-     * Returns <code>true</code> if
-     * {@link #isAccessAllowed(ServletRequest, ServletResponse, Object) isAccessAllowed(Request,Response,Object)},
-     * otherwise returns the result of
-     * {@link #onAccessDenied(ServletRequest, ServletResponse, Object) onAccessDenied(Request,Response,Object)}.
-     *
-     * @param request
-     * @param response
-     * @param mappedValue
-     * @return <code>true</code> if
-     * {@link #isAccessAllowed(ServletRequest, ServletResponse, Object) isAccessAllowed},
-     * otherwise returns the result of
-     * {@link #onAccessDenied(ServletRequest, ServletResponse) onAccessDenied}.
-     * @throws Exception if an error occurs.
-     */
     @Override
     public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
-        Subject subject = getSubject(request, response);
-        if (isAuthenticated(subject.getSession().getId().toString(),(HttpServletRequest) request,(HttpServletResponse) response)) {
-            return super.onPreHandle(request, response, mappedValue);
-        }
-        return false;
+        return super.onPreHandle(request, response, mappedValue);
     }
 
-
-    public boolean isAuthenticated(String sessionID, HttpServletRequest request, HttpServletResponse response){
+    /**
+     * @Description:是否已登陆
+     * @Author: sgt
+     * @Date: 2019/4/5
+     */
+    public boolean isAuthenticated(String sessionID, HttpServletRequest request, HttpServletResponse response) throws IOException {
         boolean status = false;
-
-        SessionKey key = new WebSessionKey(sessionID,request,response);
-        try{
+        SessionKey key = new WebSessionKey(sessionID, request, response);
+        try {
             Session se = SecurityUtils.getSecurityManager().getSession(key);
             Object obj = se.getAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
-            if(obj != null){
+            if (obj != null) {
                 status = (Boolean) obj;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             Session se = null;
             Object obj = null;
         }
-        response.setStatus(123);
         return status;
+    }
+
+    /**
+     * @Description:当前请求是否已经授权
+     * @Author: sgt
+     * @Date: 2019/4/5
+     */
+    public boolean isAuthorization(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Subject subject = getSubject(request, response);
+        // If the subject isn't identified, redirect to login URL
+        if (subject.getPrincipal() == null) {
+            saveRequestAndRedirectToLogin(request, response);
+        } else {
+            // If subject is known but not authorized, redirect to the unauthorized URL if there is one
+            // If no unauthorized URL is specified, just return an unauthorized HTTP status code
+            String unauthorizedUrl = getUnauthorizedUrl();
+            //SHIRO-142 - ensure that redirect _or_ error code occurs - both cannot happen due to response commit:
+            if (StringUtils.hasText(unauthorizedUrl)) {
+                //WebUtils.issueRedirect(request, response, unauthorizedUrl);
+            } else {
+                WebUtils.toHttp(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            }
+        }
+        return false;
+    }
+
+    /**
+    * @Description:是否是注销请求
+    * @Author: sgt
+    * @Date:  2019/4/5
+    */
+    public boolean isLoginOutRequest(ServletRequest request){
+        return pathsMatch(SpConstantInter.SYSTEM_USER + SpConstantInter.SYSTEM_USER_LOGIN_OUT, request);
     }
 
 }

@@ -1,6 +1,9 @@
 package com.evo.sp.config.shiro;
 
 
+import com.alibaba.fastjson.JSON;
+import com.evo.sp.business.system.entity.SystemFilterPath;
+import com.evo.sp.business.system.service.ISystemFilterPathService;
 import com.evo.sp.common.filter.SpCheckLoginFilter;
 import org.apache.commons.collections.FastHashMap;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -10,11 +13,13 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -25,6 +30,8 @@ import java.util.Map;
 @Configuration
 public class SpShiroConfig {
 
+    @Autowired
+    private ISystemFilterPathService iSystemFilterPathService;
     /**
     * @Description:自定义Realm加入容器 
     * @Author: 史国涛
@@ -69,19 +76,14 @@ public class SpShiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         Map<String, Filter> mapFilter = new FastHashMap();
-        mapFilter.put("spCheckLoginFilter",getSpCheckLoginFilter());
+        mapFilter.put("spFilter",getSpCheckLoginFilter());
         bean.setFilters(mapFilter);
+        LinkedList<SystemFilterPath> systemFilterPaths = iSystemFilterPathService.queryFilePath();
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/system/user/login", "anon");
-        filterChainDefinitionMap.put("/druid/*", "anon");
-        filterChainDefinitionMap.put("/**/*.*", "anon");
-        filterChainDefinitionMap.put("/webjars/**", "anon");
-        filterChainDefinitionMap.put("/v2/**", "anon");
-        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
-        filterChainDefinitionMap.put("/*", "authc");
-        filterChainDefinitionMap.put("/**", "authc");
-        filterChainDefinitionMap.put("/system/user/*", "spCheckLoginFilter");
+        for (SystemFilterPath systemFilterPath : systemFilterPaths) {
+            filterChainDefinitionMap.put(systemFilterPath.getPath(),systemFilterPath.getType());
+        }
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         bean.setSecurityManager(securityManager);
         return bean;

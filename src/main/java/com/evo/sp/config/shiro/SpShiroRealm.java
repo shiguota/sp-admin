@@ -48,8 +48,6 @@ public class SpShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //获取登录用户名
         SystemUserVo loginUser = (SystemUserVo) principalCollection.getPrimaryPrincipal();
-        //查询用户名称
-        SystemUser user = new SystemUser();
         //添加角色和权限
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         try {
