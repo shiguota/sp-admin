@@ -30,7 +30,7 @@ import java.util.Map;
 @Configuration
 public class SpShiroConfig {
 
-    private static final String FILTER_NAME = "spFilter";
+    private static final String FILTER_NAME = "spfilter";
 
     @Autowired
     private ISystemFilterPathService iSystemFilterPathService;
