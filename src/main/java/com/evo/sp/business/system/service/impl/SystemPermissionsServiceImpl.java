@@ -4,7 +4,7 @@ import com.evo.sp.business.system.entity.SystemPermissions;
 import com.evo.sp.business.system.mapper.SystemPermissionsMapper;
 import com.evo.sp.business.system.service.ISystemPermissionsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.evo.sp.common.SpAssert;
+import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.ex.BaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

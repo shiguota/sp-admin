@@ -1,12 +1,14 @@
 package com.evo.sp.business.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.evo.sp.business.system.entity.SystemUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.evo.sp.common.ex.BaseException;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author sgt
@@ -14,11 +16,10 @@ import com.evo.sp.common.ex.BaseException;
  */
 public interface ISystemUserService extends IService<SystemUser> {
     /**
-     * @Description: 通过用户名获取密码
-     * @Param:
-     * @return:
-     * @Author: sgt
-     * @Date: 2019-03-28
+     *
+     * 通过用户名获取密码
      */
     SystemUser userByname(String name) throws BaseException;
+
+
 }

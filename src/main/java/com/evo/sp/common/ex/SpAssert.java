@@ -1,4 +1,4 @@
-package com.evo.sp.common;
+package com.evo.sp.common.ex;
 
 import com.evo.sp.common.ex.SpParameterException;
 import com.evo.sp.common.result.ResultEnum;

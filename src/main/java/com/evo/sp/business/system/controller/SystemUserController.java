@@ -1,13 +1,17 @@
 package com.evo.sp.business.system.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.evo.sp.business.system.entity.SystemUser;
 import com.evo.sp.business.system.entity.vo.SystemUserVo;
 import com.evo.sp.business.system.service.ISystemUserService;
 import com.evo.sp.common.BaseController;
-import com.evo.sp.common.SpAssert;
+import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.SpConstantInter;
+import com.evo.sp.common.parameter.PageRequestParameter;
 import com.evo.sp.common.result.Result;
 import com.evo.sp.common.result.ResultEnum;
 import com.evo.sp.config.swagger.SwaggerConstantInter;
@@ -148,4 +152,12 @@ public class SystemUserController extends BaseController {
         return modify(user, iSpUserService);
     }
 
+    /**
+     * 获取分页列表
+     */
+    @RequestMapping(value = SpConstantInter.SYSTEM_USER_PAGES, method = RequestMethod.POST)
+    public Result queryListPages(@RequestBody PageRequestParameter<SystemUser> pageRequestParameter) {
+        IPage pageInstance = pageRequestParameter.pageInstance();
+        return queryListPage(pageInstance, pageRequestParameter.parameterInstance(), iSpUserService);
+    }
 }

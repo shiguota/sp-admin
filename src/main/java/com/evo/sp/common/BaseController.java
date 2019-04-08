@@ -1,15 +1,19 @@
 package com.evo.sp.common;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.baomidou.mybatisplus.extension.service.additional.query.impl.QueryChainWrapper;
+import com.evo.sp.business.system.entity.SystemUser;
+import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.result.Result;
 import com.evo.sp.common.result.ResultEnum;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisSubscribedConnectionException;
+import com.evo.sp.common.tree.BuildTree;
+import com.evo.sp.common.tree.Test;
+import com.evo.sp.common.tree.Tree;
 
 import java.io.Serializable;
-import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +27,6 @@ public class BaseController<T> {
 
     /**
      * @Description: 新增
-     * @Param:
-     * @return:
      * @Author: sgt
      * @Date: 2019-03-27
      */
@@ -44,8 +46,6 @@ public class BaseController<T> {
 
     /**
      * @Description: 删除（根据id）
-     * @Param:
-     * @return:
      * @Author: sgt
      * @Date: 2019-03-27
      */
@@ -63,8 +63,6 @@ public class BaseController<T> {
 
     /**
      * @Description: 修改
-     * @Param:
-     * @return:
      * @Author: sgt
      * @Date: 2019-03-27
      */
@@ -83,8 +81,6 @@ public class BaseController<T> {
 
     /**
     * @Description:通过id查询
-    * @Param:
-    * @return:
     * @Date: 2019-04-03
     */
     public Result queryById(Serializable id,IService<T> tiService){
@@ -96,9 +92,7 @@ public class BaseController<T> {
 
     /**
     * @Description:根据id查询（批量）
-    * @Param:  
-    * @return:  
-    * @Date: 2019-04-03 
+    * @Date: 2019-04-03
     */
     public Result queryByIds(Collection<? extends Serializable> idList,IService<T> tiService){
         SpAssert.isNull(idList);
@@ -109,8 +103,6 @@ public class BaseController<T> {
 
     /**
     * @Description:根据条件查询（批量）
-    * @Param:
-    * @return:
     * @Date: 2019-04-04
     */
     public Result queryListsByCloumn(Map<String, Object> columnMap,IService<T> tiService){
@@ -127,5 +119,26 @@ public class BaseController<T> {
     public Result queryOne(Wrapper<T> queryWrapper, boolean throwEx,IService<T> tiService){
         T one = tiService.getOne(queryWrapper, throwEx);
         return new Result(one);
+    }
+
+
+    /**
+     *
+     * 根据条件（分页查询）
+     */
+    public Result queryListPage(IPage<T> page,T t,IService<T> tiService){
+        if (!SpAssert.isNotNull(t)) {
+            return new  Result(tiService.page(page, Wrappers.emptyWrapper()));
+        }else{
+            return new  Result(tiService.page(page,new QueryWrapper<>(t)));
+        }
+    }
+    
+    /**
+     *
+     * 返回树形结构json
+     */
+    public Result queryJsonData(List<Tree<T>> trees){
+        return new Result(BuildTree.build(trees));
     }
 }

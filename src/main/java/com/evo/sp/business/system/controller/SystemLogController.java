@@ -1,6 +1,14 @@
 package com.evo.sp.business.system.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.evo.sp.business.system.entity.SystemLog;
+import com.evo.sp.business.system.service.ISystemLogService;
+import com.evo.sp.common.SpConstantInter;
+import com.evo.sp.common.parameter.PageRequestParameter;
+import com.evo.sp.common.result.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +23,37 @@ import com.evo.sp.common.BaseController;
  * @since 2019-03-29
  */
 @RestController
-@RequestMapping("/basis/sp-log")
+@RequestMapping(SpConstantInter.SYSTEM_LOG)
 public class SystemLogController extends BaseController {
 
+    @Autowired
+    private ISystemLogService iSystemLogService;
+
+    /**
+     *
+     * 新增日志
+     */
+    @RequestMapping(value = SpConstantInter.SYSTEM_LOG_SAVE)
+    public Result saveLog(@RequestBody SystemLog systemLog){
+        return save(systemLog,iSystemLogService);
+    }
+
+    /**
+     *
+     * 删除日志
+     */
+    @RequestMapping(value = SpConstantInter.SYSTEM_LOG_DEL)
+    public Result delLog(String id){
+        return del(id,iSystemLogService);
+    }
+
+    /**
+     *
+     * 查询日志列表（分页查询）
+     */
+    @RequestMapping(value = SpConstantInter.SYSTEM_LOG_PAGES)
+    public Result queryListPage(@RequestBody PageRequestParameter<SystemLog> pageRequestParameter){
+        IPage iPage = pageRequestParameter.pageInstance();
+        return queryListPage(iPage,pageRequestParameter.parameterInstance(),iSystemLogService);
+    }
 }

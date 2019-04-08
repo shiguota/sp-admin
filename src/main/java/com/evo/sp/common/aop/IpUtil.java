@@ -1,4 +1,4 @@
-package com.evo.sp.common;
+package com.evo.sp.common.aop;
 
 import com.evo.sp.common.aop.SpLogAspectJ;
 import lombok.extern.slf4j.Slf4j;

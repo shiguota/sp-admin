@@ -1,10 +1,8 @@
 package com.evo.sp.config.shiro;
 
 
-import com.alibaba.fastjson.JSON;
 import com.evo.sp.business.system.entity.SystemFilterPath;
 import com.evo.sp.business.system.service.ISystemFilterPathService;
-import com.evo.sp.common.filter.SpCheckLoginFilter;
 import org.apache.commons.collections.FastHashMap;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.credential.Md5CredentialsMatcher;
