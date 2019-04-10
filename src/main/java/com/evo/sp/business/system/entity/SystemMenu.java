@@ -22,11 +22,6 @@ public class SystemMenu extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
-     * id
-     */
-    private String id;
-
-    /**
      * 菜单名称
      */
     private String name;
@@ -47,11 +42,6 @@ public class SystemMenu extends BaseEntity {
     private String path;
 
     /**
-     * 状态
-     */
-    private Integer state;
-
-    /**
      * 排序
      */
     private Integer sort;
@@ -61,15 +51,51 @@ public class SystemMenu extends BaseEntity {
      */
     private String pid;
 
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
+    public String getName() {
+        return name;
+    }
 
-    /**
-     * 修改时间
-     */
-    private LocalDateTime updateTime;
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public String getCode() {
+        return code;
+    }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
 }

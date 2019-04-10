@@ -9,6 +9,7 @@ import com.evo.sp.business.system.entity.SystemUser;
 import com.evo.sp.business.system.entity.vo.SystemUserVo;
 import com.evo.sp.business.system.service.ISystemUserService;
 import com.evo.sp.common.BaseController;
+import com.evo.sp.common.annotations.SpLogController;
 import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.parameter.PageRequestParameter;
@@ -56,6 +57,7 @@ public class SystemUserController extends BaseController {
      */
     @RequestMapping(value = SpConstantInter.SYSTEM_USER_LOGIN, method = RequestMethod.POST)
     @ApiOperation(value = SwaggerConstantInter.SWAGGER_SYSTEM_SUER_LOGIN_VLUES)
+    @SpLogController
     public Result login(@RequestBody SystemUserVo spUserVo) {
         Result result = null;
         SpAssert.isNullParamsObj(spUserVo);
