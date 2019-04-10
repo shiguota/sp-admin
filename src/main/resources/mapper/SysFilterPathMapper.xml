@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.evo.sp.business.system.mapper.SystemFilterPathMapper">
-    <select id="queryFilePath" resultType="com.evo.sp.business.system.entity.SystemFilterPath" parameterType="java.lang.String">
+<mapper namespace="com.evo.sp.business.system.mapper.SysFilterPathMapper">
+    <select id="queryFilePath" resultType="com.evo.sp.business.system.entity.SysFilterPath" parameterType="java.lang.String">
         select path,type from system_filter_path where state = 1 order by sort
     </select>
 </mapper>

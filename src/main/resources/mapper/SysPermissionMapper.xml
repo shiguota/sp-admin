@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evo.sp.business.system.mapper.SysPermissionMapper">
+    <!--根据角色获取权限-->
+    <select id="getPermissionsByCode" parameterType="java.lang.String"
+            resultType="com.evo.sp.business.system.entity.SystemPermissions">
+              select p.per_code from sys_role r
+                join sys_role_permission rp on r.id = rp.sys_role_id
+                join sys_menu_permission mp on rp.sys_menu_has_sys_permission_id = mp.id
+                join sys_menu m on mp.sys_menu_id = m.id
+                join sys_permission p on mp.sys_permission_id = p.id
+              where  u.role_code = #{roleCode}
+    </select>
+</mapper>
