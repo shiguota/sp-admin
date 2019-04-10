@@ -12,10 +12,10 @@ import com.evo.sp.common.BaseController;
  * </p>
  *
  * @author sgt
- * @since 2019-03-27
+ * @since 2019-04-05
  */
 @RestController
-@RequestMapping("/basis/sp-user-role")
-public class SystemUserRoleController extends BaseController {
+@RequestMapping("/business.system/system-filter-path")
+public class SysFilterPathController extends BaseController {
 
 }
