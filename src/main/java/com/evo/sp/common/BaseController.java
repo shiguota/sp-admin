@@ -5,12 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.evo.sp.business.system.entity.SystemUser;
 import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.result.Result;
 import com.evo.sp.common.result.ResultEnum;
 import com.evo.sp.common.tree.BuildTree;
-import com.evo.sp.common.tree.Test;
 import com.evo.sp.common.tree.Tree;
 
 import java.io.Serializable;
@@ -49,7 +47,7 @@ public class BaseController<T> {
      * @Author: sgt
      * @Date: 2019-03-27
      */
-    public Result del(String id,IService<T> tiService) {
+    public Result del(Serializable id,IService<T> tiService) {
         Result result = null;
         boolean b = tiService.removeById(id);
         if (b) {

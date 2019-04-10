@@ -1,11 +1,12 @@
 package com.evo.sp.config.shiro;
 
-import com.evo.sp.business.system.entity.SystemPermissions;
-import com.evo.sp.business.system.entity.SystemRole;
-import com.evo.sp.business.system.entity.SystemUser;
-import com.evo.sp.business.system.service.ISystemPermissionsService;
-import com.evo.sp.business.system.service.ISystemRoleService;
-import com.evo.sp.business.system.service.ISystemUserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.evo.sp.business.system.entity.SysPermission;
+import com.evo.sp.business.system.entity.SysRole;
+import com.evo.sp.business.system.entity.SysUser;
+import com.evo.sp.business.system.service.ISysPermissionService;
+import com.evo.sp.business.system.service.ISysRoleService;
+import com.evo.sp.business.system.service.ISysUserService;
 import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.BaseException;
@@ -30,11 +31,11 @@ import java.util.List;
 public class SpShiroRealm extends AuthorizingRealm {
 
     @Autowired
-    private ISystemUserService iSpUserService;
+    private ISysUserService iSpUserService;
     @Autowired
-    private ISystemRoleService iSpRoleService;
+    private ISysRoleService iSpRoleService;
     @Autowired
-    private ISystemPermissionsService iSpPermissionsService;
+    private ISysPermissionService iSpPermissionsService;
 
     /**
      * @Description:授权
@@ -46,18 +47,18 @@ public class SpShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //获取登录用户名
-        SystemUser loginUser = (SystemUser) principalCollection.getPrimaryPrincipal();
+        SysUser loginUser = (SysUser) principalCollection.getPrimaryPrincipal();
         //添加角色和权限
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         try {
-            List<SystemRole> roleByUname = iSpRoleService.getRoleByUname(loginUser.getName());
-            for (SystemRole spRole : roleByUname) {
+            List<SysRole> roleByUname = iSpRoleService.getRoleByAccount(loginUser.getAccount());
+            for (SysRole spRole : roleByUname) {
                 //添加角色
-                simpleAuthorizationInfo.addRole(spRole.getRoleName());
-                List<SystemPermissions> permissionsByRName = iSpPermissionsService.getPermissionsByRName(spRole.getRoleName());
-                for (SystemPermissions spPermissions : permissionsByRName) {
+                simpleAuthorizationInfo.addRole(spRole.getRoleCode());
+                List<SysPermission> permissionsByRName = iSpPermissionsService.getPermissionsByCode(spRole.getRoleCode());
+                for (SysPermission spPermissions : permissionsByRName) {
                     //添加权限
-                    simpleAuthorizationInfo.addStringPermission(spPermissions.getPermissionsTag());
+                    simpleAuthorizationInfo.addStringPermission(spPermissions.getPerCode());
                 }
             }
 
@@ -79,13 +80,15 @@ public class SpShiroRealm extends AuthorizingRealm {
         //获取用户输入的token
         UsernamePasswordToken utoken = (UsernamePasswordToken) token;
         String username = utoken.getUsername();
-        SystemUser spUser = null;
-        spUser = iSpUserService.userByname(username);
+        SysUser spUser = null;
+        QueryWrapper<SysUser> sysUserQueryWrapper = new QueryWrapper<>();
+        sysUserQueryWrapper.setEntity(new SysUser(username));
+        spUser = iSpUserService.getOne(sysUserQueryWrapper);
         if (!SpAssert.isNotNull(spUser)) {
             throw new UnknownAccountException();
         }
         //盐值
-        ByteSource credentialsSalt = ByteSource.Util.bytes(spUser.getName());
+        ByteSource credentialsSalt = ByteSource.Util.bytes(spUser.getAccount());
         SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(spUser,
                 spUser.getPassword(),
                 credentialsSalt,

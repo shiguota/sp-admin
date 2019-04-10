@@ -1,8 +1,8 @@
 package com.evo.sp.config.shiro;
 
 
-import com.evo.sp.business.system.entity.SystemFilterPath;
-import com.evo.sp.business.system.service.ISystemFilterPathService;
+import com.evo.sp.business.system.entity.SysFilterPath;
+import com.evo.sp.business.system.service.ISysFilterPathService;
 import org.apache.commons.collections.FastHashMap;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.credential.Md5CredentialsMatcher;
@@ -31,7 +31,7 @@ public class SpShiroConfig {
     private static final String FILTER_NAME = "spfilter";
 
     @Autowired
-    private ISystemFilterPathService iSystemFilterPathService;
+    private ISysFilterPathService iSystemFilterPathService;
     /**
     * @Description:自定义Realm加入容器 
     * @Author: 史国涛
@@ -78,10 +78,10 @@ public class SpShiroConfig {
         Map<String, Filter> mapFilter = new FastHashMap();
         mapFilter.put(FILTER_NAME,getSpCheckLoginFilter());
         bean.setFilters(mapFilter);
-        LinkedList<SystemFilterPath> systemFilterPaths = iSystemFilterPathService.queryFilePath();
+        LinkedList<SysFilterPath> systemFilterPaths = iSystemFilterPathService.queryFilePath();
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        for (SystemFilterPath systemFilterPath : systemFilterPaths) {
+        for (SysFilterPath systemFilterPath : systemFilterPaths) {
             filterChainDefinitionMap.put(systemFilterPath.getPath(),systemFilterPath.getType());
         }
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);

@@ -1,6 +1,9 @@
 package com.evo.sp.business.system.entity;
 
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +24,11 @@ public class SystemLog extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(type = IdType.UUID)
+    /**
+     * 主键id
+     */
+    private String id;
     /**
      * 方法名称
      */
@@ -149,5 +157,13 @@ public class SystemLog extends BaseEntity {
 
     public void setResults(String results) {
         this.results = results;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -1,0 +1,22 @@
+package com.evo.sp.business.system.mapper;
+
+import com.evo.sp.business.system.entity.SysRole;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 角色表 Mapper 接口
+ * </p>
+ *
+ * @author sgt
+ * @since 2019-04-10
+ */
+public interface SysRoleMapper extends BaseMapper<SysRole> {
+    /**
+     *
+     * 根据账号获取角色
+     */
+    List<SysRole> getRoleByAccount(String account);
+}

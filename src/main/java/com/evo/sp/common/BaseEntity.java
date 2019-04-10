@@ -10,11 +10,6 @@ import java.time.LocalDateTime;
 
 public class BaseEntity implements Serializable {
 
-    /**
-     * id
-     */
-    @TableId(type = IdType.UUID,value="id")
-    private String id;
 
     /**
      * 创建时间
@@ -31,13 +26,6 @@ public class BaseEntity implements Serializable {
      */
     private Integer state;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public LocalDateTime getCreateTime() {
         return createTime;
