@@ -34,11 +34,13 @@ public class SysRoleController extends BaseController {
 
     /**
      *
-     * 新增角色
+     * 新增(授权)
      */
     @RequestMapping(value = SpConstantInter.SYS_ROLE_SAVE,method = RequestMethod.POST)
-    public Result saveRole(@RequestBody SysRole sysRole){
-        return save(sysRole,iSysRoleService);
+    public Result saveRole(@RequestBody SysRoleVo roleVo){
+
+
+        return save(roleVo,iSysRoleService);
     }
 
     /**

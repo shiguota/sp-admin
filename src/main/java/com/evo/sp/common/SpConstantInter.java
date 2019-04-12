@@ -79,6 +79,7 @@ public class SpConstantInter {
     public static final String SYS_ROLE_PERMISSION_SAVE ="/save";
     public static final String SYS_ROLE_PERMISSION_DEL ="/del";
     public static final String SYS_ROLE_PERMISSION_MODIFY ="/mpdify";
+    public static final String SYS_ROLE_PERMISSION_AUTH="/auth";
     //菜单
     public static final String SYS_MENU = "/sys/menu";
     public static final String SYS_MENU_SAVE = "/save";
