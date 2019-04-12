@@ -3,7 +3,7 @@
 <mapper namespace="com.evo.sp.business.system.mapper.SysPermissionMapper">
     <!--根据角色获取权限-->
     <select id="getPermissionsByCode" parameterType="java.lang.String"
-            resultType="com.evo.sp.business.system.entity.SystemPermissions">
+            resultType="com.evo.sp.business.system.entity.SysPermission">
               select p.per_code from sys_role r
                 join sys_role_permission rp on r.id = rp.sys_role_id
                 join sys_menu_permission mp on rp.sys_menu_has_sys_permission_id = mp.id

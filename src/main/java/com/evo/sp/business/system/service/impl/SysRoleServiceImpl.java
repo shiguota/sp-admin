@@ -1,9 +1,13 @@
 package com.evo.sp.business.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.evo.sp.business.system.entity.SysRole;
+import com.evo.sp.business.system.entity.vo.SysRoleVo;
 import com.evo.sp.business.system.mapper.SysRoleMapper;
 import com.evo.sp.business.system.service.ISysRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.evo.sp.common.ex.SpAssert;
+import com.evo.sp.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +33,18 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
      * @param account
      */
     @Override
-    public List<SysRole> getRoleByAccount(String account) {
+    public List<SysRole> queryRoleByAccount(String account) {
         return sysRoleMapper.getRoleByAccount(account);
+    }
+
+    /**
+     * 根据组织（机构）id查询角色
+     *
+     * @param sysRoleVo
+     */
+    @Override
+    public Result queryByNameOrg(Page page,SysRoleVo sysRoleVo) {
+        SpAssert.isNull(sysRoleVo.getOrgId());
+        return new Result(sysRoleMapper.queryByNameOrg(sysRoleVo));
     }
 }

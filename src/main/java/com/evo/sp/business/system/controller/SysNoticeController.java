@@ -5,6 +5,7 @@ import com.evo.sp.business.system.entity.SysNotice;
 import com.evo.sp.business.system.service.ISysNoticeService;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.result.Result;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import java.io.Serializable;
  */
 @RestController
 @RequestMapping(SpConstantInter.SYS_NOTICE)
+@Api(tags = "通知")
 public class SysNoticeController extends BaseController {
 
     @Autowired

@@ -112,7 +112,7 @@ public class GenerateMain {
         strategy.setRestControllerStyle(true);
         strategy.setSuperControllerClass("com.evo.sp.common.BaseController");
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
-        strategy.setSuperEntityColumns("id,state,createTime");
+        strategy.setSuperEntityColumns("state,createTime,updateTime");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);

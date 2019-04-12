@@ -1,10 +1,11 @@
-package com.evo.sp.business.system.entity;
+package com.evo.sp.business.system.entity.vo;
 
-import java.time.LocalDateTime;
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -14,10 +15,7 @@ import lombok.experimental.Accessors;
  * @author sgt
  * @since 2019-04-10
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
-public class SysDictionary extends BaseEntity {
+public class SysDictionaryVo extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -52,19 +50,17 @@ public class SysDictionary extends BaseEntity {
     private String pid;
 
     /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
-
-    /**
-     * 修改时间
-     */
-    private LocalDateTime updateTime;
-
-    /**
      * 级别
      */
     private Integer level;
+    /**
+     * 创建时间排序
+     */
+    private String CTimeOrder;
+    /**
+     * 修改时间排序
+     */
+    private String UTimeOrder;
 
 
     public String getId() {
@@ -117,25 +113,6 @@ public class SysDictionary extends BaseEntity {
         this.pid = pid;
     }
 
-    @Override
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    @Override
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    @Override
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    @Override
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
 
     public Integer getLevel() {
         return level;
@@ -145,10 +122,26 @@ public class SysDictionary extends BaseEntity {
         this.level = level;
     }
 
-    public SysDictionary() {
+    public SysDictionaryVo() {
     }
 
-    public SysDictionary(String dicName) {
+    public SysDictionaryVo(String dicName) {
         this.dicName = dicName;
+    }
+
+    public String getCTimeOrder() {
+        return CTimeOrder;
+    }
+
+    public void setCTimeOrder(String CTimeOrder) {
+        this.CTimeOrder = CTimeOrder;
+    }
+
+    public String getUTimeOrder() {
+        return UTimeOrder;
+    }
+
+    public void setUTimeOrder(String UTimeOrder) {
+        this.UTimeOrder = UTimeOrder;
     }
 }

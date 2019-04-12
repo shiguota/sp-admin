@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evo.sp.business.system.mapper.SysDictionaryMapper">
-
+    <!--查询字典通过名称/父id-->
+    <select id="queryByNamePid" parameterType="com.evo.sp.business.system.entity.vo.SysDictionaryVo" resultType="com.evo.sp.business.system.entity.SysDictionary">
+        select dic.dic_name,dic_code,dic_sort,create_time,update_time from sys_dictionary dic
+        <where>
+            state=1
+            <if test="dicName ！= null">
+              and dic_name like '%${dicName}%'
+            </if>
+            <if test="pid ！= null">
+                and pid = ${pid}
+            </if>
+            <if test="CTimeOrder != null">
+              order by create_time #{CTimeOrder}
+            </if>
+            <if test="UTimeOrder != null">
+                order by update_time #{CTimeOrder}
+            </if>
+            <if test="dicSort != null">
+                order by dic_sort asc
+            </if>
+        </where>
+    </select>
 </mapper>

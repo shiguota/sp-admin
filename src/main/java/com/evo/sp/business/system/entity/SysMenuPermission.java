@@ -1,6 +1,7 @@
 package com.evo.sp.business.system.entity;
 
 import java.time.LocalDateTime;
+
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,20 +26,36 @@ public class SysMenuPermission extends BaseEntity {
      * 菜单权限表id
      */
     private String id;
-
+    /**
+     * 菜单id
+     */
     private Integer sysMenuId;
-
+    /**
+     * 权限id
+     */
     private String sysPermissionId;
 
-    /**
-     * 状态
-     */
-    private String state;
+    public String getId() {
+        return id;
+    }
 
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public Integer getSysMenuId() {
+        return sysMenuId;
+    }
 
+    public void setSysMenuId(Integer sysMenuId) {
+        this.sysMenuId = sysMenuId;
+    }
+
+    public String getSysPermissionId() {
+        return sysPermissionId;
+    }
+
+    public void setSysPermissionId(String sysPermissionId) {
+        this.sysPermissionId = sysPermissionId;
+    }
 }

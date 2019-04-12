@@ -5,6 +5,7 @@ import com.evo.sp.business.system.entity.SysRolePermission;
 import com.evo.sp.business.system.service.ISysRolePermissionService;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.result.Result;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import java.io.Serializable;
  */
 @RestController
 @RequestMapping(SpConstantInter.SYS_ROLE_PERMISSION)
+@Api(tags = "角色权限")
 public class SysRolePermissionController extends BaseController {
 
     @Autowired
@@ -43,7 +45,7 @@ public class SysRolePermissionController extends BaseController {
      *
      * 删除
      */
-    @RequestMapping(value = SpConstantInter.SYS_ROLE_PERMISSION_SAVE,method = RequestMethod.POST)
+    @RequestMapping(value = SpConstantInter.SYS_ROLE_PERMISSION_DEL,method = RequestMethod.POST)
     public Result delRolePermission(Serializable id){
         return del(id,iSysRolePermissionService);
     }
@@ -52,7 +54,7 @@ public class SysRolePermissionController extends BaseController {
      *
      *修改
      */
-    @RequestMapping(value = SpConstantInter.SYS_ROLE_PERMISSION_SAVE,method = RequestMethod.POST)
+    @RequestMapping(value = SpConstantInter.SYS_ROLE_PERMISSION_MODIFY,method = RequestMethod.POST)
     public Result modifyRolePermission(@RequestBody SysRolePermission sysRolePermission){
         return modify(sysRolePermission,iSysRolePermissionService);
     }

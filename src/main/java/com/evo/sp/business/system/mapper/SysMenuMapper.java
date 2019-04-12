@@ -3,6 +3,8 @@ package com.evo.sp.business.system.mapper;
 import com.evo.sp.business.system.entity.SysMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -13,4 +15,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
+    /**
+     *
+     * 查询用户可用菜单
+     */
+    List<SysMenu> queryMenuPath(String account);
 }

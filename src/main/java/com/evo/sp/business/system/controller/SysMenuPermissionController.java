@@ -5,6 +5,7 @@ import com.evo.sp.business.system.entity.SysMenuPermission;
 import com.evo.sp.business.system.service.ISysMenuPermissionService;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.result.Result;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import java.io.Serializable;
  */
 @RestController
 @RequestMapping(SpConstantInter.SYS_MENU_PERMISSION)
+@Api(tags = "菜单权限")
 public class SysMenuPermissionController extends BaseController {
 
     @Autowired

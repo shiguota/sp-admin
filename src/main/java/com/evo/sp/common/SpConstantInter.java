@@ -17,8 +17,18 @@ public class SpConstantInter {
      * 数据库字段
      */
     public static final String TABLE_ID = "id";
+    public static final String TABLE_STATE = "state";
+    public static final String PID = "pid";
     //用户表
     public static final String SYS_USER_NAME = "name";
+    //字典表
+    public static final String SYS_DIC_NAME = "dic_name";
+    //菜单表
+    public static final String SYS_MENU_NAME = "menu_name";
+    //区域表
+    public static final String SYS_AREA_NAME = "area_name";
+    //组织机构
+    public static final String SYS_ORG_NAME = "org_name";
 
 
     /**
@@ -29,13 +39,15 @@ public class SpConstantInter {
     public static final String SYS_LOG_SAVE="/save";
     public static final String SYS_LOG_DEL="/del";
     public static final String SYS_LOG_MODIFY="/modify";
-    public static final String SYS_LOG_PAGES="/pages";
+    public static final String SYS_LOG_PAGE="/page";
+    public static final String SYS_LOG_DELS = "/dels";
     //字典
     public static final String SYS_DICTIONNARY="/sys/dictionary";
     public static final String SYS_DICTIONNARY_SAVE = "/save";
     public static final String SYS_DICTIONNARY_DEL = "/del";
     public static final String SYS_DICTIONNARY_MODIFY = "/modify";
-    public static final String SYS_DICTIONNARY_PAGES = "/pages";
+    public static final String SYS_DICTIONNARY_PAGE = "/page";
+    public static final String SYS_DICTIONNARY_QUERY_BY_NAME ="/byname";
     //用户
     public static final String SYS_USER = "/sys/user";
     public static final String SYS_USER_SAVE = "/save";
@@ -43,7 +55,8 @@ public class SpConstantInter {
     public static final String SYS_USER_LOGIN_OUT = "/loginout";
     public static final String SYS_USER_DEL = "/del";
     public static final String SYS_USER_MODIFY = "/modify";
-    public static final String SYS_USER_PAGES = "/pages";
+    public static final String SYS_USER_PAGE = "/page";
+    public static final String SYS_USER_QUERY_ONE = "/one";
     //用户信息
     public static final String SYS_USER_INFO="/sys/user/info";
     public static final String SYS_USER_INFO_SAVE="/save";
@@ -54,13 +67,13 @@ public class SpConstantInter {
     public static final  String SYS_PERMISSION_SAVE ="/save";
     public static final  String SYS_PERMISSION_DEL ="/del";
     public static final  String SYS_PERMISSION_MODIFY ="/modify";
-    public static final  String SYS_PERMISSION_PAGES ="/pages";
+    public static final  String SYS_PERMISSION_PAGE ="/page";
     //角色
     public static final  String SYS_ROLE ="/sys/role";
     public static final  String SYS_ROLE_SAVE ="/save";
     public static final  String SYS_ROLE_DEL ="/del";
     public static final  String SYS_ROLE_MODIFY ="/modify";
-    public static final  String SYS_ROLE_PAGES ="/pages";
+    public static final  String SYS_ROLE_PAGE ="/page";
     //角色权限
     public static final String SYS_ROLE_PERMISSION ="/sys/role/permission";
     public static final String SYS_ROLE_PERMISSION_SAVE ="/save";
@@ -71,7 +84,9 @@ public class SpConstantInter {
     public static final String SYS_MENU_SAVE = "/save";
     public static final String SYS_MENU_DEL = "/del";
     public static final String SYS_MENU_MODIFY = "/modify";
-    public static final String SYS_MENU_PAGES = "/pages";
+    public static final String SYS_MENU_PAGE = "/page";
+    public static final String SYS_MENU_TREE ="/tree";
+    public static final String STS_MENU_PATH = "/path";
     //菜单权限
     public static final String SYS_MENU_PERMISSION = "/sys/menu/permission";
     public static final String SYS_MENU_PERMISSION_SAVE = "/save";
@@ -82,16 +97,23 @@ public class SpConstantInter {
     public static final String SYS_AREA_SAVE="/save";
     public static final String SYS_AREA_DEL="/del";
     public static final String SYS_AREA_NODIFY="/modify";
+    public static final String SYS_AREA_TREE = "tree";
+    public static final String SYS_AREA_QUERY = "query";
+    public static final String SYS_AREA_PAGE = "page";
     //通知
     public static final String SYS_NOTICE="/sys/notice";
     public static final String SYS_NOTICE_SAVE="/save";
     public static final String SYS_NOTICE_DEL="/del";
     public static final String SYS_NOTICE_MODIFY="/modify";
-    //组织机构
+    //组织（机构）
     public static final String SYS_ORGANIZATION = "/sys/organization";
     public static final String SYS_ORGANIZATION_SAVE = "/save";
     public static final String SYS_ORGANIZATION_DEL = "/del";
     public static final String SYS_ORGANIZATION_MODIFY = "/modify";
+    public static final String SYS_ORGANIZATION_PAGE = "/page";
+    public static final String SYS_ORGANIZATION_TREE = "/tree";
+    //组织（机构）角色
+    public static final String SYS_ORGANIZATION_ROLE="/system/organization/role";
 
 
     /**

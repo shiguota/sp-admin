@@ -31,15 +31,20 @@ public class SysRolePermission extends BaseEntity {
      */
     private String sysRoleId;
 
-    /**
-     * 状态
-     */
-    private Integer state;
 
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
+    public String getSysMenuHasSysPermissionId() {
+        return sysMenuHasSysPermissionId;
+    }
 
+    public void setSysMenuHasSysPermissionId(String sysMenuHasSysPermissionId) {
+        this.sysMenuHasSysPermissionId = sysMenuHasSysPermissionId;
+    }
 
+    public String getSysRoleId() {
+        return sysRoleId;
+    }
+
+    public void setSysRoleId(String sysRoleId) {
+        this.sysRoleId = sysRoleId;
+    }
 }

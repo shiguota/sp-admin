@@ -1,7 +1,10 @@
 package com.evo.sp.business.system.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.evo.sp.business.system.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.evo.sp.business.system.entity.vo.SysRoleVo;
+import com.evo.sp.common.result.Result;
 
 import java.util.List;
 
@@ -18,5 +21,11 @@ public interface ISysRoleService extends IService<SysRole> {
      *
      * 根据账号获取角色
      */
-    List<SysRole> getRoleByAccount(String account);
+    List<SysRole> queryRoleByAccount(String account);
+
+    /**
+     *
+     * 根据组织（机构）id查询角色
+     */
+    Result queryByNameOrg(Page page,SysRoleVo sysRoleVo);
 }

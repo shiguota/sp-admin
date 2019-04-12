@@ -24,7 +24,7 @@ public class SysMenu extends BaseEntity {
     /**
      * 菜单表id
      */
-    private Integer id;
+    private String id;
 
     /**
      * 菜单名称
@@ -47,11 +47,6 @@ public class SysMenu extends BaseEntity {
     private String menuPath;
 
     /**
-     * 状态
-     */
-    private Integer menuState;
-
-    /**
      * 排序
      */
     private Integer menuSort;
@@ -62,16 +57,73 @@ public class SysMenu extends BaseEntity {
     private String pid;
 
     /**
-     * 创建时间
+     *
+     *字典表id
      */
-    private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
-    private LocalDateTime updateTime;
-
     private String systemDictionaryId;
 
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
+
+    public String getMenuCode() {
+        return menuCode;
+    }
+
+    public void setMenuCode(String menuCode) {
+        this.menuCode = menuCode;
+    }
+
+    public String getMenuIcon() {
+        return menuIcon;
+    }
+
+    public void setMenuIcon(String menuIcon) {
+        this.menuIcon = menuIcon;
+    }
+
+    public String getMenuPath() {
+        return menuPath;
+    }
+
+    public void setMenuPath(String menuPath) {
+        this.menuPath = menuPath;
+    }
+
+    public Integer getMenuSort() {
+        return menuSort;
+    }
+
+    public void setMenuSort(Integer menuSort) {
+        this.menuSort = menuSort;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public String getSystemDictionaryId() {
+        return systemDictionaryId;
+    }
+
+    public void setSystemDictionaryId(String systemDictionaryId) {
+        this.systemDictionaryId = systemDictionaryId;
+    }
 }

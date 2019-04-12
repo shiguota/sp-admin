@@ -77,7 +77,7 @@ public class Test {
             trees.add(tree);
         }
 
-        Tree<Test> t = BuildTree.build(trees);
+        Tree<Test> t = BuildTree.build(trees,"测试数据");
         System.out.println(JSON.toJSONString(t));
     }
 }

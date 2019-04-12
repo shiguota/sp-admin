@@ -2,4 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evo.sp.business.system.mapper.SysUserMapper">
 
+    <!--通过机构id获取用户信息-->
+    <select id="queryUserByOrg" parameterType="com.evo.sp.business.system.entity.vo.SysUserVo"
+            resultType="com.evo.sp.business.system.entity.vo.SysUserVo">
+        select u.id,u.account,ui.nickname,o.org_name,ui.email,ui.phone,ui.state,u.user_type,u.create_time,u.update_time from sys_user u
+        join sys_user_info ui on u.sys_user_info_id = ui.id
+        join sys_organization o on u.sys_organization_id = o.id
+        <where>
+            u.sys_organization_id = #{u.sysOrganizationId}
+            <if test="u.account != null">
+              and u.account = #{u.account}
+            </if>
+            <if test="u.info.nickname != null">
+              and ui.nickname = #{u.info.nickname}
+            </if>
+            <if test="u.info.phone !=null">
+              and ui.phone = #{u.info.phone}
+            </if>
+        </where>
+    </select>
+    <!--通过用户id获取用户信息-->
+    <select id="queryUserById" parameterType="java.lang.String"
+            resultType="com.evo.sp.business.system.entity.vo.SysUserVo">
+        select u.account,ui.nickname,ui.email,ui.phone,ui.state,u.user_type,u.create_time,u.update_time from sys_user u
+        join sys_user_info ui on u.sys_user_info_id = ui.id
+        where u.id = #{id}
+    </select>
 </mapper>

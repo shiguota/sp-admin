@@ -1,7 +1,11 @@
 package com.evo.sp.business.system.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.evo.sp.business.system.entity.SysDictionary;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.evo.sp.business.system.entity.vo.SysDictionaryVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +16,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2019-04-10
  */
 public interface SysDictionaryMapper extends BaseMapper<SysDictionary> {
-
+    /**
+     *
+     * 根据名称查询/pid
+     */
+    List<SysDictionary> queryByNamePid(Page page,SysDictionaryVo sysDictionaryVo);
 }

@@ -73,7 +73,7 @@ public class PageRequestParameter<T> {
      *
      * 获取ipage实例
      */
-    public IPage pageInstance() {
+    public Page pageInstance() {
         return new Page(this.page, this.size);
     }
     /**

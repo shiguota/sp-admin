@@ -14,7 +14,7 @@ public enum ResultEnum implements EnumValue {
     MODIFY_FAIL(1006,"修改失败"),
     OPERATION_SUCCESS(1007,"操作成功"),
     OPERATION_FAIL(1008,"操作失败"),
-
+    OPERATION_UNKNOWN(1009,"未知错误"),
 
 
 //    登录

@@ -27,10 +27,8 @@ public class SysNotice extends BaseEntity {
     private String id;
 
     /**
-     * 状态
+     * 模板
      */
-    private Integer state;
-
     private String template;
 
     /**
@@ -39,19 +37,39 @@ public class SysNotice extends BaseEntity {
     private Integer threshold;
 
     /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
-
-    /**
-     * 修改时间
-     */
-    private LocalDateTime updateTime;
-
-    /**
      * 通知类型（关联字典表id）
      */
     private String sysDictionaryId;
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
+    }
+
+    public Integer getThreshold() {
+        return threshold;
+    }
+
+    public void setThreshold(Integer threshold) {
+        this.threshold = threshold;
+    }
+
+    public String getSysDictionaryId() {
+        return sysDictionaryId;
+    }
+
+    public void setSysDictionaryId(String sysDictionaryId) {
+        this.sysDictionaryId = sysDictionaryId;
+    }
 }

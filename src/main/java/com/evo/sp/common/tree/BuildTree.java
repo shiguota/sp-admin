@@ -3,17 +3,13 @@ package com.evo.sp.common.tree;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class BuildTree {
     /**
-     *
-     * TODO
-     * <br>
-     * @author kangxu2 2017-1-7
-     *
      * @param nodes
      * @return
      */
-    public static <T> Tree<T> build(List<Tree<T>> nodes) {
+    public static <T> Tree<T> build(List<Tree<T>> nodes,String topNode) {
 
         if(nodes == null){
             return null;
@@ -52,7 +48,7 @@ public class BuildTree {
             root.setChildren(true);
             root.setChecked(true);
             root.setChildren(topNodes);
-            root.setText("顶级节点");
+            root.setText(topNode);
         }
         return root;
     }

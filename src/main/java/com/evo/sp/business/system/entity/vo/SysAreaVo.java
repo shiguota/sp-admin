@@ -1,11 +1,11 @@
-package com.evo.sp.business.system.entity;
+package com.evo.sp.business.system.entity.vo;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -15,10 +15,7 @@ import lombok.experimental.Accessors;
  * @author sgt
  * @since 2019-04-10
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
-public class SysArea extends BaseEntity {
+public class SysAreaVo extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

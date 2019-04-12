@@ -21,6 +21,7 @@ import java.util.Map;
  * @Author: sgt
  * @Date: 2019-03-27
  */
+@SuppressWarnings("all")
 public class BaseController<T> {
 
     /**
@@ -28,7 +29,7 @@ public class BaseController<T> {
      * @Author: sgt
      * @Date: 2019-03-27
      */
-    public Result save(T t,IService<T> tiService) {
+    public Result save(T t, IService<T> tiService) {
         Result result = null;
         boolean save = tiService.save(t);
         if (save) {
@@ -47,8 +48,9 @@ public class BaseController<T> {
      * @Author: sgt
      * @Date: 2019-03-27
      */
-    public Result del(Serializable id,IService<T> tiService) {
+    public Result del(Serializable id, IService<T> tiService) {
         Result result = null;
+        SpAssert.isNotNull(id);
         boolean b = tiService.removeById(id);
         if (b) {
             result = new Result(b, ResultEnum.REMOVE_SUCCESS.getValue(), ResultEnum.REMOVE_SUCCESS.getName());
@@ -60,28 +62,43 @@ public class BaseController<T> {
     }
 
     /**
-     * @Description: 修改
+     *
+     * 批量删除
+     */
+    public Result dels(Collection<? extends Serializable> collection ,IService<T> tiService){
+        Result result = null;
+        boolean b = tiService.removeByIds(collection);
+        if (b) {
+            result = new Result(b,ResultEnum.REMOVE_SUCCESS.getValue(),ResultEnum.REMOVE_SUCCESS.getName());
+        }else{
+            result = new Result(b,ResultEnum.REMOVE_FAIL.getValue(),ResultEnum.REMOVE_FAIL.getName());
+        }
+        return result;
+    }
+
+    /**
+     * @Description: 修改(根据id)
      * @Author: sgt
      * @Date: 2019-03-27
      */
-    public Result modify(T t,IService<T> tiService) {
+    public Result modify(T t, IService<T> tiService) {
         Result result = null;
 
         boolean b = tiService.updateById(t);
         if (b) {
-            result = new Result(b,ResultEnum.MODIFY_SUCCESS.getValue(),ResultEnum.MODIFY_SUCCESS.getName());
+            result = new Result(b, ResultEnum.MODIFY_SUCCESS.getValue(), ResultEnum.MODIFY_SUCCESS.getName());
         } else {
-            result = new Result(b,ResultEnum.MODIFY_FAIL.getValue(),ResultEnum.MODIFY_FAIL.getName());
+            result = new Result(b, ResultEnum.MODIFY_FAIL.getValue(), ResultEnum.MODIFY_FAIL.getName());
         }
         return result;
 
     }
 
     /**
-    * @Description:通过id查询
-    * @Date: 2019-04-03
-    */
-    public Result queryById(Serializable id,IService<T> tiService){
+     * @Description:通过id查询
+     * @Date: 2019-04-03
+     */
+    public Result queryById(Serializable id, IService<T> tiService) {
         SpAssert.isNull(id);
         SpAssert.isNull(tiService);
         T byId = tiService.getById(id);
@@ -89,10 +106,10 @@ public class BaseController<T> {
     }
 
     /**
-    * @Description:根据id查询（批量）
-    * @Date: 2019-04-03
-    */
-    public Result queryByIds(Collection<? extends Serializable> idList,IService<T> tiService){
+     * @Description:根据id查询（批量）
+     * @Date: 2019-04-03
+     */
+    public Result queryByIds(Collection<? extends Serializable> idList, IService<T> tiService) {
         SpAssert.isNull(idList);
         SpAssert.isNull(tiService);
         Collection<T> ts = tiService.listByIds(idList);
@@ -100,43 +117,64 @@ public class BaseController<T> {
     }
 
     /**
-    * @Description:根据条件查询（批量）
-    * @Date: 2019-04-04
-    */
-    public Result queryListsByCloumn(Map<String, Object> columnMap,IService<T> tiService){
+     * @Description:根据条件查询（批量）
+     * @Date: 2019-04-04
+     */
+    public Result queryListsByColumn(Map<String, Object> columnMap, IService<T> tiService) {
         Collection<T> ts = tiService.listByMap(columnMap);
         return new Result(ts);
     }
 
     /**
-    * @Description:根据条件查询一条记录
-    * @Param:
-    * @return:
-    * @Date: 2019-04-04
-    */
-    public Result queryOne(Wrapper<T> queryWrapper, boolean throwEx,IService<T> tiService){
+     * @Description:根据条件查询一条记录
+     * @Param:
+     * @return:
+     * @Date: 2019-04-04
+     */
+    public Result queryOne(Wrapper<T> queryWrapper, boolean throwEx, IService<T> tiService) {
         T one = tiService.getOne(queryWrapper, throwEx);
         return new Result(one);
     }
 
 
     /**
-     *
      * 根据条件（分页查询）
      */
-    public Result queryListPage(IPage<T> page,T t,IService<T> tiService){
+    public Result queryListPage(IPage<T> page, T t, IService<T> tiService) {
         if (!SpAssert.isNotNull(t)) {
-            return new  Result(tiService.page(page, Wrappers.emptyWrapper()));
-        }else{
-            return new  Result(tiService.page(page,new QueryWrapper<>(t)));
+            return new Result(tiService.page(page, Wrappers.emptyWrapper()));
+        } else {
+            return new Result(tiService.page(page, new QueryWrapper<>(t)));
         }
     }
-    
+
     /**
-     *
+     * 根据条件（分页查询）注：不推荐使用
+     */
+    public Result queryListPage(IPage<T> page, Wrapper<T> tWrapper, IService<T> tiService) {
+        if (!SpAssert.isNotNull(tWrapper)) {
+            return new Result(tiService.page(page, Wrappers.emptyWrapper()));
+        } else {
+            return new Result(tiService.page(page, tWrapper));
+        }
+    }
+
+    /**
      * 返回树形结构json
      */
-    public Result queryJsonData(List<Tree<T>> trees){
-        return new Result(BuildTree.build(trees));
+    public Result queryTreeData(List<Tree<T>> trees,String topNode) {
+        return new Result(BuildTree.build(trees,topNode));
     }
+
+    /**
+     * 查询列表
+     */
+    public Result queryListsByColumn(Wrapper<T> wrapper, IService<T> tiService) {
+        if (SpAssert.isNotNull(wrapper)) {
+            return new Result(tiService.list(wrapper));
+        }
+        return new Result(tiService.list());
+    }
+
+
 }

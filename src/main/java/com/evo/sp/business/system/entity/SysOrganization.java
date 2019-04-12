@@ -47,24 +47,56 @@ public class SysOrganization extends BaseEntity {
     private String pid;
 
     /**
-     * 状态
-     */
-    private Integer state;
-
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
-
-    /**
-     * 修改时间
-     */
-    private LocalDateTime updateTime;
-
-    /**
      * 区域表id
      */
     private String sysAreaId;
 
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public Integer getOrgSort() {
+        return orgSort;
+    }
+
+    public void setOrgSort(Integer orgSort) {
+        this.orgSort = orgSort;
+    }
+
+    public Integer getOrgLevel() {
+        return orgLevel;
+    }
+
+    public void setOrgLevel(Integer orgLevel) {
+        this.orgLevel = orgLevel;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public String getSysAreaId() {
+        return sysAreaId;
+    }
+
+    public void setSysAreaId(String sysAreaId) {
+        this.sysAreaId = sysAreaId;
+    }
 }

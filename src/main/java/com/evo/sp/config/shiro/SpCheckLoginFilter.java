@@ -37,7 +37,7 @@ public class SpCheckLoginFilter extends HttpMethodPermissionFilter {
     @Override
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
         //设置登陆路径
-        setLoginUrl(SpConstantInter.SYSTEM_USER + SpConstantInter.SYSTEM_USER_LOGIN);
+        setLoginUrl(SpConstantInter.SYS_USER + SpConstantInter.SYS_USER_LOGIN);
         //判断当前请求是否是登陆请求或注销请求
         if (!isLoginRequest(request, response)) {
             HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
@@ -137,7 +137,7 @@ public class SpCheckLoginFilter extends HttpMethodPermissionFilter {
     * @Date:  2019/4/5
     */
     public boolean isLoginOutRequest(ServletRequest request){
-        return pathsMatch(SpConstantInter.SYSTEM_USER + SpConstantInter.SYSTEM_USER_LOGIN_OUT, request);
+        return pathsMatch(SpConstantInter.SYS_USER + SpConstantInter.SYS_USER_LOGIN_OUT, request);
     }
 
 }

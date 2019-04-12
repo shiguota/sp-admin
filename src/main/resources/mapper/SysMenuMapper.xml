@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evo.sp.business.system.mapper.SysMenuMapper">
-
+    <!--查询用户可用菜单-->
+    <select id="queryMenuPath" parameterType="java.lang.String" resultType="com.evo.sp.business.system.entity.SysMenu">
+        select m.menu_name,m.menu_code,m.menu_path,m.pid from sys_menu m
+            join sys_menu_permission mp on m.id = mp.sys_menu_id
+            join sys_role_permission rp on mp.id = rp.sys_menu_has_sys_permission_id
+            join sys_role r on rp.sys_menu_has_sys_permission_id = r.id
+            join sys_user_role ur on r.id = ur.sys_role_id
+            join sys_user u on ur.sys_user_id = u.id
+            <where>
+                m.state = 1
+                <if test="account != null">
+                    u.account = #{account}
+                </if>
+            </where>
+    </select>
 </mapper>
