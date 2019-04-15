@@ -10,7 +10,8 @@ public class SpConstantInter {
     public static final String USER = "user";
     public static final String ENCRYPTION_TYPE = "MD5";
     public static final String CHARACTER_ENCODING = "UTF-8";
-
+    //crud操作影响的行数
+    public static final Integer CURDVAL = 1;
 
 
     /**
@@ -87,7 +88,8 @@ public class SpConstantInter {
     public static final String SYS_MENU_MODIFY = "/modify";
     public static final String SYS_MENU_PAGE = "/page";
     public static final String SYS_MENU_TREE ="/tree";
-    public static final String STS_MENU_PATH = "/path";
+    public static final String SYS_MENU_PATH = "/path";
+    public static final String SYS_MENU_PER = "/per";
     //菜单权限
     public static final String SYS_MENU_PERMISSION = "/sys/menu/permission";
     public static final String SYS_MENU_PERMISSION_SAVE = "/save";

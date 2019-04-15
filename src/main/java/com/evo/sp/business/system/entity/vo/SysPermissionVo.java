@@ -1,9 +1,8 @@
-package com.evo.sp.business.system.entity;
-
-import java.time.LocalDateTime;
+package com.evo.sp.business.system.entity.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.evo.sp.business.system.entity.SysMenuPermission;
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,11 +19,10 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class SysPermission extends BaseEntity {
+public class SysPermissionVo extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.UUID)
     private String id;
 
     /**
@@ -36,10 +34,10 @@ public class SysPermission extends BaseEntity {
      * 权限编码
      */
     private String perCode;
-    
+
     /**
      *
-     * 权限菜单
+     *  菜单权限表
      */
     private SysMenuPermission sysMenuPermission;
 
@@ -50,6 +48,7 @@ public class SysPermission extends BaseEntity {
     public void setSysMenuPermission(SysMenuPermission sysMenuPermission) {
         this.sysMenuPermission = sysMenuPermission;
     }
+
 
     public String getId() {
         return id;

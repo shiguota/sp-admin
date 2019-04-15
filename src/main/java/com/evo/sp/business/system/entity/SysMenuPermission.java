@@ -29,7 +29,7 @@ public class SysMenuPermission extends BaseEntity {
     /**
      * 菜单id
      */
-    private Integer sysMenuId;
+    private String sysMenuId;
     /**
      * 权限id
      */
@@ -43,11 +43,11 @@ public class SysMenuPermission extends BaseEntity {
         this.id = id;
     }
 
-    public Integer getSysMenuId() {
+    public String getSysMenuId() {
         return sysMenuId;
     }
 
-    public void setSysMenuId(Integer sysMenuId) {
+    public void setSysMenuId(String sysMenuId) {
         this.sysMenuId = sysMenuId;
     }
 

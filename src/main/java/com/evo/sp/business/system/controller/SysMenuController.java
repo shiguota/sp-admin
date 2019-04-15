@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.evo.sp.business.system.entity.SysMenu;
 import com.evo.sp.business.system.entity.SysUser;
+import com.evo.sp.business.system.entity.vo.SysMenuVo;
 import com.evo.sp.business.system.service.ISysMenuService;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.SpAssert;
@@ -49,8 +50,8 @@ public class SysMenuController extends BaseController {
      * 新增
      */
     @RequestMapping(value = SpConstantInter.SYS_MENU_SAVE,method = RequestMethod.POST)
-    public Result saveMenu(@RequestBody SysMenu sysMenu){
-        return save(sysMenu,iSysMenuService);
+    public Result saveMenu(@RequestBody SysMenuVo sysMenuVo){
+        return iSysMenuService.menuSave(sysMenuVo);
     }
 
     /**
@@ -106,7 +107,7 @@ public class SysMenuController extends BaseController {
      *
      * 查询菜单（用户权限范围内）
      */
-    @RequestMapping(value = SpConstantInter.STS_MENU_PATH,method = RequestMethod.POST)
+    @RequestMapping(value = SpConstantInter.SYS_MENU_PATH,method = RequestMethod.POST)
     public Result queryMenuPer(){
         SysUser sysUser = (SysUser) SecurityUtils.getSubject().getSession().getAttribute(SpConstantInter.USER);
         if (SpAssert.isNotNull(sysUser)) {

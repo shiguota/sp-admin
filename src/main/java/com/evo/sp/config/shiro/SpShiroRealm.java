@@ -55,7 +55,7 @@ public class SpShiroRealm extends AuthorizingRealm {
             for (SysRole spRole : roleByUname) {
                 //添加角色
                 simpleAuthorizationInfo.addRole(spRole.getRoleCode());
-                List<SysPermission> permissionsByRName = iSpPermissionsService.getPermissionsByCode(spRole.getRoleCode());
+                List<SysPermission> permissionsByRName = iSpPermissionsService.queryPermissionsByCode(spRole.getRoleCode());
                 for (SysPermission spPermissions : permissionsByRName) {
                     //添加权限
                     simpleAuthorizationInfo.addStringPermission(spPermissions.getPerCode());

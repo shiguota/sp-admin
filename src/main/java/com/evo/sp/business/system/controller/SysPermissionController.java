@@ -55,4 +55,13 @@ public class SysPermissionController extends BaseController {
     public Result modifyPermission(@RequestBody SysPermission sysPermission) {
         return modify(sysPermission, iSysPermissionService);
     }
+    
+    /**
+     *
+     * 根据菜单获取权限
+     */
+    @RequestMapping(value = SpConstantInter.SYS_MENU_PER,method = RequestMethod.POST)
+    public Result queryPerByMenuId(String menuId){
+        return iSysPermissionService.queryPerByMenuId(menuId);
+    }
 }

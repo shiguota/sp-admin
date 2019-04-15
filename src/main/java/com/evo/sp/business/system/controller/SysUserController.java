@@ -13,6 +13,7 @@ import com.evo.sp.common.parameter.PageRequestParameter;
 import com.evo.sp.common.result.Result;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -42,9 +43,10 @@ public class SysUserController extends BaseController {
 
     /**
      *
-     * 新增角色
+     * 新增用户
      */
     @RequestMapping(value = SpConstantInter.SYS_USER_SAVE,method = RequestMethod.POST)
+    @Transactional
     public Result saveUser(@RequestBody SysUserVo sysUserVo){
         //验证参数
         SpAssert.isNull(sysUserVo);

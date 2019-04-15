@@ -28,4 +28,10 @@ public interface ISysRoleService extends IService<SysRole> {
      * 根据组织（机构）id查询角色
      */
     Result queryByNameOrg(Page page,SysRoleVo sysRoleVo);
+    
+    /**
+     *
+     * 新增角色
+     */
+    Result saveRole(SysRoleVo sysRoleVo);
 }

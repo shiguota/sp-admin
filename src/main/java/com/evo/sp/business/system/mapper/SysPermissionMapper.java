@@ -18,5 +18,11 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      *
      * 根据角色编码获取权限
      */
-    List<SysPermission> getPermissionsByCode(String roleCode);
+    List<SysPermission> queryPermissionsByCode(String roleCode);
+
+    /**
+     *
+     * 根据菜单获取权限
+     */
+    List<SysPermission> queryPerByMenuId(String menuId);
 }

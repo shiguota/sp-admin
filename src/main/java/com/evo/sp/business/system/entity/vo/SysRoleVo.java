@@ -3,6 +3,7 @@ package com.evo.sp.business.system.entity.vo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.business.system.entity.SysOrganizationRole;
+import com.evo.sp.business.system.entity.SysRolePermission;
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,6 +35,19 @@ public class SysRoleVo extends BaseEntity {
      */
     private String roleCode;
     
+    /**
+     *
+     * 菜单权限id
+     */
+    private SysRolePermission sysRolePermission;
+
+    public SysRolePermission getSysRolePermission() {
+        return sysRolePermission;
+    }
+
+    public void setSysRolePermission(SysRolePermission sysRolePermission) {
+        this.sysRolePermission = sysRolePermission;
+    }
 
     public String getOrgId() {
         return orgId;

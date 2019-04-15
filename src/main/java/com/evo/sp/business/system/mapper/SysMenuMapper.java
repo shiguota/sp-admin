@@ -2,6 +2,7 @@ package com.evo.sp.business.system.mapper;
 
 import com.evo.sp.business.system.entity.SysMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.evo.sp.common.result.Result;
 
 import java.util.List;
 

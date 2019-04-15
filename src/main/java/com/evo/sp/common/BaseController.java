@@ -41,6 +41,22 @@ public class BaseController<T> {
         return result;
 
     }
+    
+    /**
+     *
+     * 新增（批量）
+     */
+    public Result save(Collection<T> entityList,IService<T> tiService){
+        Result result = null;
+        boolean save = tiService.saveBatch(entityList);
+        if (save) {
+            result = new Result(save, ResultEnum.SAVE_SUCCESS.getValue(), ResultEnum.SAVE_SUCCESS.getName());
+        } else {
+            result = new Result(save, ResultEnum.SAVE_FAIL.getValue(), ResultEnum.SAVE_FAIL.getName());
+        }
+
+        return result;
+    }
 
 
     /**
@@ -63,7 +79,7 @@ public class BaseController<T> {
 
     /**
      *
-     * 批量删除
+     * 删除(批量)
      */
     public Result dels(Collection<? extends Serializable> collection ,IService<T> tiService){
         Result result = null;
@@ -149,7 +165,7 @@ public class BaseController<T> {
     }
 
     /**
-     * 根据条件（分页查询）注：不推荐使用
+     * 根据条件（分页查询）
      */
     public Result queryListPage(IPage<T> page, Wrapper<T> tWrapper, IService<T> tiService) {
         if (!SpAssert.isNotNull(tWrapper)) {

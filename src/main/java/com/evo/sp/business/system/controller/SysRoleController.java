@@ -38,9 +38,7 @@ public class SysRoleController extends BaseController {
      */
     @RequestMapping(value = SpConstantInter.SYS_ROLE_SAVE,method = RequestMethod.POST)
     public Result saveRole(@RequestBody SysRoleVo roleVo){
-
-
-        return save(roleVo,iSysRoleService);
+        return iSysRoleService.saveRole(roleVo);
     }
 
     /**
