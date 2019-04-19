@@ -7,6 +7,7 @@ import org.apache.commons.collections.FastHashMap;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.credential.Md5CredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -25,7 +26,7 @@ import java.util.Map;
  * @Author: sgt
  * @Date: 2019-03-28
  */
-//@Configuration
+@Configuration
 public class SpShiroConfig {
 
     private static final String FILTER_NAME = "spfilter";
@@ -62,9 +63,9 @@ public class SpShiroConfig {
     * @Date: 2019-03-29 
     */
     @Bean
-    public SecurityManager securityManager() {
+    public SecurityManager securityManager(Realm realm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(myShiroRealm());
+        securityManager.setRealm(realm);
         return securityManager;
     }
     /**

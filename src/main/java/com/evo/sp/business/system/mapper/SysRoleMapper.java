@@ -20,7 +20,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      *
      * 根据账号获取角色
      */
-    List<SysRole> getRoleByAccount(String account);
+    List<SysRole> queryRoleByAccount(String account);
     
     /**
      *

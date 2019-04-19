@@ -1,6 +1,9 @@
 package com.evo.sp.business.system.entity;
 
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +27,7 @@ public class SysMenu extends BaseEntity {
     /**
      * 菜单表id
      */
+    @TableId(type = IdType.UUID)
     private String id;
 
     /**
@@ -49,7 +53,7 @@ public class SysMenu extends BaseEntity {
     /**
      * 排序
      */
-    private Integer menuSort;
+    private Integer sort;
 
     /**
      * 父id
@@ -103,12 +107,12 @@ public class SysMenu extends BaseEntity {
         this.menuPath = menuPath;
     }
 
-    public Integer getMenuSort() {
-        return menuSort;
+    public Integer getSort() {
+        return sort;
     }
 
-    public void setMenuSort(Integer menuSort) {
-        this.menuSort = menuSort;
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 
     public String getPid() {

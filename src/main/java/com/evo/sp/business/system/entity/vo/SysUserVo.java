@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.business.system.entity.SysUserInfo;
 import com.evo.sp.common.BaseEntity;
+import com.evo.sp.common.BaseEntityVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,7 +17,7 @@ import lombok.experimental.Accessors;
  * @author sgt
  * @since 2019-04-10
  */
-public class SysUserVo extends BaseEntity {
+public class SysUserVo extends BaseEntityVo {
 
     private static final long serialVersionUID = 1L;
 

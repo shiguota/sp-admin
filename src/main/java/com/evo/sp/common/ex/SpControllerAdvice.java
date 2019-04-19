@@ -26,6 +26,7 @@ public class SpControllerAdvice {
 
     private static final String EXCEPTION_CODE= "code";
     private static final String EXCEPTION_MSG= "msg";
+    private static final String EXCEPTION_DATA= "data";
     private static final String EXCEPTION_MSG_DETAIL= "msg_detail";
 
     /**
@@ -40,23 +41,32 @@ public class SpControllerAdvice {
         if(ex instanceof SpParameterException){//参数错误
             SpParameterException spParameterException = (SpParameterException) ex;
             map.put(EXCEPTION_CODE, spParameterException.getCode());
+            map.put(EXCEPTION_DATA, false);
             map.put(EXCEPTION_MSG, spParameterException.getMsg());
-            map.put(EXCEPTION_MSG_DETAIL, spParameterException.getDtail());
         }else if(ex instanceof UnauthorizedException){//未授权
+            map.put(EXCEPTION_DATA, false);
             map.put(EXCEPTION_CODE,ResultEnum.PERMISSION_UNAUTHORIZED.getValue());
             map.put(EXCEPTION_MSG, ResultEnum.PERMISSION_UNAUTHORIZED.getName());
         }else if(ex instanceof UnknownAccountException || ex instanceof IncorrectCredentialsException ){//用户名密码错误
             map.put(EXCEPTION_CODE,ResultEnum.LOGIN_FAIL_SUER_NOT_AND_PASSWORD_ERORR.getValue());
             map.put(EXCEPTION_MSG, ResultEnum.LOGIN_FAIL_SUER_NOT_AND_PASSWORD_ERORR.getName());
         }else if(ex instanceof LockedAccountException){//用户被锁定
+            map.put(EXCEPTION_DATA, false);
             map.put(EXCEPTION_CODE,ResultEnum.LOGIN_FAIL_USER_IS_LOCKED.getValue());
             map.put(EXCEPTION_MSG, ResultEnum.LOGIN_FAIL_USER_IS_LOCKED.getName());
         }else if(ex instanceof AuthenticationException){//登陆（其他）错误
+            map.put(EXCEPTION_DATA, false);
             map.put(EXCEPTION_CODE,ResultEnum.LOGIN_FAIL.getValue());
             map.put(EXCEPTION_MSG, ResultEnum.LOGIN_FAIL.getName());
+        }else if(ex instanceof SessionException){//会话过期
+            map.put(EXCEPTION_DATA, false);
+            map.put(EXCEPTION_CODE,ResultEnum.SESSION_IS_NULL.getValue());
+            map.put(EXCEPTION_MSG, ResultEnum.SESSION_IS_NULL.getName());
         }else{
+            map.put(EXCEPTION_DATA, false);
             map.put(EXCEPTION_CODE, 100);
             map.put(EXCEPTION_MSG, ex.getMessage());
+            ex.printStackTrace();
         }
         return map;
     }

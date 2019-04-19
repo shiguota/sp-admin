@@ -1,7 +1,10 @@
 package com.evo.sp.business.system.entity;
 
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,6 +28,7 @@ public class SysUserInfo extends BaseEntity {
     /**
      * 主键id
      */
+    @TableId(type = IdType.UUID)
     private String id;
 
     /**

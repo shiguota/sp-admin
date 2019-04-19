@@ -20,7 +20,6 @@ import com.evo.sp.common.BaseController;
  * <p>
  * 角色表 前端控制器
  * </p>
- *
  * @author sgt
  * @since 2019-04-10
  */
@@ -34,10 +33,10 @@ public class SysRoleController extends BaseController {
 
     /**
      *
-     * 新增(授权)
+     * 新增(授权:角色与权限关联)
      */
-    @RequestMapping(value = SpConstantInter.SYS_ROLE_SAVE,method = RequestMethod.POST)
-    public Result saveRole(@RequestBody SysRoleVo roleVo){
+    @RequestMapping(value = SpConstantInter.SYS_ROLE_SAVE, method = RequestMethod.POST)
+    public Result saveRole(@RequestBody SysRoleVo roleVo) {
         return iSysRoleService.saveRole(roleVo);
     }
 
@@ -45,27 +44,30 @@ public class SysRoleController extends BaseController {
      *
      * 删除角色（根据id）
      */
-    @RequestMapping(value = SpConstantInter.SYS_ROLE_DEL,method = RequestMethod.POST)
-    public Result delRole(String id){
-        return del(id,iSysRoleService);
+    @RequestMapping(value = SpConstantInter.SYS_ROLE_DEL, method = RequestMethod.POST)
+    public Result delRole(String id) {
+        return del(id, iSysRoleService);
     }
 
     /**
      *
      * 修改角色
      */
-    @RequestMapping(value = SpConstantInter.SYS_ROLE_MODIFY,method = RequestMethod.POST)
-    public Result modifyRole(@RequestBody SysRole sysRole){
-        return modify(sysRole,iSysRoleService);
+    @RequestMapping(value = SpConstantInter.SYS_ROLE_MODIFY, method = RequestMethod.POST)
+    public Result modifyRole(@RequestBody SysRole sysRole) {
+        return modify(sysRole, iSysRoleService);
     }
 
-    /**
-     *
-     * 获取权限列表（分页查询）
-     */
-    @RequestMapping(value = SpConstantInter.SYS_ROLE_PAGE,method = RequestMethod.POST)
-    public Result queryListPage(@RequestBody PageRequestParameter<SysRoleVo> pageRequestParameter){
-        return iSysRoleService.queryByNameOrg(pageRequestParameter.pageInstance(),pageRequestParameter.parameterInstance());
+
+    @RequestMapping(value = SpConstantInter.SYS_ROLE_PAGE, method = RequestMethod.POST)
+    public Result queryListPage(@RequestBody PageRequestParameter<SysRoleVo> pageRequestParameter) {
+        return iSysRoleService.queryByNameOrg(pageRequestParameter.pageInstance(), pageRequestParameter.parameterInstance());
     }
 
+
+
+    @RequestMapping(value = SpConstantInter.SYS_ROLE_AUTHORIZATION, method = RequestMethod.POST)
+    public Result authorizationRole(@RequestBody SysRoleVo sysRoleVo) {
+        return iSysRoleService.authorizationRole(sysRoleVo);
+    }
 }

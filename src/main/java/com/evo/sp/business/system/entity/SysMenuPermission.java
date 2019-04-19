@@ -2,6 +2,8 @@ package com.evo.sp.business.system.entity;
 
 import java.time.LocalDateTime;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,6 +27,7 @@ public class SysMenuPermission extends BaseEntity {
     /**
      * 菜单权限表id
      */
+    @TableId(type = IdType.UUID)
     private String id;
     /**
      * 菜单id

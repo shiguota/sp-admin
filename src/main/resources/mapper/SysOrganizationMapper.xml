@@ -2,4 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evo.sp.business.system.mapper.SysOrganizationMapper">
 
+    <!--根据添加获取机构列表（分页）-->
+    <select id="queryListPage" parameterType="java.lang.String" resultType="com.evo.sp.business.system.entity.vo.SysOrganizationVo">
+        select o.org_name,
+        o.sort,
+        a.area_name,
+        o.create_time,
+        o.update_time
+        from sys_organization o
+            join sys_area a on o.sys_area_id = a.id
+            join sys_organization_role sor on o.id = sor.sys_organization_id
+            join sys_role r on r.id = sor.sys_organization_id
+            join sys_user_role ur on r.id = ur.sys_role_id
+            join sys_user u on ur.sys_user_id = u.id
+        where u.account = #{account}
+    </select>
 </mapper>

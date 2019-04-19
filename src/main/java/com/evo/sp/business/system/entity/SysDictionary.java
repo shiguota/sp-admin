@@ -1,6 +1,9 @@
 package com.evo.sp.business.system.entity;
 
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +27,7 @@ public class SysDictionary extends BaseEntity {
     /**
      * 字典表id
      */
+    @TableId(type = IdType.UUID)
     private String id;
 
     /**
@@ -42,24 +46,9 @@ public class SysDictionary extends BaseEntity {
     private Integer dicSort;
 
     /**
-     * 状态
-     */
-    private Integer state;
-
-    /**
      * 父id
      */
     private String pid;
-
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
-
-    /**
-     * 修改时间
-     */
-    private LocalDateTime updateTime;
 
     /**
      * 级别
@@ -99,42 +88,12 @@ public class SysDictionary extends BaseEntity {
         this.dicSort = dicSort;
     }
 
-    @Override
-    public Integer getState() {
-        return state;
-    }
-
-    @Override
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
     public String getPid() {
         return pid;
     }
 
     public void setPid(String pid) {
         this.pid = pid;
-    }
-
-    @Override
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    @Override
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    @Override
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    @Override
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
     }
 
     public Integer getLevel() {

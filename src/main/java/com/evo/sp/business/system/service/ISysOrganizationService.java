@@ -2,6 +2,13 @@ package com.evo.sp.business.system.service;
 
 import com.evo.sp.business.system.entity.SysOrganization;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.evo.sp.business.system.entity.SysUser;
+import com.evo.sp.business.system.entity.vo.SysOrganizationVo;
+import com.evo.sp.common.parameter.PageRequestParameter;
+import com.evo.sp.common.result.Result;
+import com.evo.sp.common.tree.Tree;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +20,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysOrganizationService extends IService<SysOrganization> {
 
+    /**
+     * 根据机构id查询子机构（分页）
+     */
+    Result queryListPage(PageRequestParameter<SysOrganizationVo> sysOrganizationVoPageRequestParameter);
+
+
+    /**
+     * 根据条件
+     */
+    List<Tree<SysOrganizationVo>> queryListTree();
 }

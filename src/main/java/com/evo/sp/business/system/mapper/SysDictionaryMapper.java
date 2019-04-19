@@ -20,5 +20,5 @@ public interface SysDictionaryMapper extends BaseMapper<SysDictionary> {
      *
      * 根据名称查询/pid
      */
-    List<SysDictionary> queryByNamePid(Page page,SysDictionaryVo sysDictionaryVo);
+    Page<SysDictionary> queryByNamePid(Page page,SysDictionaryVo vo);
 }

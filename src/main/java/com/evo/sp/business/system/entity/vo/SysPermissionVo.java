@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.business.system.entity.SysMenuPermission;
 import com.evo.sp.common.BaseEntity;
+import com.evo.sp.common.BaseEntityVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,10 +17,8 @@ import lombok.experimental.Accessors;
  * @author sgt
  * @since 2019-04-10
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
-public class SysPermissionVo extends BaseEntity {
+
+public class SysPermissionVo extends BaseEntityVo {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,6 +33,24 @@ public class SysPermissionVo extends BaseEntity {
      * 权限编码
      */
     private String perCode;
+
+    /**
+     *
+     * 菜单id
+     */
+    private String menuId;
+    
+    /**
+     *
+     * 系统当前登录账号
+     */
+    private String LAccount;
+
+    /**
+     *
+     * 登录账号
+     */
+    private String account;
 
     /**
      *
@@ -72,5 +89,29 @@ public class SysPermissionVo extends BaseEntity {
 
     public void setPerCode(String perCode) {
         this.perCode = perCode;
+    }
+
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getLAccount() {
+        return LAccount;
+    }
+
+    public void setLAccount(String LAccount) {
+        this.LAccount = LAccount;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 }

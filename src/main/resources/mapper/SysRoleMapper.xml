@@ -10,15 +10,21 @@
         where u.account = #{account}
     </select>
 
-    <!--根据查询角色（分页）-->
+    <!--根据机构查询角色（分页）-->
     <select id="queryByNameOrg" parameterType="com.evo.sp.business.system.entity.vo.SysRoleVo" resultType="com.evo.sp.business.system.entity.SysRole">
         select r.role_name,r.role_code,r.create_time,r.update_time from sys_role r
         join sys_organization_role sor on r.id = sor.sys_role_id
         join sys_organization o on sor.sys_organization_id = o.id
         <where>
-            o.id = #{id}
+            o.id = #{orgId}
             <if test="roleName != null">
               and role_name = #{roleName}
+            </if>
+            <if test="u.USortType != null">
+                order by u.update_time ${u.USortType}
+            </if>
+            <if test="u.CSortType != null">
+                order by u.create_time ${u.CSortType}
             </if>
         </where>
     </select>

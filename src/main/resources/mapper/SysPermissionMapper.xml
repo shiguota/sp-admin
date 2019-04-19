@@ -13,9 +13,43 @@
     </select>
 
     <!--根据菜单获取权限-->
-    <select id="queryPerByMenuId" parameterType="String" resultType="SysPermission">
+    <select id="queryPerByMenuId" parameterType="java.lang.String" resultType="SysPermission">
         select per.id,per.per_code,per.per_name,per.create_time,per.update_time from sys_permission per
           join sys_menu_permission mp on per.id = mp.sys_permission_id
         where mp.sys_menu_id = #{sysMenuId}
     </select>
+
+    <!--根据用户账号以及菜单id，获取该菜单下，当前用户拥有的权限-->
+    <select id="queryPerByMenuUser" parameterType="java.lang.String" resultType="com.evo.sp.business.system.entity.SysPermission">
+        select p.id,p.per_code,p.per_name,p.per_describe from sys_permission p
+            join sys_menu_permission mp on p.id = mp.sys_permission_id
+            join sys_menu m on mp.sys_menu_id = m.i
+            join sys_role_permission sor on mp.id = sor.sys_menu_has_sys_permission_id
+            join sys_role r on sor.sys_role_id = r.id
+            join sys_user_role ur on r.id = ur.sys_role_id
+            join sys_user u on ur.sys_user_id = u.id
+        where m.id = #{menuId} and u.account = #{account}
+    </select>
+
+    <!--获取当前登录账号以及被勾选账号的某个菜单的权限差集-->
+    <select id="queryPerByMenuUserDifSet" parameterType="com.evo.sp.business.system.entity.vo.SysPermissionVo" resultType="SysPermission">
+        select a.id,a.per_code,a.per_name,a.per_describe from (select p.id,p.per_code,p.per_name,p.per_describe from sys_permission p
+            join sys_menu_permission mp on p.id = mp.sys_permission_id
+            join sys_menu m on mp.sys_menu_id = m.id
+            join sys_role_permission sor on mp.id = sor.sys_menu_has_sys_permission_id
+            join sys_role r on sor.sys_role_id = r.id
+            join sys_user_role ur on r.id = ur.sys_role_id
+            join sys_user u on ur.sys_user_id = u.id
+            where m.id = #{menuId} and u.account = #{LAccount}) as a
+            left join (select p.id,p.per_code,p.per_name,p.per_describe from sys_permission p
+            join sys_menu_permission mp on p.id = mp.sys_permission_id
+            join sys_menu m on mp.sys_menu_id = m.id
+            join sys_role_permission sor on mp.id = sor.sys_menu_has_sys_permission_id
+            join sys_role r on sor.sys_role_id = r.id
+            join sys_user_role ur on r.id = ur.sys_role_id
+            join sys_user u on ur.sys_user_id = u.id
+            where m.id = #{menuId} and u.account = #{account}) as b on a.id = b.id
+            where a.id is null
+    </select>
+
 </mapper>

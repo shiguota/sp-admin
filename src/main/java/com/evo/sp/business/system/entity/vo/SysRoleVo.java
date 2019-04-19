@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.business.system.entity.SysOrganizationRole;
 import com.evo.sp.business.system.entity.SysRolePermission;
 import com.evo.sp.common.BaseEntity;
+import com.evo.sp.common.BaseEntityVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,8 +20,13 @@ import lombok.experimental.Accessors;
  * @author sgt
  * @since 2019-04-10
  */
-public class SysRoleVo extends BaseEntity {
-
+public class SysRoleVo extends BaseEntityVo {
+    
+    /**
+     *
+     * 角色id
+     */
+    private String roleId;
 
     /**
      *
@@ -37,15 +45,15 @@ public class SysRoleVo extends BaseEntity {
     
     /**
      *
-     * 菜单权限id
+     * 劫色权限
      */
-    private SysRolePermission sysRolePermission;
+    private List<SysRolePermission> sysRolePermission;
 
-    public SysRolePermission getSysRolePermission() {
+    public List<SysRolePermission> getSysRolePermission() {
         return sysRolePermission;
     }
 
-    public void setSysRolePermission(SysRolePermission sysRolePermission) {
+    public void setSysRolePermission(List<SysRolePermission> sysRolePermission) {
         this.sysRolePermission = sysRolePermission;
     }
 
@@ -71,5 +79,13 @@ public class SysRoleVo extends BaseEntity {
 
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 }

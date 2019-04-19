@@ -4,6 +4,7 @@ package com.evo.sp.business.system.controller;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.evo.sp.business.system.entity.SysDictionary;
+import com.evo.sp.business.system.entity.vo.SysDictionaryVo;
 import com.evo.sp.business.system.service.ISysDictionaryService;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.parameter.PageRequestParameter;
@@ -62,10 +63,10 @@ public class SysDictionaryController extends BaseController {
 
     /**
      *
-     *  根据字典名称/Pid查询（模糊查询）
+     *  根据字典名称/Pid查询（模糊分页查询）
      */
     @RequestMapping(value = SpConstantInter.SYS_DICTIONNARY_QUERY_BY_NAME,method = RequestMethod.POST)
-    public Result queryByName(@RequestBody PageRequestParameter pageRequestParameter){
+    public Result queryByName(@RequestBody PageRequestParameter<SysDictionaryVo> pageRequestParameter){
         return new Result(iSysDictionaryService.queryByNamePid(pageRequestParameter));
     }
 }

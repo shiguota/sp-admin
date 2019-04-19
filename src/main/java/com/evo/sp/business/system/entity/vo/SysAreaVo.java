@@ -1,6 +1,7 @@
 package com.evo.sp.business.system.entity.vo;
 
 import com.evo.sp.common.BaseEntity;
+import com.evo.sp.common.BaseEntityVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
  * @author sgt
  * @since 2019-04-10
  */
-public class SysAreaVo extends BaseEntity {
+public class SysAreaVo extends BaseEntityVo {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,7 +50,7 @@ public class SysAreaVo extends BaseEntity {
     /**
      * 排序
      */
-    private Integer sort;
+    private String sort;
 
     /**
      * 父id
@@ -105,11 +106,11 @@ public class SysAreaVo extends BaseEntity {
         this.level = level;
     }
 
-    public Integer getSort() {
+    public String getSort() {
         return sort;
     }
 
-    public void setSort(Integer sort) {
+    public void setSort(String sort) {
         this.sort = sort;
     }
 

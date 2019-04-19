@@ -21,5 +21,5 @@ public interface ISysDictionaryService extends IService<SysDictionary> {
      *
      * 根据名称查询/pid
      */
-    List<SysDictionary> queryByNamePid(PageRequestParameter<SysDictionaryVo> pageRequestParameter);
+    Page<SysDictionary> queryByNamePid(PageRequestParameter<SysDictionaryVo> pageRequestParameter);
 }

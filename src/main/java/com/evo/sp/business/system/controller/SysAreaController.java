@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.evo.sp.business.system.entity.SysArea;
+import com.evo.sp.business.system.entity.vo.SysAreaVo;
 import com.evo.sp.business.system.service.ISysAreaService;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.SpAssert;
@@ -74,16 +75,7 @@ public class SysAreaController extends BaseController {
      */
     @RequestMapping(value = SpConstantInter.SYS_AREA_TREE, method = RequestMethod.POST)
     public Result queryAreaTree() {
-        List<Tree<SysArea>> trees = new ArrayList<>();
-        List<SysArea> list = iSysAreaService.list();
-        for (SysArea sysArea : list) {
-            Tree<SysArea> tree = new Tree<SysArea>();
-            tree.setId(sysArea.getId());
-            tree.setParentId(sysArea.getPid());
-            tree.setText(sysArea.getAreaName());
-            trees.add(tree);
-        }
-        return queryTreeData(trees, TOP_NODE_NAME);
+        return queryTreeData(iSysAreaService.queryAreaTree(), TOP_NODE_NAME);
     }
 
     /**
@@ -101,22 +93,8 @@ public class SysAreaController extends BaseController {
      * 查询区域（分页）
      */
     @RequestMapping(value = SpConstantInter.SYS_AREA_PAGE,method = RequestMethod.POST)
-    public Result queryListPage(@RequestBody PageRequestParameter<SysArea> sysAreaPageRequestParameter){
-        SpAssert.isNull(sysAreaPageRequestParameter);
-        //获取page
-        Page page = sysAreaPageRequestParameter.pageInstance();
-        //获取查询条件
-        SysArea sysArea = sysAreaPageRequestParameter.parameterInstance();
-        Wrapper<SysArea> sysAreaWrapper = new QueryWrapper<>();;
-        //判断差查询参数对象
-        SpAssert.isNull(sysArea);
-        //添加查询条件
-        ((QueryWrapper<SysArea>) sysAreaWrapper).eq(SpConstantInter.PID,sysArea.getId());
-        //判断选填查询条件是否存在
-        if (SpAssert.isNotNull(sysArea.getAreaName())) {
-            ((QueryWrapper<SysArea>) sysAreaWrapper).like(SpConstantInter.SYS_AREA_NAME,sysArea.getAreaName());
-        }
-        return queryListPage(page,sysAreaWrapper,iSysAreaService);
+    public Result queryListPage(@RequestBody PageRequestParameter<SysAreaVo> sysAreaPageRequestParameter){
+        return iSysAreaService.queryListPage(sysAreaPageRequestParameter);
     }
 
 

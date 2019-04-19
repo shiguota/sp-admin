@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author sgt
@@ -45,78 +45,47 @@ public class SysMenuController extends BaseController {
 
     @Autowired
     private ISysMenuService iSysMenuService;
+
     /**
-     *
      * 新增
      */
-    @RequestMapping(value = SpConstantInter.SYS_MENU_SAVE,method = RequestMethod.POST)
-    public Result saveMenu(@RequestBody SysMenuVo sysMenuVo){
+    @RequestMapping(value = SpConstantInter.SYS_MENU_SAVE, method = RequestMethod.POST)
+    public Result saveMenu(@RequestBody SysMenuVo sysMenuVo) {
         return iSysMenuService.menuSave(sysMenuVo);
     }
 
     /**
-     *
      * 删除
      */
-    @RequestMapping(value = SpConstantInter.SYS_MENU_DEL,method = RequestMethod.POST)
-    public Result delMenu(Serializable id){
-        return del(id,iSysMenuService);
+    @RequestMapping(value = SpConstantInter.SYS_MENU_DEL, method = RequestMethod.POST)
+    public Result delMenu(Serializable id) {
+        return del(id, iSysMenuService);
     }
 
     /**
-     *
-     *修改
+     * 修改
      */
-    @RequestMapping(value = SpConstantInter.SYS_MENU_MODIFY,method = RequestMethod.POST)
-    public Result modifyMenu(@RequestBody SysMenu sysMenu){
-        return modify(sysMenu,iSysMenuService);
+    @RequestMapping(value = SpConstantInter.SYS_MENU_MODIFY, method = RequestMethod.POST)
+    public Result modifyMenu(@RequestBody SysMenu sysMenu) {
+        return modify(sysMenu, iSysMenuService);
     }
-    
+
 
     /**
-     *
      * 查询菜单（分页）
      */
-    @RequestMapping(value = SpConstantInter.SYS_MENU_PAGE,method = RequestMethod.POST)
-    public Result queryMenuPage(@RequestBody PageRequestParameter pageRequestParameter){
-         SysMenu sysMenu = (SysMenu) pageRequestParameter.parameterInstance();
-        Wrapper<SysMenu> sysMenuWrapper = new QueryWrapper<>();
-        ((QueryWrapper<SysMenu>) sysMenuWrapper).eq(SpConstantInter.PID,sysMenu.getId());
-        ((QueryWrapper<SysMenu>) sysMenuWrapper).like(SpConstantInter.SYS_MENU_NAME,sysMenu.getMenuName());
-        return queryListPage(pageRequestParameter.pageInstance(),sysMenuWrapper,iSysMenuService);
+    @RequestMapping(value = SpConstantInter.SYS_MENU_PAGE, method = RequestMethod.POST)
+    public Result queryMenuPage(@RequestBody PageRequestParameter<SysMenuVo> pageRequestParameter) {
+        return iSysMenuService.queryListPage(pageRequestParameter);
     }
 
     /**
-     *
-     * 查询菜单（树结构）
-     */
-    @RequestMapping(value = SpConstantInter.SYS_MENU_TREE,method = RequestMethod.POST)
-    public Result queryMenuTree(){
-        List<Tree<SysMenu>> trees = new ArrayList<>();
-        List<SysMenu> list = iSysMenuService.list();
-        for (SysMenu sysMenu : list) {
-            Tree<SysMenu> sysMenuTree = new Tree<>();
-            sysMenuTree.setId(sysMenu.getId());
-            sysMenuTree.setParentId(sysMenu.getPid());
-            sysMenuTree.setText(sysMenu.getMenuName());
-        }
-        return queryTreeData(trees,TOP_NODE_NAME);
-    }
-    
-    /**
-     *
      * 查询菜单（用户权限范围内）
      */
-    @RequestMapping(value = SpConstantInter.SYS_MENU_PATH,method = RequestMethod.POST)
-    public Result queryMenuPer(){
-        SysUser sysUser = (SysUser) SecurityUtils.getSubject().getSession().getAttribute(SpConstantInter.USER);
-        if (SpAssert.isNotNull(sysUser)) {
-            if (SpAssert.isNotNull(sysUser.getAccount())) {
-                List<SysMenu> sysMenus = iSysMenuService.queryMenuPath(sysUser.getAccount());
-                return  new Result(sysMenus);
-            }
-        }
-        return new Result(false, ResultEnum.OPERATION_UNKNOWN.getValue(),ResultEnum.OPERATION_UNKNOWN.getName());
+    @RequestMapping(value = SpConstantInter.SYS_MENU_PATH, method = RequestMethod.POST)
+    public Result queryMenus() {
+        //获取当前用户所拥有权限范围内的菜单
+        List<Tree<SysMenu>> sysMenus = iSysMenuService.queryMenuPath();
+        return queryTreeData(sysMenus, TOP_NODE_NAME);
     }
-
 }

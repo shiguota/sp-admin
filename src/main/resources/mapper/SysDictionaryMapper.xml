@@ -6,19 +6,22 @@
         select dic.dic_name,dic_code,dic_sort,create_time,update_time from sys_dictionary dic
         <where>
             state=1
-            <if test="dicName ！= null">
-              and dic_name like '%${dicName}%'
+            <if test="vo.dicName != null">
+              and dic_name like '%${vo.dicName}%'
             </if>
-            <if test="pid ！= null">
-                and pid = ${pid}
+            <if test="vo.pid != null">
+                and pid = #{vo.pid}
             </if>
-            <if test="CTimeOrder != null">
-              order by create_time #{CTimeOrder}
+            <if test="vo.pid == null">
+                and pid is null
             </if>
-            <if test="UTimeOrder != null">
-                order by update_time #{CTimeOrder}
+            <if test="vo.CSortType != null">
+                order by create_time ${vo.CSortType}
             </if>
-            <if test="dicSort != null">
+            <if test="vo.USortType != null">
+                order by update_time ${vo.USortType}
+            </if>
+            <if test="vo.dicSort != null">
                 order by dic_sort asc
             </if>
         </where>

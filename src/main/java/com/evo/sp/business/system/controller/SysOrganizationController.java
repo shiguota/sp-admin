@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.evo.sp.business.system.entity.SysOrganization;
+import com.evo.sp.business.system.entity.vo.SysOrganizationVo;
 import com.evo.sp.business.system.service.ISysOrganizationService;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.SpAssert;
@@ -75,21 +76,8 @@ public class SysOrganizationController extends BaseController {
      * 查询组织机构(分页)
      */
     @RequestMapping(value = SpConstantInter.SYS_ORGANIZATION_PAGE,method = RequestMethod.POST)
-    public Result queryListPage(@RequestBody PageRequestParameter<SysOrganization> pageRequestParameter){
-        //获取page
-        Page page = pageRequestParameter.pageInstance();
-        //获取查询条件
-        SysOrganization sysOrganization = pageRequestParameter.parameterInstance();
-        //创建Mybatis-plus QueryWrapper对象
-        QueryWrapper<SysOrganization> xWrapper = new QueryWrapper<>();
-        //检查并设置查询参数
-        SpAssert.isNull(sysOrganization);
-        SpAssert.isNull(sysOrganization.getPid());
-        xWrapper.eq(SpConstantInter.PID,sysOrganization.getId());
-        if (SpAssert.isNotNull(sysOrganization.getOrgName())) {
-            xWrapper.like(SpConstantInter.SYS_ORG_NAME,sysOrganization.getOrgName());
-        }
-        return queryListPage(page,xWrapper,iSysOrganizationService);
+    public Result queryListPage(@RequestBody PageRequestParameter<SysOrganizationVo> pageRequestParameter){
+        return iSysOrganizationService.queryListPage(pageRequestParameter);
     }
 
     /**
@@ -98,14 +86,6 @@ public class SysOrganizationController extends BaseController {
      */
     @RequestMapping(value = SpConstantInter.SYS_ORGANIZATION_TREE,method = RequestMethod.POST)
     public Result queryListTree(){
-        List<Tree<SysOrganization>> trees = new ArrayList<>();
-        List<SysOrganization> list = iSysOrganizationService.list();
-        for (SysOrganization sysMenu : list) {
-            Tree<SysOrganization> sysMenuTree = new Tree<>();
-            sysMenuTree.setId(sysMenu.getId());
-            sysMenuTree.setParentId(sysMenu.getPid());
-            sysMenuTree.setText(sysMenu.getOrgName());
-        }
-        return queryTreeData(trees,TOP_NODE_NAME);
+        return queryTreeData(iSysOrganizationService.queryListTree(),TOP_NODE_NAME);
     }
 }

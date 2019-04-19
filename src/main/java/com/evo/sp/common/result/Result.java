@@ -25,14 +25,14 @@ public class Result implements Serializable {
 
     public Result(Object date) {
         this.date = date;
+        if(date instanceof Boolean){
+            if(!(Boolean) date){
+                this.code = ResultEnum.OPERATION_FAIL.getValue();
+                this.msg = ResultEnum.OPERATION_FAIL.getName();
+            }
+        }
         this.code = ResultEnum.OPERATION_SUCCESS.getValue();
         this.msg = ResultEnum.OPERATION_SUCCESS.getName();
-    }
-
-    public Result(boolean b){
-        this.date = b;
-        this.code = ResultEnum.OPERATION_FAIL.getValue();
-        this.msg = ResultEnum.OPERATION_FAIL.getName();
     }
 
     public Result(Integer code, Object msg) {

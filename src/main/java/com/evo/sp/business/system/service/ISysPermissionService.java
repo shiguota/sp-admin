@@ -34,4 +34,18 @@ public interface ISysPermissionService extends IService<SysPermission> {
      * 根据菜单获取权限
      */
     Result queryPerByMenuId(String menuId);
+
+    /**
+     *
+     *根据当前登录用户以及菜单id，获取该菜单下，当前用户拥有的权限
+     * @param menuId 菜单id
+     * @param account 用户账号
+     */
+    Result queryPerByMenuUser(String menuId,String account);
+
+    /**
+     *
+     * 获取当前登录账号以及被勾选账号的某个菜单的权限差集
+     */
+    Result queryPerByMenuUserDifSet(SysPermissionVo sysPermissionVo);
 }

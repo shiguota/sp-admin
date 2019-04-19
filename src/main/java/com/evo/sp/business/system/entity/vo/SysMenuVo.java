@@ -2,6 +2,7 @@ package com.evo.sp.business.system.entity.vo;
 
 import com.evo.sp.business.system.entity.SysMenuPermission;
 import com.evo.sp.common.BaseEntity;
+import com.evo.sp.common.BaseEntityVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -14,10 +15,7 @@ import lombok.experimental.Accessors;
  * @author sgt
  * @since 2019-04-10
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
-public class SysMenuVo extends BaseEntity {
+public class SysMenuVo extends BaseEntityVo {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,7 +47,7 @@ public class SysMenuVo extends BaseEntity {
     /**
      * 排序
      */
-    private Integer menuSort;
+    private Integer sort;
 
     /**
      * 父id
@@ -67,6 +65,7 @@ public class SysMenuVo extends BaseEntity {
      *  菜单权限表
      */
     private SysMenuPermission sysMenuPermission;
+
 
     public SysMenuPermission getSysMenuPermission() {
         return sysMenuPermission;
@@ -116,12 +115,12 @@ public class SysMenuVo extends BaseEntity {
         this.menuPath = menuPath;
     }
 
-    public Integer getMenuSort() {
-        return menuSort;
+    public Integer getSort() {
+        return sort;
     }
 
-    public void setMenuSort(Integer menuSort) {
-        this.menuSort = menuSort;
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 
     public String getPid() {

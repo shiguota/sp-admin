@@ -1,6 +1,7 @@
 package com.evo.sp.business.system.entity.vo;
 
 import com.evo.sp.common.BaseEntity;
+import com.evo.sp.common.BaseEntityVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
  * @author sgt
  * @since 2019-04-10
  */
-public class SysDictionaryVo extends BaseEntity {
+public class SysDictionaryVo extends BaseEntityVo {
 
     private static final long serialVersionUID = 1L;
 
@@ -53,14 +54,7 @@ public class SysDictionaryVo extends BaseEntity {
      * 级别
      */
     private Integer level;
-    /**
-     * 创建时间排序
-     */
-    private String CTimeOrder;
-    /**
-     * 修改时间排序
-     */
-    private String UTimeOrder;
+
 
 
     public String getId() {
@@ -95,12 +89,9 @@ public class SysDictionaryVo extends BaseEntity {
         this.dicSort = dicSort;
     }
 
-    @Override
     public Integer getState() {
         return state;
     }
-
-    @Override
     public void setState(Integer state) {
         this.state = state;
     }
@@ -129,19 +120,4 @@ public class SysDictionaryVo extends BaseEntity {
         this.dicName = dicName;
     }
 
-    public String getCTimeOrder() {
-        return CTimeOrder;
-    }
-
-    public void setCTimeOrder(String CTimeOrder) {
-        this.CTimeOrder = CTimeOrder;
-    }
-
-    public String getUTimeOrder() {
-        return UTimeOrder;
-    }
-
-    public void setUTimeOrder(String UTimeOrder) {
-        this.UTimeOrder = UTimeOrder;
-    }
 }

@@ -27,7 +27,7 @@ public enum ResultEnum implements EnumValue {
     LOGIN_OUT_SUCCESS(2007,"注销用户成功"),
     LOGIN_OUT_FAIL(2008,"注销用户失败"),
     REGISTER_FAIL(2009,"当前用户名已存在"),
-    SESSION_IS_NULL(2010,"回话不存在或已过期，请重新登录"),
+    SESSION_IS_NULL(2010,"会话已过期，请重新登录"),
     LOGIN_HELP(2011,"请先登录"),
 
 
@@ -40,8 +40,8 @@ public enum ResultEnum implements EnumValue {
 //    权限
     PERMISSION_UNAUTHORIZED(4001,"未授权"),
 
-
-
+//    用户
+    USER_IS_EXIST(5001,"当前用户已存在");
 
 
 

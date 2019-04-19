@@ -47,11 +47,10 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
 
     /**
      * 新增权限
-     *
      * @param sysPermissionVo
      */
-    @Override
     @Transactional
+    @Override
     public Result savePermission(SysPermissionVo sysPermissionVo) {
         //创建需要保存的权限对象
         SysPermission sysPermission = new SysPermission();
@@ -92,5 +91,31 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     public Result queryPerByMenuId(String menuId) {
         SpAssert.isNull(menuId);
         return new Result(sysPermissionMapper.queryPerByMenuId(menuId));
+    }
+
+    /**
+     * 根据用户账号以及菜单id，获取该菜单下，当前用户拥有的权限
+     *
+     * @param menuId  菜单id
+     * @param account 用户账号
+     */
+    @Override
+    public Result queryPerByMenuUser(String menuId, String account) {
+        SpAssert.isNull(menuId);
+        SpAssert.isNull(account);
+        return new Result(sysPermissionMapper.queryPerByMenuUser(menuId,account));
+    }
+
+    /**
+     * 获取当前登录账号以及被勾选账号的某个菜单的权限差集
+     * @param sysPermissionVo
+     */
+    @Override
+    public Result queryPerByMenuUserDifSet(SysPermissionVo sysPermissionVo) {
+        SpAssert.isNull(sysPermissionVo);
+        SpAssert.isNull(sysPermissionVo.getMenuId());
+        SpAssert.isNull(sysPermissionVo.getLAccount());
+        SpAssert.isNull(sysPermissionVo.getAccount());
+        return new Result(sysPermissionMapper.queryPerByMenuUserDifSet(sysPermissionVo));
     }
 }

@@ -3,29 +3,70 @@
 <mapper namespace="com.evo.sp.business.system.mapper.SysUserMapper">
 
     <!--通过机构id获取用户信息-->
-    <select id="queryUserByOrg" parameterType="com.evo.sp.business.system.entity.vo.SysUserVo"
+    <select id="queryUserByOrg" parameterType="java.util.Map"
             resultType="com.evo.sp.business.system.entity.vo.SysUserVo">
-        select u.id,u.account,ui.nickname,o.org_name,ui.email,ui.phone,ui.state,u.user_type,u.create_time,u.update_time from sys_user u
+        select u.id,
+        u.account,
+        ui.nickname,
+        o.org_name as orgName,
+        ui.email,
+        ui.phone,
+        ui.state,
+        u.user_type as userType,
+        u.create_time as createTime,
+        u.update_time as updateTime
+        from sys_user u
         join sys_user_info ui on u.sys_user_info_id = ui.id
         join sys_organization o on u.sys_organization_id = o.id
         <where>
             u.sys_organization_id = #{u.sysOrganizationId}
             <if test="u.account != null">
-              and u.account = #{u.account}
+                and u.account = #{u.account}
             </if>
-            <if test="u.info.nickname != null">
-              and ui.nickname = #{u.info.nickname}
+            <if test="u.info != null">
+                <if test="u.info.nickname != null">
+                    and ui.nickname = #{u.info.nickname}
+                </if>
+                <if test="u.info.phone !=null">
+                    and ui.phone = #{u.info.phone}
+                </if>
             </if>
-            <if test="u.info.phone !=null">
-              and ui.phone = #{u.info.phone}
+            <if test="u.USortType != null">
+                order by u.update_time ${u.USortType}
+            </if>
+            <if test="u.CSortType != null">
+                order by u.create_time ${u.CSortType}
             </if>
         </where>
     </select>
     <!--通过用户id获取用户信息-->
     <select id="queryUserById" parameterType="java.lang.String"
             resultType="com.evo.sp.business.system.entity.vo.SysUserVo">
-        select u.account,ui.nickname,ui.email,ui.phone,ui.state,u.user_type,u.create_time,u.update_time from sys_user u
+        select u.id,u.account,ui.nickname,ui.email,ui.phone,ui.state,u.user_type,u.create_time,u.update_time from sys_user u
         join sys_user_info ui on u.sys_user_info_id = ui.id
         where u.id = #{id}
+    </select>
+
+    <!--根据用户id获取账号已存在的角色-->
+    <select id="queryRoleById" parameterType="java.lang.String" resultType="java.lang.Object">
+        select r.id,
+               r.role_name,
+               r.role_code
+            from sys_user u
+            join sys_user_role ur on u.id = ur.sys_user_id
+            join sys_role r on r.id = ur.sys_role_id
+        where u.id = #{id};
+    </select>
+
+    <!--通过当前登录账号的信息，获取当前账号下的角色（不包括，已经分配给选中的当前账号的角色）-->
+    <select id="queryUnRoleById" parameterType="java.lang.String" resultType="Object">
+        select r.id,r.role_name,r.role_code from sys_user u
+            join sys_user_role ur on u.id = ur.sys_user_id
+            join sys_role r on r.id = ur.sys_role_id
+        where u.id = #{loginId} and r.id not in (
+            select r.id from sys_user u
+            join sys_user_role ur on u.id = ur.sys_user_id
+            join sys_role r on r.id = ur.sys_role_id
+            where u.id = #{seleId})
     </select>
 </mapper>

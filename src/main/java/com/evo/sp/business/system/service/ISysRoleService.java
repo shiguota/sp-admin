@@ -34,4 +34,12 @@ public interface ISysRoleService extends IService<SysRole> {
      * 新增角色
      */
     Result saveRole(SysRoleVo sysRoleVo);
+    
+    /**
+     *
+     * 为角色授权
+     */
+    Result authorizationRole(SysRoleVo sysRoleVo);
+
+
 }
