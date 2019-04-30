@@ -5,9 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 public class Tree<T> {
+    
+    /**
+     *
+     * 节点ID
+     */
+    private String treeId;
 
     /**
-     * 节点ID
+     *  数据id
      */
     private String id;
     /**
@@ -43,6 +49,41 @@ public class Tree<T> {
      * 是否有子节点
      */
     private boolean isChildren = false;
+    /**
+     *
+     * 节点路径
+     */
+    private String path;
+    
+    /**
+     *
+     *  菜单icon
+     */
+    private String icon;
+
+    public String getTreeId() {
+        return treeId;
+    }
+
+    public void setTreeId(String treeId) {
+        this.treeId = treeId;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     public String getId() {
         return id;

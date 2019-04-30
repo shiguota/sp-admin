@@ -1,9 +1,12 @@
 package com.evo.sp.business.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.evo.sp.business.system.entity.SysOrganizationRole;
 import com.evo.sp.business.system.entity.SysRole;
 import com.evo.sp.business.system.entity.SysRolePermission;
 import com.evo.sp.business.system.entity.vo.SysRoleVo;
+import com.evo.sp.business.system.mapper.SysOrganizationRoleMapper;
 import com.evo.sp.business.system.mapper.SysRoleMapper;
 import com.evo.sp.business.system.mapper.SysRolePermissionMapper;
 import com.evo.sp.business.system.service.ISysRolePermissionService;
@@ -37,6 +40,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     private SysRoleMapper sysRoleMapper;
     @Autowired
     private ISysRolePermissionService iSysRolePermissionService;
+    @Autowired
+    private SysOrganizationRoleMapper sysOrganizationRoleMapper;
 
     /**
      * 根据账号获取角色
@@ -78,6 +83,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         SysRole sysRole = new SysRole();
         //校验参数
         SpAssert.isNull(sysRoleVo);
+        SpAssert.isNull(sysRoleVo.getOrgId());
+        SpAssert.isNull(sysRoleVo.getRoleCode());
+        SpAssert.isNull(sysRoleVo.getRoleName());
         //转换类型
         BeanUtils.copyProperties(sysRoleVo,sysRole);
         //判断是否添加成功
@@ -112,5 +120,36 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
 
         return null;
+    }
+
+    /**
+     * 修改角色
+     *
+     * @param sysRoleVo
+     */
+    @Override
+    @Transactional
+    public Result modifyRole(SysRoleVo sysRoleVo) {
+        //检验参数
+        SpAssert.isNull(sysRoleVo);
+        SpAssert.isNull(sysRoleVo.getRoleId());
+        SysRole sysRole = new SysRole();
+        BeanUtils.copyProperties(sysRoleVo,sysRole);
+        if (!updateById(sysRole)) {
+            throw new SaveException();
+        }
+        //机构id是否为空
+        if(SpAssert.isNotNull(sysRoleVo.getOrgId())){
+            //如果组织机构id不为空，做更新操作
+            SysOrganizationRole organizationRole = new SysOrganizationRole();
+            organizationRole.setSysRoleId(sysRoleVo.getOrgId());
+            QueryWrapper<SysOrganizationRole> wrapper = new QueryWrapper<>();
+            wrapper.eq(SpConstantInter.SYS_ORG_ROLEID,sysRoleVo.getRoleId());
+            if (sysOrganizationRoleMapper.update(organizationRole, wrapper) != SpConstantInter.CURDVAL) {
+                throw new SaveException();
+            }
+
+        }
+        return new Result(true);
     }
 }

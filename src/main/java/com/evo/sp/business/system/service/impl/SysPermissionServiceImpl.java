@@ -97,13 +97,13 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
      * 根据用户账号以及菜单id，获取该菜单下，当前用户拥有的权限
      *
      * @param menuId  菜单id
-     * @param account 用户账号
+     * @param userId 用户id
      */
     @Override
-    public Result queryPerByMenuUser(String menuId, String account) {
+    public Result queryPerByMenuUser(String menuId, String userId) {
         SpAssert.isNull(menuId);
-        SpAssert.isNull(account);
-        return new Result(sysPermissionMapper.queryPerByMenuUser(menuId,account));
+        SpAssert.isNull(userId);
+        return new Result(sysPermissionMapper.queryPerByMenuUser(menuId,userId));
     }
 
     /**
@@ -114,8 +114,8 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     public Result queryPerByMenuUserDifSet(SysPermissionVo sysPermissionVo) {
         SpAssert.isNull(sysPermissionVo);
         SpAssert.isNull(sysPermissionVo.getMenuId());
-        SpAssert.isNull(sysPermissionVo.getLAccount());
-        SpAssert.isNull(sysPermissionVo.getAccount());
+        SpAssert.isNull(sysPermissionVo.getLUserId());
+        SpAssert.isNull(sysPermissionVo.getUserId());
         return new Result(sysPermissionMapper.queryPerByMenuUserDifSet(sysPermissionVo));
     }
 }

@@ -73,7 +73,7 @@ public class SysOrganizationServiceImpl extends ServiceImpl<SysOrganizationMappe
         //获取session中user对象
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
-        SysUser sysUser = (SysUser) session.getAttribute(SpConstantInter.USER);
+        SysUser sysUser = (SysUser) session.getAttribute(session.getId());
         //校验参数
         SpAssert.isNull(sysUser);
         SpAssert.isNull(sysUser.getAccount());

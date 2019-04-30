@@ -37,19 +37,19 @@ public class SysPermission extends BaseEntity {
      */
     private String perCode;
     
-//    /**
-//     *
-//     * 权限菜单
-//     */
-//    private SysMenuPermission sysMenuPermission;
-//
-//    public SysMenuPermission getSysMenuPermission() {
-//        return sysMenuPermission;
-//    }
-//
-//    public void setSysMenuPermission(SysMenuPermission sysMenuPermission) {
-//        this.sysMenuPermission = sysMenuPermission;
-//    }
+    /**
+     *
+     * 描述
+     */
+    private String perDescribe;
+
+    public String getPerDescribe() {
+        return perDescribe;
+    }
+
+    public void setPerDescribe(String perDescribe) {
+        this.perDescribe = perDescribe;
+    }
 
     public String getId() {
         return id;

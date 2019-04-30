@@ -42,12 +42,19 @@ public class SysRoleVo extends BaseEntityVo {
      * 角色编码
      */
     private String roleCode;
-    
+
     /**
      *
-     * 劫色权限
+     * 角色描述
+     */
+    private String roleDescription;
+
+    /**
+     *
+     * 角色权限
      */
     private List<SysRolePermission> sysRolePermission;
+
 
     public List<SysRolePermission> getSysRolePermission() {
         return sysRolePermission;
@@ -88,4 +95,13 @@ public class SysRoleVo extends BaseEntityVo {
     public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
+
+    public String getRoleDescription() {
+        return roleDescription;
+    }
+
+    public void setRoleDescription(String roleDescription) {
+        this.roleDescription = roleDescription;
+    }
+
 }

@@ -12,6 +12,7 @@ import com.evo.sp.common.tree.BuildTree;
 import com.evo.sp.common.tree.Tree;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -181,6 +182,7 @@ public class BaseController<T> {
     public Result queryTreeData(List<Tree<T>> trees,String topNode) {
         return new Result(BuildTree.build(trees,topNode));
     }
+
 
     /**
      * 查询列表

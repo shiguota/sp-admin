@@ -12,7 +12,7 @@
             <where>
                 m.state = 1
                 <if test="account != null">
-                    u.account = #{account}
+                  and u.account = #{account}
                 </if>
             </where>
     </select>

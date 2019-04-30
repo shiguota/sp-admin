@@ -3,6 +3,7 @@ package com.evo.sp.business.system.mapper;
 import com.evo.sp.business.system.entity.SysMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.evo.sp.common.result.Result;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,5 +21,5 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      *
      * 查询用户可用菜单
      */
-    List<SysMenu> queryMenuPath(String account);
+    List<SysMenu> queryMenuPath(@Param("account") String account);
 }

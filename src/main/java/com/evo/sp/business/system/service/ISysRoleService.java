@@ -41,5 +41,10 @@ public interface ISysRoleService extends IService<SysRole> {
      */
     Result authorizationRole(SysRoleVo sysRoleVo);
 
+    /**
+     *
+     * 修改角色
+     */
+    Result modifyRole(SysRoleVo sysRoleVo);
 
 }

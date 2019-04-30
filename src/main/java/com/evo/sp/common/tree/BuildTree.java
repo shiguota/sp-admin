@@ -19,19 +19,19 @@ public class BuildTree {
         for (Tree<T> children : nodes) {
 
             String pid = children.getParentId();
-            if (pid == null || "".equals(pid)) {
+            if (pid == null || "-1".equals(pid)) {
                 topNodes.add(children);
 
                 continue;
             }
 
-            for (Tree<T> parent : nodes) {
-                String id = parent.getId();
+            for (int i = 0; i < nodes.size(); i++) {
+                String id = nodes.get(i).getId();
                 if (id != null && id.equals(pid)) {
-                    parent.getChildren().add(children);
+                    nodes.get(i).getChildren().add(children);
                     children.setParent(true);
-                    parent.setChildren(true);
-
+                    children.setTreeId(nodes.get(i).getTreeId()+"-"+i);
+                    nodes.get(i).setChildren(true);
                     continue;
                 }
             }
@@ -43,12 +43,14 @@ public class BuildTree {
             root = topNodes.get(0);
         } else {
             root.setId("-1");
+            root.setTreeId("0-0");
             root.setParentId("");
             root.setParent(false);
             root.setChildren(true);
             root.setChecked(true);
             root.setChildren(topNodes);
             root.setText(topNode);
+            root.setPath("#");
         }
         return root;
     }

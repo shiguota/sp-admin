@@ -31,27 +31,77 @@ public class SysUserRoleController extends BaseController {
     @Autowired
     private ISysUserRoleService iSysUserRoleService;
 
+
     /**
-     *
-     *  新增（为用户授权角色）
+     * @api {post} /sys/user/role/save 新增（用户分配"角色"）
+     * @apiName save
+     * @apiGroup UserRole
+     * @apiHeader {applications/json} ContentType 请求参数为json格式
+     * @apiParam {String} sysRoleId   角色id.
+     * @apiParam {String} sysUserId   用户id.
+     * @apiSuccess {Object} data 接口返回的数据对象.
+     * @apiSuccess {Integer} code 操作编码.
+     * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiSuccessExample 成功响应:
+     * HTTP/1.1 200 OK
+     * {
+     * "date": true,
+     * "code": xxxxx ,
+     * "msg": "提示"
+     * }
+     * @apiError data false.
+     * @apiError code 操作编码.
+     * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiErrorExample 错误响应示例:
+     * {
+     * "date": false,
+     * "code": xxxx,
+     * "msg": "xxxxxxxx"
+     * }
      */
-    @RequestMapping(value = SpConstantInter.SYS_USER_ROLE_SAVE,method = RequestMethod.POST)
-    public Result saveUserRole(@RequestBody SysUserRole sysUserRole){
+    @RequestMapping(value = SpConstantInter.SYS_USER_ROLE_SAVE, method = RequestMethod.POST)
+    public Result saveUserRole(@RequestBody SysUserRole sysUserRole) {
         SpAssert.isNull(sysUserRole);
         SpAssert.isNull(sysUserRole.getSysRoleId());
         SpAssert.isNull(sysUserRole.getSysUserId());
-        return save(sysUserRole,iSysUserRoleService);
+        return save(sysUserRole, iSysUserRoleService);
     }
-    
+
     /**
      *
-     * 删除（取消用户权限角色）
      */
-    @RequestMapping(value = SpConstantInter.SYS_USER_ROLE_DEL,method = RequestMethod.POST)
-    public Result delUserRole(@RequestBody SysUserRole sysUserRole){
+    /**
+     * @api {post} /sys/user/role/del 删除（用户删除"角色"）
+     * @apiName del
+     * @apiGroup UserRole
+     * @apiHeader {applications/json} ContentType 请求参数为json格式
+     * @apiParam {String} sysRoleId   角色id.
+     * @apiParam {String} sysUserId   用户id.
+     * @apiSuccess {Object} data 接口返回的数据对象.
+     * @apiSuccess {Integer} code 操作编码.
+     * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiSuccessExample 成功响应:
+     * HTTP/1.1 200 OK
+     * {
+     * "date": true,
+     * "code": xxxxx ,
+     * "msg": "提示"
+     * }
+     * @apiError data false.
+     * @apiError code 操作编码.
+     * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiErrorExample 错误响应示例:
+     * {
+     * "date": false,
+     * "code": xxxx,
+     * "msg": "xxxxxxxx"
+     * }
+     */
+    @RequestMapping(value = SpConstantInter.SYS_USER_ROLE_DEL, method = RequestMethod.POST)
+    public Result delUserRole(@RequestBody SysUserRole sysUserRole) {
         SpAssert.isNull(sysUserRole);
         SpAssert.isNull(sysUserRole.getSysRoleId());
         SpAssert.isNull(sysUserRole.getSysUserId());
-        return del(sysUserRole,iSysUserRoleService);
+        return del(sysUserRole, iSysUserRoleService);
     }
 }

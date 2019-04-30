@@ -1,5 +1,6 @@
 package com.evo.sp.business.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.evo.sp.business.system.entity.SysDictionary;
@@ -7,8 +8,10 @@ import com.evo.sp.business.system.entity.vo.SysDictionaryVo;
 import com.evo.sp.business.system.mapper.SysDictionaryMapper;
 import com.evo.sp.business.system.service.ISysDictionaryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.parameter.PageRequestParameter;
+import com.evo.sp.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,4 +73,31 @@ public class SysDictionaryServiceImpl extends ServiceImpl<SysDictionaryMapper, S
         }
         return sysDictionaryMapper.queryByNamePid(page,sysDictionaryVo);
     }
+
+    /**
+     * 根据字典code编码获取数据
+     *
+     * @param code
+     */
+    @Override
+    public Result queryByCode(String code) {
+        //校验
+        SpAssert.isNull(code);
+        SysDictionary sysDictionary = new SysDictionary();
+        sysDictionary.setDicCode(code);
+        //设置条件
+        QueryWrapper<SysDictionary> sysDictionaryQueryWrapper = new QueryWrapper<>();
+        sysDictionaryQueryWrapper.setEntity(sysDictionary);
+        return new Result(sysDictionaryQueryWrapper);
+    }
+
+    /**
+     * 根据级别查询字典值
+     */
+    @Override
+    public List<SysDictionary> queryDictionaryByLevel() {
+        return list(new QueryWrapper<SysDictionary>().eq(SpConstantInter.LEVEL,1));
+    }
+
+
 }

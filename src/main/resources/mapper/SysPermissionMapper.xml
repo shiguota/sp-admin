@@ -9,7 +9,7 @@
                 join sys_menu_permission mp on rp.sys_menu_has_sys_permission_id = mp.id
                 join sys_menu m on mp.sys_menu_id = m.id
                 join sys_permission p on mp.sys_permission_id = p.id
-              where  u.role_code = #{roleCode}
+              where  r.role_code = #{roleCode}
     </select>
 
     <!--根据菜单获取权限-->
@@ -28,7 +28,7 @@
             join sys_role r on sor.sys_role_id = r.id
             join sys_user_role ur on r.id = ur.sys_role_id
             join sys_user u on ur.sys_user_id = u.id
-        where m.id = #{menuId} and u.account = #{account}
+        where m.id = #{menuId} and u.id = #{userId}
     </select>
 
     <!--获取当前登录账号以及被勾选账号的某个菜单的权限差集-->
@@ -40,7 +40,7 @@
             join sys_role r on sor.sys_role_id = r.id
             join sys_user_role ur on r.id = ur.sys_role_id
             join sys_user u on ur.sys_user_id = u.id
-            where m.id = #{menuId} and u.account = #{LAccount}) as a
+            where m.id = #{menuId} and u.id = #{LUserId}) as a
             left join (select p.id,p.per_code,p.per_name,p.per_describe from sys_permission p
             join sys_menu_permission mp on p.id = mp.sys_permission_id
             join sys_menu m on mp.sys_menu_id = m.id
@@ -48,7 +48,7 @@
             join sys_role r on sor.sys_role_id = r.id
             join sys_user_role ur on r.id = ur.sys_role_id
             join sys_user u on ur.sys_user_id = u.id
-            where m.id = #{menuId} and u.account = #{account}) as b on a.id = b.id
+            where m.id = #{menuId} and u.id = #{userId}) as b on a.id = b.id
             where a.id is null
     </select>
 

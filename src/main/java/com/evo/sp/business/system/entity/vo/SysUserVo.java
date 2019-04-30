@@ -19,8 +19,6 @@ import lombok.experimental.Accessors;
  */
 public class SysUserVo extends BaseEntityVo {
 
-    private static final long serialVersionUID = 1L;
-
     private String id;
 
     /**
@@ -47,6 +45,12 @@ public class SysUserVo extends BaseEntityVo {
      * 用户信息id
      */
     private String sysUserInfoId;
+    /**
+     *
+     * 用户状态
+     */
+    private Integer state;
+
 
     /**
      *
@@ -110,6 +114,14 @@ public class SysUserVo extends BaseEntityVo {
         this.sysUserInfoId = sysUserInfoId;
     }
 
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
 
     public SysUserVo() {
     }

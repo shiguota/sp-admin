@@ -78,6 +78,7 @@ public class SpShiroConfig {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         Map<String, Filter> mapFilter = new FastHashMap();
         mapFilter.put(FILTER_NAME,getSpCheckLoginFilter());
+        mapFilter.put("aa",aa());
         bean.setFilters(mapFilter);
         LinkedList<SysFilterPath> systemFilterPaths = iSystemFilterPathService.queryFilePath();
         //配置访问权限
@@ -93,6 +94,10 @@ public class SpShiroConfig {
     @Bean(name = "spCheckLoginFilter")
     public SpCheckLoginFilter getSpCheckLoginFilter(){
         return new SpCheckLoginFilter();
+    }
+
+    public SpPathFilter aa(){
+        return new SpPathFilter();
     }
 
     /**

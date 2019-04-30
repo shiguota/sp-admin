@@ -42,15 +42,15 @@ public class SysPermissionVo extends BaseEntityVo {
     
     /**
      *
-     * 系统当前登录账号
+     * 系统当前登录用户id
      */
-    private String LAccount;
+    private String LUserId;
 
     /**
      *
-     * 登录账号
+     * 用户id
      */
-    private String account;
+    private String userId;
 
     /**
      *
@@ -99,19 +99,19 @@ public class SysPermissionVo extends BaseEntityVo {
         this.menuId = menuId;
     }
 
-    public String getLAccount() {
-        return LAccount;
+    public String getLUserId() {
+        return LUserId;
     }
 
-    public void setLAccount(String LAccount) {
-        this.LAccount = LAccount;
+    public void setLUserId(String LUserId) {
+        this.LUserId = LUserId;
     }
 
-    public String getAccount() {
-        return account;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

@@ -2,6 +2,7 @@ package com.evo.sp.business.system.controller;
 
 
 import com.evo.sp.business.system.entity.SysRolePermission;
+import com.evo.sp.business.system.entity.vo.SysRolePermissionVo;
 import com.evo.sp.business.system.service.ISysRolePermissionService;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.result.Result;
@@ -32,31 +33,36 @@ public class SysRolePermissionController extends BaseController {
     @Autowired
     private ISysRolePermissionService iSysRolePermissionService;
 
-    /**
-     *
-     * 新增
-     */
-    @RequestMapping(value = SpConstantInter.SYS_ROLE_PERMISSION_SAVE,method = RequestMethod.POST)
-    public Result saveRolePermission(@RequestBody SysRolePermission sysRolePermission){
-        return save(sysRolePermission,iSysRolePermissionService);
-    }
 
     /**
-     *
-     * 删除
+     * @api {post} /sys/role/permission/save 角色授权
+     * @apiName save
+     * @apiGroup RolePermission
+     * @apiHeader {applications/json} ContentType 请求参数为json格式
+     * @apiParam  {String} sysRoleId 角色id
+     * @apiParam {Array[String]} sysMenuHasSysPermissionId 权限id数组.
+     * @apiSuccess {Object} data 接口返回的数据对象.
+     * @apiSuccess {Integer} code 操作编码.
+     * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiSuccessExample 成功响应:
+     * HTTP/1.1 200 OK
+     * {
+     * "date": true,
+     * "code": xxxxx ,
+     * "msg": "提示"
+     * }
+     * @apiError data false.
+     * @apiError code 操作编码.
+     * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiErrorExample 错误响应示例:
+     * {
+     * "date": false,
+     * "code": xxxx,
+     * "msg": "xxxxxxxx"
+     * }
      */
-    @RequestMapping(value = SpConstantInter.SYS_ROLE_PERMISSION_DEL,method = RequestMethod.POST)
-    public Result delRolePermission(Serializable id){
-        return del(id,iSysRolePermissionService);
+    @RequestMapping(value = SpConstantInter.SYS_ROLE_PERMISSION_SAVE, method = RequestMethod.POST)
+    public Result saveRolePermission(@RequestBody SysRolePermissionVo sysRolePermission) {
+        return iSysRolePermissionService.saveBatch(sysRolePermission);
     }
-
-    /**
-     *
-     *修改
-     */
-    @RequestMapping(value = SpConstantInter.SYS_ROLE_PERMISSION_MODIFY,method = RequestMethod.POST)
-    public Result modifyRolePermission(@RequestBody SysRolePermission sysRolePermission){
-        return modify(sysRolePermission,iSysRolePermissionService);
-    }
-
 }

@@ -63,7 +63,7 @@ public class SpLogAspectJ {
         String ip = IpUtil.getUserIP(request);
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
-        SysUser user = (SysUser) session.getAttribute(SpConstantInter.USER);
+        SysUser user = (SysUser) session.getAttribute(session.getId());
         SystemLog spLog = new SystemLog();
         try {
             if (SpAssert.isNotNull(user)) {
@@ -96,7 +96,7 @@ public class SpLogAspectJ {
         Session session = subject.getSession();
         try {
             if (SpAssert.isNotNull(session)) {
-                SysUser user = (SysUser) session.getAttribute(SpConstantInter.USER);
+                SysUser user = (SysUser) session.getAttribute(session.getId());
                 SystemLog spLog = new SystemLog();
                 spLog.setUserName(user.getAccount());
                 spLog.setUserId(user.getId());

@@ -47,4 +47,16 @@ public class SysRolePermission extends BaseEntity {
     public void setSysRoleId(String sysRoleId) {
         this.sysRoleId = sysRoleId;
     }
+
+    public SysRolePermission(String sysMenuHasSysPermissionId, String sysRoleId) {
+        this.sysMenuHasSysPermissionId = sysMenuHasSysPermissionId;
+        this.sysRoleId = sysRoleId;
+    }
+
+    public SysRolePermission(String sysRoleId) {
+        this.sysRoleId = sysRoleId;
+    }
+
+    public SysRolePermission() {
+    }
 }

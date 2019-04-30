@@ -31,9 +31,9 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      *
      * 根据用户账号以及菜单id，获取该菜单下，当前用户拥有的权限
      * @param menuId 菜单id
-     * @param account 用户账号
+     * @param userId 用户id
      */
-    List<SysPermission> queryPerByMenuUser(String menuId,String account);
+    List<SysPermission> queryPerByMenuUser(String menuId,String userId);
 
     /**
      *

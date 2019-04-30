@@ -46,23 +46,107 @@ public class SysAreaController extends BaseController {
     private ISysAreaService iSysAreaService;
 
     /**
-     * 新增
+     * @api {post} /sys/area/save 新增
+     * @apiName save
+     * @apiGroup Area
+     * @apiHeader {applications/json} ContentType 请求参数为json格式
+     * @apiParam {String} areaName  区域名 .
+     * @apiParam {String} shortName   简称.
+     * @apiParam {String} lon   经度.
+     * @apiParam {String} lat   纬度.
+     * @apiParam {String} level   级别.
+     * @apiParam {String} sort   排序.
+     * @apiParam {String} pid   父id.
+     * @apiSuccess {Object} data 接口返回的数据对象.
+     * @apiSuccess {Integer} code 操作编码.
+     * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiSuccessExample 成功响应:
+     * HTTP/1.1 200 OK
+     * {
+     * "date": true,
+     * "code": xxxxx ,
+     * "msg": "提示"
+     * }
+     * @apiError data false.
+     * @apiError code 操作编码.
+     * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiErrorExample 错误响应示例:
+     * {
+     * "date": false,
+     * "code": xxxx,
+     * "msg": "xxxxxxxx"
+     * }
      */
     @RequestMapping(value = SpConstantInter.SYS_AREA_SAVE, method = RequestMethod.POST)
     public Result saveArea(@RequestBody SysArea sysArea) {
         return save(sysArea, iSysAreaService);
     }
 
+
     /**
-     * 删除
+     * @api {post} /sys/area/del 删除
+     * @apiName del
+     * @apiGroup Area
+     * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
+     * @apiParam {String} id  区域id .
+     * @apiSuccess {Object} data 接口返回的数据对象.
+     * @apiSuccess {Integer} code 操作编码.
+     * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiSuccessExample 成功响应:
+     * HTTP/1.1 200 OK
+     * {
+     * "date": true,
+     * "code": xxxxx ,
+     * "msg": "提示"
+     * }
+     * @apiError data false.
+     * @apiError code 操作编码.
+     * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiErrorExample 错误响应示例:
+     * {
+     * "date": false,
+     * "code": xxxx,
+     * "msg": "xxxxxxxx"
+     * }
      */
     @RequestMapping(value = SpConstantInter.SYS_AREA_DEL, method = RequestMethod.POST)
-    public Result delArea(Serializable id) {
+    public Result delArea(String id) {
         return del(id, iSysAreaService);
     }
 
+
     /**
-     * 修改
+     * @api {post} /sys/area/modify 修改
+     * @apiName modify
+     * @apiGroup Area
+     * @apiHeader {applications/json} ContentType 请求参数为json格式
+     * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
+     * @apiParam {String} areaName  区域名 .
+     * @apiParam {String} shortName   简称.
+     * @apiParam {String} lon   经度.
+     * @apiParam {String} lat   纬度.
+     * @apiParam {String} level   级别.
+     * @apiParam {String} sort   排序.
+     * @apiParam {String} pid   父id.
+     * @apiSuccess {Object} data 接口返回的数据对象.
+     * @apiSuccess {Integer} code 操作编码.
+     * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiSuccessExample 成功响应:
+     * HTTP/1.1 200 OK
+     * {
+     * "date": true,
+     * "code": xxxxx ,
+     * "msg": "提示"
+     * }
+     * @apiError data false.
+     * @apiError code 操作编码.
+     * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiErrorExample 错误响应示例:
+     * {
+     * "date": false,
+     * "code": xxxx,
+     * "msg": "xxxxxxxx"
+     * }
      */
     @RequestMapping(value = SpConstantInter.SYS_AREA_NODIFY, method = RequestMethod.POST)
     public Result modifyArea(@RequestBody SysArea sysArea) {
@@ -72,6 +156,31 @@ public class SysAreaController extends BaseController {
 
     /**
      * 查询区域（树结构）
+     */
+
+    /**
+     * @api {post} /sys/area/tree
+     * @apiName tree
+     * @apiGroup Area
+     * @apiSuccess {Object} data 接口返回的数据对象.
+     * @apiSuccess {Integer} code 操作编码.
+     * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiSuccessExample 成功响应:
+     * HTTP/1.1 200 OK
+     * {
+     * "date": true,
+     * "code": xxxxx ,
+     * "msg": "提示"
+     * }
+     * @apiError data false.
+     * @apiError code 操作编码.
+     * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiErrorExample 错误响应示例:
+     * {
+     * "date": false,
+     * "code": xxxx,
+     * "msg": "xxxxxxxx"
+     * }
      */
     @RequestMapping(value = SpConstantInter.SYS_AREA_TREE, method = RequestMethod.POST)
     public Result queryAreaTree() {
@@ -87,13 +196,12 @@ public class SysAreaController extends BaseController {
         sysAreaWrapper.setEntity(sysArea);
         return queryListsByColumn(sysAreaWrapper, iSysAreaService);
     }
-    
+
     /**
-     *
      * 查询区域（分页）
      */
-    @RequestMapping(value = SpConstantInter.SYS_AREA_PAGE,method = RequestMethod.POST)
-    public Result queryListPage(@RequestBody PageRequestParameter<SysAreaVo> sysAreaPageRequestParameter){
+    @RequestMapping(value = SpConstantInter.SYS_AREA_PAGE, method = RequestMethod.POST)
+    public Result queryListPage(@RequestBody PageRequestParameter<SysAreaVo> sysAreaPageRequestParameter) {
         return iSysAreaService.queryListPage(sysAreaPageRequestParameter);
     }
 

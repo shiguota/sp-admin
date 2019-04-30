@@ -40,6 +40,19 @@ public class SysRole extends BaseEntity {
      */
     private String roleCode;
 
+    /**
+     *
+     * 角色描述
+     */
+    private String roleDescription;
+
+    public String getRoleDescription() {
+        return roleDescription;
+    }
+
+    public void setRoleDescription(String roleDescription) {
+        this.roleDescription = roleDescription;
+    }
 
     public String getId() {
         return id;

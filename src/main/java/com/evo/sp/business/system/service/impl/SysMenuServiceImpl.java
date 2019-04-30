@@ -19,6 +19,7 @@ import com.evo.sp.common.parameter.PageRequestParameter;
 import com.evo.sp.common.result.Result;
 import com.evo.sp.common.tree.Tree;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public List<Tree<SysMenu>> queryMenuPath() {
         List<Tree<SysMenu>> trees = new ArrayList<>();
         //获取session中的用户信息
-        SysUser sysUser = (SysUser) SecurityUtils.getSubject().getSession().getAttribute(SpConstantInter.USER);
+        Session session = SecurityUtils.getSubject().getSession();
+        SysUser sysUser = (SysUser) session.getAttribute(session.getId());
         //校验用户信息
         if (SpAssert.isNotNull(sysUser)) {
             if (SpAssert.isNotNull(sysUser.getAccount())) {
@@ -63,6 +65,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
                     sysMenuTree.setId(sysMenu.getId());
                     sysMenuTree.setParentId(sysMenu.getPid());
                     sysMenuTree.setText(sysMenu.getMenuName());
+                    sysMenuTree.setIcon(sysMenu.getMenuIcon());
+                    sysMenuTree.setPath(sysMenu.getMenuPath());
                     trees.add(sysMenuTree);
                 }
             } else {
@@ -86,6 +90,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         SysMenu sysMenu = new SysMenu();
         //校验参数
         SpAssert.isNull(sysMenuVo);
+        SpAssert.isNull(sysMenuVo.getMenuName());
+        SpAssert.isNull(sysMenuVo.getMenuCode());
+        SpAssert.isNull(sysMenuVo.getMenuIcon());
+        SpAssert.isNull(sysMenuVo.getMenuPath());
+        SpAssert.isNull(sysMenuVo.getPid());
         //转换参数类型
         BeanUtils.copyProperties(sysMenuVo, sysMenu);
         //新增菜单操作

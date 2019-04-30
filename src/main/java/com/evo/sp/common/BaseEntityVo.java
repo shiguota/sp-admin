@@ -16,7 +16,8 @@ public class BaseEntityVo implements Serializable {
     private String USortType;
 
     public String getCSortType() {
-        this.CSortType  = CSortType == null ? SpConstantInter.DESC : CSortType;
+
+        this.CSortType  = (CSortType == null && USortType == null) ? SpConstantInter.DESC : CSortType;
         return CSortType;
     }
 
@@ -25,7 +26,7 @@ public class BaseEntityVo implements Serializable {
     }
 
     public String getUSortType() {
-        this.USortType  = USortType == null ? SpConstantInter.DESC : USortType;
+        this.USortType  = (CSortType == null && USortType == null) ? SpConstantInter.DESC : USortType;
         return USortType;
     }
 

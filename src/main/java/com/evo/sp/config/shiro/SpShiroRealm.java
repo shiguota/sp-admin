@@ -95,7 +95,8 @@ public class SpShiroRealm extends AuthorizingRealm {
                 this.getClass().getName());
         Subject currentUser = SecurityUtils.getSubject();
         Session session = currentUser.getSession();
-        session.setAttribute(SpConstantInter.USER, spUser);
+        session.setAttribute(session.getId(), spUser);
+        session.setTimeout(1000*60*1000);
         return simpleAuthenticationInfo;
     }
 

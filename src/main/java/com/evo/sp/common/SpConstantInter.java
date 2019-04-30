@@ -5,7 +5,7 @@ public class SpConstantInter {
     /*******************************************全局常量**********************************/
 
     public static final String USER_NAME = "userName";
-    public static final String USER = "user";
+    public static final String USER1 = "user";
     public static final String ENCRYPTION_TYPE = "MD5";
     public static final String CHARACTER_ENCODING = "UTF-8";
     //crud操作影响的行数
@@ -23,6 +23,7 @@ public class SpConstantInter {
     public static final String TABLE_UPDATE_TIME = "update_time";
     public static final String PID = "pid";
     public static final String SORT = "sort";
+    public static final String LEVEL = "level";
 
     //用户表
     public static final String SYS_USER_ACCOUNT = "account";
@@ -34,7 +35,10 @@ public class SpConstantInter {
     public static final String SYS_AREA_NAME = "area_name";
     //组织机构
     public static final String SYS_ORG_NAME = "org_name";
-
+    //组织机构角色表
+    public static final String SYS_ORG_ROLEID="sys_role_id";
+    //角色权限表
+    public static final String SYS_ROLE_PERMISSION_ROLEID = "sys_role_id";
 
     /*******************************************控制器URL**********************************/
 
@@ -55,8 +59,9 @@ public class SpConstantInter {
     public static final String SYS_DICTIONNARY_SAVE = "/save";
     public static final String SYS_DICTIONNARY_DEL = "/del";
     public static final String SYS_DICTIONNARY_MODIFY = "/modify";
-    public static final String SYS_DICTIONNARY_PAGE = "/page";
+    public static final String SYS_DICTIONNARY_LEVEL = "/level";
     public static final String SYS_DICTIONNARY_QUERY_BY_NAME = "/byname";
+    public static final String SYS_DICTIONNARY_QUERY_BY_CODE = "/code";
 
     /**
      *
@@ -186,7 +191,14 @@ public class SpConstantInter {
      */
     public static final String SYS_ORGANIZATION_ROLE = "/system/organization/role";
 
-
+    /**
+     *
+     * 公告
+     */
+    public static final String APPLICATION_ANNOUNCEMENT="/application/announcement";
+    public static final String APPLICATION_ANNOUNCEMENT_SAVE="/save";
+    public static final String APPLICATION_ANNOUNCEMENT_MODIFY="/modify";
+    public static final String APPLICATION_ANNOUNCEMENT_DEL="/del";
 
 
 
