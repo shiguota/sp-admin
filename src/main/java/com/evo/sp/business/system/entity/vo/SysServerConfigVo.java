@@ -1,25 +1,22 @@
-package com.evo.sp.business.system.entity;
+package com.evo.sp.business.system.entity.vo;
 
-import java.time.LocalDateTime;
 import com.evo.sp.common.BaseEntity;
+import com.evo.sp.common.BaseEntityVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author sgt
  * @since 2019-04-25
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
-public class SysServerConfig extends BaseEntity {
-
-    private static final long serialVersionUID = 1L;
+public class SysServerConfigVo extends BaseEntityVo {
 
     private String id;
 
@@ -37,7 +34,47 @@ public class SysServerConfig extends BaseEntity {
      * 字典表id
      */
     private String sysDictionaryId;
+    
+    /**
+     *
+     * 服务商名称
+     */
+    private String serverName;
+    /**
+     *
+     * 创建时间
+     */
+    private Date createTime;
 
+    /**
+     *
+     * 修改时间
+     */
+    private Date updateTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getServerName() {
+        return serverName;
+    }
+
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
+    }
 
     public String getId() {
         return id;

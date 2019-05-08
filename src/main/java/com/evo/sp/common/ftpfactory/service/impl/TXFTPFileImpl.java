@@ -11,6 +11,7 @@ import com.qcloud.cos.auth.COSCredentials;
 import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.model.PutObjectResult;
 import com.qcloud.cos.region.Region;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -62,13 +63,13 @@ public class TXFTPFileImpl extends ServiceImpl<SysServerConfigMapper, SysServerC
      * 上传
      */
     @Override
-    public boolean upload(MultipartFile file) throws IOException {
+    public String upload(MultipartFile file) throws IOException {
         String bucketName = BUCKETNAME;
         String key = UUID.randomUUID().toString();
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(CONTENTLENGTH);
         PutObjectResult putObjectResult = getClirnt().putObject(bucketName, key,file.getInputStream() , objectMetadata);
-        return false;
+        return "";
     }
 
     /**

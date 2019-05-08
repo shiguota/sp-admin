@@ -48,6 +48,17 @@ public class SpLogAspectJ {
     @Pointcut("@annotation(com.evo.sp.common.annotations.SpLogController)")
     public void controllerAspect() {
     }
+    //创建切入点
+    @Pointcut("execution(* com.baomidou.mybatisplus.extension.service..*.save*(..))")
+    public void timeAspect(){}
+
+
+    @Before("timeAspect()")
+    public void setTimeExecuteMethod(JoinPoint joinPoint){
+        Object[] args = joinPoint.getArgs();
+
+        System.out.println("执行了save方法");
+    }
 
     /**
      * @Description:前置通知 用于拦截Controller层记录用户的操作
@@ -167,4 +178,6 @@ public class SpLogAspectJ {
         }
         return description;
     }
+
+
 }

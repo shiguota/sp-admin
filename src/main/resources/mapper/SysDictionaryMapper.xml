@@ -2,27 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evo.sp.business.system.mapper.SysDictionaryMapper">
     <!--查询字典通过名称/父id-->
-    <select id="queryByNamePid" parameterType="com.evo.sp.business.system.entity.vo.SysDictionaryVo" resultType="com.evo.sp.business.system.entity.SysDictionary">
-        select dic.dic_name,dic_code,dic_sort,create_time,update_time from sys_dictionary dic
+    <select id="queryByNamePid" parameterType="com.evo.sp.business.system.entity.vo.SysDictionaryVo"
+            resultType="com.evo.sp.business.system.entity.SysDictionary">
+        select dic.id,dic.dic_name,dic_code,dic_sort,create_time,update_time from sys_dictionary dic
         <where>
             state=1
-            <if test="vo.dicName != null">
-              and dic_name like '%${vo.dicName}%'
-            </if>
-            <if test="vo.pid != null">
-                and pid = #{vo.pid}
-            </if>
-            <if test="vo.pid == null">
-                and pid is null
-            </if>
-            <if test="vo.CSortType != null">
-                order by create_time ${vo.CSortType}
-            </if>
-            <if test="vo.USortType != null">
-                order by update_time ${vo.USortType}
-            </if>
-            <if test="vo.dicSort != null">
-                order by dic_sort asc
+            <if test="vo != null">
+                <if test="vo.dicName != null">
+                    and dic_name like '%${vo.dicName}%'
+                </if>
+                <if test="vo.pid != null">
+                    and pid = #{vo.pid}
+                </if>
+                <if test="vo.pid == null">
+                    and pid is null
+                </if>
+                <if test="vo.CSortType != null">
+                    order by create_time ${vo.CSortType}
+                </if>
+                <if test="vo.USortType != null">
+                    order by update_time ${vo.USortType}
+                </if>
+                <if test="vo.dicSort != null">
+                    order by dic_sort asc
+                </if>
             </if>
         </where>
     </select>

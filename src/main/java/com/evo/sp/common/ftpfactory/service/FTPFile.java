@@ -20,7 +20,7 @@ public interface FTPFile extends IService<SysServerConfig> {
      *
      * 上传
      */
-     boolean upload(MultipartFile file) throws IOException;
+     String upload(MultipartFile file) throws IOException;
 
     /**
      *

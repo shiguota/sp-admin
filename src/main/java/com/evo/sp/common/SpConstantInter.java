@@ -24,6 +24,7 @@ public class SpConstantInter {
     public static final String PID = "pid";
     public static final String SORT = "sort";
     public static final String LEVEL = "level";
+    public static final String SYS_DICTIONARY_ID ="sys_dictionary_id";
 
     //用户表
     public static final String SYS_USER_ACCOUNT = "account";
@@ -39,6 +40,8 @@ public class SpConstantInter {
     public static final String SYS_ORG_ROLEID="sys_role_id";
     //角色权限表
     public static final String SYS_ROLE_PERMISSION_ROLEID = "sys_role_id";
+    //公告表
+    public static final String APPLICATION_ANNOUNCEMENT_TITLE = "title";
 
     /*******************************************控制器URL**********************************/
 
@@ -60,7 +63,7 @@ public class SpConstantInter {
     public static final String SYS_DICTIONNARY_DEL = "/del";
     public static final String SYS_DICTIONNARY_MODIFY = "/modify";
     public static final String SYS_DICTIONNARY_LEVEL = "/level";
-    public static final String SYS_DICTIONNARY_QUERY_BY_NAME = "/byname";
+    public static final String SYS_DICTIONNARY_QUERY_PAGE = "/page";
     public static final String SYS_DICTIONNARY_QUERY_BY_CODE = "/code";
 
     /**
@@ -199,6 +202,20 @@ public class SpConstantInter {
     public static final String APPLICATION_ANNOUNCEMENT_SAVE="/save";
     public static final String APPLICATION_ANNOUNCEMENT_MODIFY="/modify";
     public static final String APPLICATION_ANNOUNCEMENT_DEL="/del";
+    public static final String APPLICATION_ANNOUNCEMENT_PAGE="/page";
+    /**
+     *
+     * 服务配置
+     */
+    public static  final String APPLICATION_SERVER_CONFIG ="/server/config";
+    public static  final String APPLICATION_SERVER_CONFIG_SAVE ="/save";
+    public static  final String APPLICATION_SERVER_CONFIG_MODIFT ="/modify";
+    public static  final String APPLICATION_SERVER_CONFIG_START_END ="/start/or/end";
+    public static  final String APPLICATION_SERVER_CONFIG_QUERY_BY_ID ="querybyid";
+    public static  final String APPLICATION_SERVER_CONFIG_DELS ="dels";
+    public static  final String APPLICATION_SERVER_CONFIG_PAGE ="page";
+    public static  final String APPLICATION_SERVER_CONFIG_PAGE_DIS ="page/dis";
+
 
 
 

@@ -2,6 +2,10 @@ package com.evo.sp.business.announcement.service;
 
 import com.evo.sp.business.announcement.entity.ApplicationAnnouncement;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.evo.sp.business.announcement.mapper.ApplicationAnnouncementMapper;
+import com.evo.sp.common.parameter.PageRequestParameter;
+import com.evo.sp.common.result.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * <p>
@@ -13,4 +17,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IApplicationAnnouncementService extends IService<ApplicationAnnouncement> {
 
+    /**
+     *
+     * 查询公告
+     */
+    Result queryAnnouncementPage(PageRequestParameter<ApplicationAnnouncement> pageRequestParameter);
 }

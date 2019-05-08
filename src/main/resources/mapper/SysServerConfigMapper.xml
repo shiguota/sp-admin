@@ -8,4 +8,39 @@
        select * from sys_server_config
        where pid = (select sc.id from sys_server_config sc where sc.state = 1 and sc.pid is null);
     </select>
+
+    <!--获取服务配置项列表-->
+    <select id="queryServerConfig" parameterType="com.evo.sp.business.system.entity.vo.SysServerConfigVo"
+            resultType="com.evo.sp.business.system.entity.vo.SysServerConfigVo">
+        select d.dic_name as serverName,
+        sc.server_key as serverKey,
+        sc.server_value as serverValue,
+        sc.state as state,
+        sc.create_time as createTime,
+        sc.update_time as updateTime
+        from sys_server_config sc
+        join sys_dictionary d on sc.sys_dictionary_id = d.id
+        <if test="CSortType !=null">
+            order by sc.create_time ${CSortType}
+        </if>
+        <if test="USortType != null">
+            order by sc.update_time ${USortType}
+        </if>
+        <if test="serverName != null">
+            where d.dic_name like '%${serverName}%'
+        </if>
+
+    </select>
+
+    <!--通过字典id获取数据-->
+    <select id="queryServerConfigPageByDisId" parameterType="java.lang.String" resultType="java.util.Map">
+        select
+            sc.server_key as serverKey,
+            sc.server_value as serverValue,
+            sc.state as state,
+            sc.create_time as createTime,
+            sc.update_time as updateTime
+        from sys_server_config sc
+        where sc.sys_dictionary_id = #{sysDictionaryId}
+    </select>
 </mapper>

@@ -43,9 +43,9 @@ public class SysDictionaryController extends BaseController {
      * @apiHeader {applications/json} ContentType 请求参数为json格式
      * @apiParam {String} dicName   名称.
      * @apiParam {String} dicCode   编码.
-     * @apiParam {Integer} dicSort   排序.
+     * @apiParam {Integer} [dicSort]   排序.
      * @apiParam {String} pid   父id.
-     * @apiParam {Integer} level   级别.
+     * @apiParam {Integer} [level]   级别.
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess {Integer} code 操作编码.
      * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
@@ -68,7 +68,7 @@ public class SysDictionaryController extends BaseController {
      */
     @RequestMapping(value = SpConstantInter.SYS_DICTIONNARY_SAVE, method = RequestMethod.POST)
     public Result saveDictionary(@RequestBody SysDictionary sysDictionary) {
-        return save(sysDictionary, iSysDictionaryService);
+        return new Result(iSysDictionaryService.save(sysDictionary));
     }
 
 
@@ -147,6 +147,7 @@ public class SysDictionaryController extends BaseController {
      * @apiParam {Integer} page 当前页。
      * @apiParam {Integer} size 每页行数
      * @apiParam {String} [dicName]  字典名称.
+     * @apiParam {String} pid  父id.
      * @apiSuccess {JSONOBJECT} data JSON格式数据.
      * @apiSuccess (data){List} records JSON格式数据（列表数据）.
      * @apiSuccess (data){Integer} total 数据总数.
@@ -177,7 +178,7 @@ public class SysDictionaryController extends BaseController {
      * "msg": "xxxxxxxx"
      * }
      */
-    @RequestMapping(value = SpConstantInter.SYS_DICTIONNARY_QUERY_BY_NAME, method = RequestMethod.POST)
+    @RequestMapping(value = SpConstantInter.SYS_DICTIONNARY_QUERY_PAGE, method = RequestMethod.POST)
     public Result queryByName(@RequestBody PageRequestParameter<SysDictionaryVo> pageRequestParameter) {
         return new Result(iSysDictionaryService.queryByNamePid(pageRequestParameter));
     }
@@ -285,7 +286,5 @@ public class SysDictionaryController extends BaseController {
         }
         return queryTreeData(trees,"字典分类");
     }
-
-
 
 }

@@ -31,14 +31,6 @@ public class SysDictionaryServiceImpl extends ServiceImpl<SysDictionaryMapper, S
     @Autowired
     private SysDictionaryMapper sysDictionaryMapper;
 
-
-    /**
-     * 字典级别
-     * 1为一级（第一层）
-     * 2为二级（第二层）
-     */
-    private  final Integer DIC_LEVEL= 2;
-
     /**
      *
      * 新增
@@ -48,8 +40,10 @@ public class SysDictionaryServiceImpl extends ServiceImpl<SysDictionaryMapper, S
         SpAssert.isNull(entity);
         SpAssert.isNull(entity.getDicName());
         SpAssert.isNull(entity.getDicCode());
-        if(SpAssert.isNotNull(entity.getPid())){
-            entity.setLevel(DIC_LEVEL);
+        if(SpAssert.isNotNull(entity.getPid()) && !entity.getPid().equals("-1")){
+            entity.setLevel(2);
+        }else{
+            entity.setLevel(1);
         }
         return super.save(entity);
     }

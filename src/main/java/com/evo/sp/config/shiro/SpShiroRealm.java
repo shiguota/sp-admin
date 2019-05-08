@@ -8,7 +8,6 @@ import com.evo.sp.business.system.service.ISysPermissionService;
 import com.evo.sp.business.system.service.ISysRoleService;
 import com.evo.sp.business.system.service.ISysUserService;
 import com.evo.sp.common.ex.SpAssert;
-import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.BaseException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -81,9 +80,9 @@ public class SpShiroRealm extends AuthorizingRealm {
         UsernamePasswordToken utoken = (UsernamePasswordToken) token;
         String username = utoken.getUsername();
         SysUser spUser = null;
-        QueryWrapper<SysUser> sysUserQueryWrapper = new QueryWrapper<>();
-        sysUserQueryWrapper.setEntity(new SysUser(username));
-        spUser = iSpUserService.getOne(sysUserQueryWrapper);
+        QueryWrapper<SysUser> waWrapper = new QueryWrapper<>();
+        waWrapper.setEntity(new SysUser(username));
+        spUser = iSpUserService.getOne(waWrapper);
         if (!SpAssert.isNotNull(spUser)) {
             throw new UnknownAccountException();
         }
