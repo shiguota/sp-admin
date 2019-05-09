@@ -17,6 +17,7 @@ import com.evo.sp.common.ex.SessionException;
 import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.parameter.PageRequestParameter;
 import com.evo.sp.common.result.Result;
+import com.evo.sp.common.result.ResultEnum;
 import com.evo.sp.common.tree.Tree;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -47,7 +48,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     /**
      * 查询用户可用菜单
-     *
      */
     @Override
     public List<Tree<SysMenu>> queryMenuPath() {
@@ -101,18 +101,20 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         int insert = sysMenuMapper.insert(sysMenu);
         if (insert == SpConstantInter.CURDVAL) {
             //获取菜单权限参数
-            SysMenuPermission sysMenuPermission = sysMenuVo.getSysMenuPermission();
+            List<SysMenuPermission> sysMenuPermissions = sysMenuVo.getSysMenuPermission();
             //校验菜单权限参数
-            if (SpAssert.isNotNull(sysMenuPermission)) {
-                sysMenuPermission.setSysMenuId(sysMenu.getId());
-                if (sysMenuPermissionMapper.insert(sysMenuPermission) == SpConstantInter.CURDVAL) {
-                    throw new SaveException();
+            if (SpAssert.isNotNull(sysMenuPermissions)) {
+                for (SysMenuPermission menuPermission : sysMenuPermissions) {
+                    menuPermission.setSysMenuId(sysMenu.getId());
+                    if (sysMenuPermissionMapper.insert(menuPermission) != SpConstantInter.CURDVAL) {
+                        throw new SaveException();
+                    }
                 }
             }
         } else {
             throw new SaveException();
         }
-        return null;
+        return new Result(true, ResultEnum.SAVE_SUCCESS.getValue());
     }
 
     /**
@@ -161,5 +163,24 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         }
 
         return new Result(page(page, sysMenuQueryWrapper));
+    }
+
+    /**
+     * 菜单树
+     */
+    @Override
+    public List<Tree<SysMenu>> queryMenuTree() {
+        List<Tree<SysMenu>> trees = new ArrayList<>();
+        List<SysMenu> list = list();
+        for (SysMenu sysMenu : list) {
+            Tree<SysMenu> sysMenuTree = new Tree<>();
+            sysMenuTree.setText(sysMenu.getMenuName());
+            sysMenuTree.setPath(sysMenu.getMenuPath());
+            sysMenuTree.setIcon(sysMenu.getMenuIcon());
+            sysMenuTree.setId(sysMenu.getId());
+            sysMenuTree.setParentId(sysMenu.getPid());
+            trees.add(sysMenuTree);
+        }
+        return trees;
     }
 }

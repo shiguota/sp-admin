@@ -63,6 +63,10 @@ public class SpControllerAdvice {
             map.put(EXCEPTION_DATA, false);
             map.put(EXCEPTION_CODE, ResultEnum.SESSION_IS_NULL.getValue());
             map.put(EXCEPTION_MSG, ResultEnum.SESSION_IS_NULL.getName());
+        }else if (ex instanceof SaveException) {//保存失败
+            map.put(EXCEPTION_DATA, false);
+            map.put(EXCEPTION_CODE, ResultEnum.SAVE_FAIL.getValue());
+            map.put(EXCEPTION_MSG, ResultEnum.SAVE_FAIL.getName());
         } else if (ex instanceof UploadException) {//文件上传
             map.put(EXCEPTION_DATA, false);
             if (!SpAssert.isNotNull(((UploadException) ex).getCode()) && !SpAssert.isNotNull(((UploadException) ex).getMsg())) {

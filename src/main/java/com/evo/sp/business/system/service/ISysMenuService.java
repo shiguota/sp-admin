@@ -8,6 +8,7 @@ import com.evo.sp.common.parameter.PageRequestParameter;
 import com.evo.sp.common.result.Result;
 import com.evo.sp.common.tree.Tree;
 
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -36,4 +37,11 @@ public interface ISysMenuService extends IService<SysMenu> {
      *分页查询
      */
     Result queryListPage(PageRequestParameter<SysMenuVo> pageRequestParameter);
+    
+    /**
+     *
+     * 菜单树
+     */
+    List<Tree<SysMenu>> queryMenuTree();
+    
 }

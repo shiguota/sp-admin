@@ -52,7 +52,7 @@ public class SysDictionaryController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -61,7 +61,7 @@ public class SysDictionaryController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -76,15 +76,15 @@ public class SysDictionaryController extends BaseController {
      * @api {post} /sys/dictionary/del  删除
      * @apiName del
      * @apiGroup Dictionary
-     * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
-     * @apiParam {String} id  字典id.
+     * @apiHeader {applications/json} ContentType 请求参数为json格式
+     * @apiParam {Array} id  字典id.
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess {Integer} code 操作编码.
      * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -93,14 +93,14 @@ public class SysDictionaryController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
      */
     @RequestMapping(value = SpConstantInter.SYS_DICTIONNARY_DEL, method = RequestMethod.POST)
-    public Result delDictionary(String id) {
-        return del(id, iSysDictionaryService);
+    public Result delDictionary(@RequestBody List<String> id) {
+        return dels(id, iSysDictionaryService);
     }
 
 
@@ -112,7 +112,7 @@ public class SysDictionaryController extends BaseController {
      * @apiParam {String} dicName   名称.
      * @apiParam {String} dicCode   编码.
      * @apiParam {Integer} dicSort   排序.
-     * @apiParam {String} pid   父id.
+     * @apiParam {String} id  id.
      * @apiParam {Integer} level   级别.
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess {Integer} code 操作编码.
@@ -120,7 +120,7 @@ public class SysDictionaryController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -129,14 +129,14 @@ public class SysDictionaryController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
      */
     @RequestMapping(value = SpConstantInter.SYS_DICTIONNARY_MODIFY, method = RequestMethod.POST)
     public Result modifyDictionary(@RequestBody SysDictionary sysDictionary) {
-        return modify(sysDictionary, iSysDictionaryService);
+           return modify(sysDictionary, iSysDictionaryService);
     }
 
     /**
@@ -146,8 +146,9 @@ public class SysDictionaryController extends BaseController {
      * @apiHeader {applications/json} ContentType 请求参数为json格式
      * @apiParam {Integer} page 当前页。
      * @apiParam {Integer} size 每页行数
-     * @apiParam {String} [dicName]  字典名称.
-     * @apiParam {String} pid  父id.
+     * @apiParam {OBJECTJSON} parameter JSON数据对象
+     * @apiParam (parameter){String} [dicName]  字典名称.
+     * @apiParam (parameter){String} pid  父id.
      * @apiSuccess {JSONOBJECT} data JSON格式数据.
      * @apiSuccess (data){List} records JSON格式数据（列表数据）.
      * @apiSuccess (data){Integer} total 数据总数.
@@ -164,7 +165,7 @@ public class SysDictionaryController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -173,7 +174,7 @@ public class SysDictionaryController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -199,7 +200,7 @@ public class SysDictionaryController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": {},
+     * "data": {},
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -208,7 +209,7 @@ public class SysDictionaryController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -229,45 +230,45 @@ public class SysDictionaryController extends BaseController {
      * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
-     *{
-     *   "date": {
-     *     "treeId": "0-0",
-     *     "id": "-1",
-     *     "text": "字典分类",
-     *     "state": "open",
-     *     "checked": true,
-     *     "children": [
-     *       {
-     *         "treeId": "0-0-1",
-     *         "id": "57179210133575b328b1907d996ebcf6",
-     *         "text": "锁定状态",
-     *         "state": "open",
-     *         "checked": false,
-     *         "children": [],
-     *         "parent": false
-     *       },
-     *       {
-     *         "treeId": "0-0-2",
-     *         "id": "e170fa1ebeff1f849db1511a027ca3cd",
-     *         "text": "合作伙伴分类",
-     *         "state": "open",
-     *         "checked": false,
-     *         "children": [],
-     *         "parent": false
-     *       }
-     *     ],
-     *     "path": "#",
-     *     "parent": false
-     *   },
-     *   "code": 1007,
-     *   "msg": "操作成功"
+     * {
+     * "data": {
+     * "treeId": "0-0",
+     * "id": "-1",
+     * "text": "字典分类",
+     * "state": "open",
+     * "checked": true,
+     * "children": [
+     * {
+     * "treeId": "0-0-1",
+     * "id": "57179210133575b328b1907d996ebcf6",
+     * "text": "锁定状态",
+     * "state": "open",
+     * "checked": false,
+     * "children": [],
+     * "parent": false
+     * },
+     * {
+     * "treeId": "0-0-2",
+     * "id": "e170fa1ebeff1f849db1511a027ca3cd",
+     * "text": "合作伙伴分类",
+     * "state": "open",
+     * "checked": false,
+     * "children": [],
+     * "parent": false
+     * }
+     * ],
+     * "path": "#",
+     * "parent": false
+     * },
+     * "code": 1007,
+     * "msg": "操作成功"
      * }
      * @apiError data false.
      * @apiError code 操作编码.
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -277,14 +278,50 @@ public class SysDictionaryController extends BaseController {
         List<SysDictionary> sysDictionaries = iSysDictionaryService.queryDictionaryByLevel();
         List<Tree<SysDictionary>> trees = new ArrayList<>();
         for (int i = 0; i < sysDictionaries.size(); i++) {
-                Tree tree = new Tree();
+            Tree tree = new Tree();
             tree.setText(sysDictionaries.get(i).getDicName());
             tree.setId(sysDictionaries.get(i).getId());
             tree.setParentId(sysDictionaries.get(i).getPid());
-            tree.setTreeId(0+"-"+0+"-"+(i+1));
+            tree.setTreeId(0 + "-" + 0 + "-" + (i + 1));
+            tree.setLevel(sysDictionaries.get(i).getLevel());
             trees.add(tree);
         }
-        return queryTreeData(trees,"字典分类");
+        return queryTreeData(trees, "字典分类");
     }
 
+
+    /**
+     * @api {post} /sys/dictionary/id  根据id查询
+     * @apiName id
+     * @apiGroup Dictionary
+     * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
+     * @apiParam {String} id   字典id.
+     * @apiSuccess {Object} data 接口返回的数据对象.
+     * @apiSuccess (data){String} dicName 字典名称.
+     * @apiSuccess (data){String} dicCode 字典编码.
+     * @apiSuccess (data){Integer} dicSort 字典排序.
+     * @apiSuccess (data){Integer} level 字典级别.
+     * @apiSuccess {Integer} code 操作编码.
+     * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiSuccessExample 成功响应:
+     * HTTP/1.1 200 OK
+     * {
+     * "data": {},
+     * "code": xxxxx ,
+     * "msg": "提示"
+     * }
+     * @apiError data false.
+     * @apiError code 操作编码.
+     * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
+     * @apiErrorExample 错误响应示例:
+     * {
+     * "data": false,
+     * "code": xxxx,
+     * "msg": "xxxxxxxx"
+     * }
+     */
+    @PostMapping(value = SpConstantInter.SYS_DICTIONNARY_QUERY_BY_ID)
+    public Result queryById(String id) {
+        return queryById(id, iSysDictionaryService);
+    }
 }

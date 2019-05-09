@@ -65,6 +65,7 @@ public class SpConstantInter {
     public static final String SYS_DICTIONNARY_LEVEL = "/level";
     public static final String SYS_DICTIONNARY_QUERY_PAGE = "/page";
     public static final String SYS_DICTIONNARY_QUERY_BY_CODE = "/code";
+    public static final String SYS_DICTIONNARY_QUERY_BY_ID = "/id";
 
     /**
      *
@@ -106,9 +107,7 @@ public class SpConstantInter {
     public static final String SYS_ROLE_SAVE = "/save";
     public static final String SYS_ROLE_DEL = "/del";
     public static final String SYS_ROLE_MODIFY = "/modify";
-    //分页
     public static final String SYS_ROLE_PAGE = "/page";
-    //角色授权
     public static final String SYS_ROLE_AUTHORIZATION = "/authorization";
 
     /**
@@ -155,6 +154,7 @@ public class SpConstantInter {
     public static final String SYS_MENU_PERMISSION_SAVE = "/save";
     public static final String SYS_MENU_PERMISSION_DEL = "/del";
     public static final String SYS_MENU_PERMISSION_MPODIFY = "/modify";
+    public static final String SYS_MENU_PERMISSION_TREE = "/tree";
 
     /**
      *

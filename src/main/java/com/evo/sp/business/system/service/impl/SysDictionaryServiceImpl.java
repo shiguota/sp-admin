@@ -40,11 +40,7 @@ public class SysDictionaryServiceImpl extends ServiceImpl<SysDictionaryMapper, S
         SpAssert.isNull(entity);
         SpAssert.isNull(entity.getDicName());
         SpAssert.isNull(entity.getDicCode());
-        if(SpAssert.isNotNull(entity.getPid()) && !entity.getPid().equals("-1")){
-            entity.setLevel(2);
-        }else{
-            entity.setLevel(1);
-        }
+        SpAssert.isNull(entity.getLevel());
         return super.save(entity);
     }
 

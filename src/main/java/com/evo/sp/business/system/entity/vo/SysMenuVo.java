@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * <p>
  * 
@@ -64,14 +66,13 @@ public class SysMenuVo extends BaseEntityVo {
      *
      *  菜单权限表
      */
-    private SysMenuPermission sysMenuPermission;
+    private List<SysMenuPermission> sysMenuPermission;
 
-
-    public SysMenuPermission getSysMenuPermission() {
+    public List<SysMenuPermission> getSysMenuPermission() {
         return sysMenuPermission;
     }
 
-    public void setSysMenuPermission(SysMenuPermission sysMenuPermission) {
+    public void setSysMenuPermission(List<SysMenuPermission> sysMenuPermission) {
         this.sysMenuPermission = sysMenuPermission;
     }
 

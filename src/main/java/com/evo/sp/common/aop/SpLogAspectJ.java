@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.evo.sp.business.system.entity.SysUser;
 import com.evo.sp.business.system.entity.SystemLog;
 import com.evo.sp.business.system.service.ISysLogService;
+import com.evo.sp.common.BaseEntity;
 import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.annotations.SpLogController;
@@ -25,7 +26,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Component
 @Aspect
@@ -48,16 +52,43 @@ public class SpLogAspectJ {
     @Pointcut("@annotation(com.evo.sp.common.annotations.SpLogController)")
     public void controllerAspect() {
     }
-    //创建切入点
-    @Pointcut("execution(* com.baomidou.mybatisplus.extension.service..*.save*(..))")
-    public void timeAspect(){}
+    //createTime创建切入点
+    @Pointcut("execution(* com.baomidou.mybatisplus.core.mapper..*.insert*(..))")
+    public void createTimeAspect(){}
+    //createTime创建切入点
+    @Pointcut("execution(* com.baomidou.mybatisplus.core.mapper..*.update*(..))")
+    public void updateTimeAspect(){}
 
-
-    @Before("timeAspect()")
-    public void setTimeExecuteMethod(JoinPoint joinPoint){
+    /**
+     *
+     * 拦截所有新增方法，加入创建时间
+     */
+    @Before("createTimeAspect()")
+    public void setSaveTimeExecuteMethod(JoinPoint joinPoint){
         Object[] args = joinPoint.getArgs();
+        for (Object arg : args) {
+            if (arg instanceof BaseEntity) {
+                BaseEntity baseEntity = (BaseEntity) arg;
+                baseEntity.setCreateTime(LocalDateTime.now());
+                baseEntity.setUpdateTime(LocalDateTime.now());
+            }
+        }
+    }
 
-        System.out.println("执行了save方法");
+    
+    /**
+     *
+     * 拦截所有修改节点，加入修改时间
+     */
+    @Before("updateTimeAspect()")
+    public void setUpdateTimeExecuteMethod(JoinPoint joinPoint){
+        Object[] args = joinPoint.getArgs();
+        for (Object arg : args) {
+            if (arg instanceof BaseEntity) {
+                BaseEntity baseEntity = (BaseEntity) arg;
+                baseEntity.setUpdateTime(LocalDateTime.now());
+            }
+        }
     }
 
     /**

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.evo.sp.common.BaseController;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -40,16 +41,16 @@ public class SysPermissionController extends BaseController {
      * @apiName save
      * @apiGroup Permission
      * @apiHeader {applications/json} ContentType 请求参数为json格式
-     * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
      * @apiParam {String} perName 权限名称
      * @apiParam {String} perCode 权限编码.
+     * @apiParam {String} perDescribe 权限描述.
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess {Integer} code 操作编码.
      * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -58,7 +59,7 @@ public class SysPermissionController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -72,15 +73,15 @@ public class SysPermissionController extends BaseController {
      * @api {post} /sys/permission/del  删除
      * @apiName del
      * @apiGroup Permission
-     * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
-     * @apiParam {String} id   权限id.
+     * @apiHeader {applications/json} ContentType 请求参数为json格式
+     * @apiParam {Array} ids   权限id.
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess {Integer} code 操作编码.
      * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -89,15 +90,14 @@ public class SysPermissionController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
      */
-    @RequiresPermissions("User:add")
     @RequestMapping(value = SpConstantInter.SYS_PERMISSION_DEL, method = RequestMethod.POST)
-    public Result delPermission(Serializable id) {
-        return del(id, iSysPermissionService);
+    public Result delPermission(@RequestBody List<String> ids) {
+        return dels(ids, iSysPermissionService);
     }
 
 
@@ -114,7 +114,7 @@ public class SysPermissionController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -123,7 +123,7 @@ public class SysPermissionController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -150,7 +150,7 @@ public class SysPermissionController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": {},
+     * "data": {},
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -159,7 +159,7 @@ public class SysPermissionController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -186,7 +186,7 @@ public class SysPermissionController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": {},
+     * "data": {},
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -195,7 +195,7 @@ public class SysPermissionController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -223,7 +223,7 @@ public class SysPermissionController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -232,7 +232,7 @@ public class SysPermissionController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }

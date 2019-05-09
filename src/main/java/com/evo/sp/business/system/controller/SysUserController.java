@@ -54,7 +54,7 @@ public class SysUserController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": {
+     * "data": {
      *          "id": "75845fd5fdb7441137ec100b9af5bf33",
      *          "account": "aa",
      *          "sysOrganizationId": "1",
@@ -68,7 +68,7 @@ public class SysUserController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -102,7 +102,7 @@ public class SysUserController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": 2007,
      * "msg": "注销用户成功"
      * }
@@ -111,7 +111,7 @@ public class SysUserController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -158,7 +158,7 @@ public class SysUserController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -167,7 +167,7 @@ public class SysUserController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -189,7 +189,7 @@ public class SysUserController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -198,7 +198,7 @@ public class SysUserController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -226,7 +226,7 @@ public class SysUserController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -235,7 +235,7 @@ public class SysUserController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -265,7 +265,7 @@ public class SysUserController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": {},
+     * "data": {},
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -274,7 +274,7 @@ public class SysUserController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -317,7 +317,7 @@ public class SysUserController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": {},
+     * "data": {},
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -326,7 +326,7 @@ public class SysUserController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -352,7 +352,7 @@ public class SysUserController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": [
+     * "data": [
      * {
      * "roleCode": "admin",
      * "roleName": "超级管理员",
@@ -367,7 +367,7 @@ public class SysUserController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -395,7 +395,7 @@ public class SysUserController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": [
+     * "data": [
      * {
      * "roleCode": "admin",
      * "roleName": "超级管理员",
@@ -410,7 +410,7 @@ public class SysUserController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }

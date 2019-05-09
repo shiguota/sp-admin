@@ -9,9 +9,9 @@ public class BuildTree {
      * @param nodes
      * @return
      */
-    public static <T> Tree<T> build(List<Tree<T>> nodes,String topNode) {
+    public static <T> Tree<T> build(List<Tree<T>> nodes, String topNode) {
 
-        if(nodes == null){
+        if (nodes == null) {
             return null;
         }
         List<Tree<T>> topNodes = new ArrayList<Tree<T>>();
@@ -30,7 +30,7 @@ public class BuildTree {
                 if (id != null && id.equals(pid)) {
                     nodes.get(i).getChildren().add(children);
                     children.setParent(true);
-                    children.setTreeId(nodes.get(i).getTreeId()+"-"+i);
+                    children.setTreeId(nodes.get(i).getTreeId() + "-" + i);
                     nodes.get(i).setChildren(true);
                     continue;
                 }
@@ -39,19 +39,16 @@ public class BuildTree {
         }
 
         Tree<T> root = new Tree<T>();
-        if (topNodes.size() == 1) {
-            root = topNodes.get(0);
-        } else {
-            root.setId("-1");
-            root.setTreeId("0-0");
-            root.setParentId("");
-            root.setParent(false);
-            root.setChildren(true);
-            root.setChecked(true);
-            root.setChildren(topNodes);
-            root.setText(topNode);
-            root.setPath("#");
-        }
+        root.setId("-1");
+        root.setTreeId("0-0");
+        root.setParentId("");
+        root.setParent(false);
+        root.setChildren(true);
+        root.setChecked(true);
+        root.setChildren(topNodes);
+        root.setText(topNode);
+        root.setPath("#");
+        root.setLevel(0);
         return root;
     }
 }

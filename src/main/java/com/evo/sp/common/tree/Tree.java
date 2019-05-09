@@ -60,6 +60,20 @@ public class Tree<T> {
      *  菜单icon
      */
     private String icon;
+    
+    /**
+     *
+     * 级别
+     */
+    private Integer level;
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     public String getTreeId() {
         return treeId;

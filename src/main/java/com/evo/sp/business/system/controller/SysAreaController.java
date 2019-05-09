@@ -63,7 +63,7 @@ public class SysAreaController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -72,7 +72,7 @@ public class SysAreaController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -95,7 +95,7 @@ public class SysAreaController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -104,7 +104,7 @@ public class SysAreaController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -134,7 +134,7 @@ public class SysAreaController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -143,7 +143,7 @@ public class SysAreaController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
@@ -168,7 +168,7 @@ public class SysAreaController extends BaseController {
      * @apiSuccessExample 成功响应:
      * HTTP/1.1 200 OK
      * {
-     * "date": true,
+     * "data": true,
      * "code": xxxxx ,
      * "msg": "提示"
      * }
@@ -177,7 +177,7 @@ public class SysAreaController extends BaseController {
      * @apiError msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiErrorExample 错误响应示例:
      * {
-     * "date": false,
+     * "data": false,
      * "code": xxxx,
      * "msg": "xxxxxxxx"
      * }
