@@ -66,6 +66,7 @@ public class SpConstantInter {
     public static final String SYS_DICTIONNARY_QUERY_PAGE = "/page";
     public static final String SYS_DICTIONNARY_QUERY_BY_CODE = "/code";
     public static final String SYS_DICTIONNARY_QUERY_BY_ID = "/id";
+    public static final String SYS_DICTIONNARY_QUERY_BY_PID = "/pid";
 
     /**
      *
@@ -145,6 +146,8 @@ public class SpConstantInter {
     public static final String SYS_MENU_TREE = "/tree";
     public static final String SYS_MENU_PATH = "/path";
     public static final String SYS_MENU_PER = "/per";
+    public static final String SYS_MENU_PID = "/pid";
+    public static final String SYS_MENU_ID = "/id";
 
     /**
      *

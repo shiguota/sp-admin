@@ -49,6 +49,7 @@ public class BuildTree {
         root.setText(topNode);
         root.setPath("#");
         root.setLevel(0);
+        root.setState(1);
         return root;
     }
 }

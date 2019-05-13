@@ -8,13 +8,17 @@ import com.evo.sp.business.system.entity.vo.SysDictionaryVo;
 import com.evo.sp.business.system.mapper.SysDictionaryMapper;
 import com.evo.sp.business.system.service.ISysDictionaryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.evo.sp.common.BaseService;
+import com.evo.sp.common.BaseServiceImpl;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.parameter.PageRequestParameter;
 import com.evo.sp.common.result.Result;
+import com.evo.sp.common.tree.Tree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +30,9 @@ import java.util.List;
  * @since 2019-04-10
  */
 @Service
-public class SysDictionaryServiceImpl extends ServiceImpl<SysDictionaryMapper, SysDictionary> implements ISysDictionaryService {
+@SuppressWarnings("all")
+public class SysDictionaryServiceImpl extends BaseServiceImpl<SysDictionaryMapper, SysDictionary>
+        implements ISysDictionaryService{
 
     @Autowired
     private SysDictionaryMapper sysDictionaryMapper;
@@ -85,9 +91,28 @@ public class SysDictionaryServiceImpl extends ServiceImpl<SysDictionaryMapper, S
      * 根据级别查询字典值
      */
     @Override
-    public List<SysDictionary> queryDictionaryByLevel() {
-        return list(new QueryWrapper<SysDictionary>().eq(SpConstantInter.LEVEL,1));
+    public List<Tree<SysDictionary>> queryDictionaryByLevel() {
+        List<SysDictionary> list = list(new QueryWrapper<SysDictionary>().eq(SpConstantInter.TABLE_STATE, 1).eq(SpConstantInter.LEVEL, 1));
+        return queryTree(list,null);
     }
 
+    /**
+     * 根据pid获取当前节点下的子节点
+     *
+     * @param pid
+     */
+    @Override
+    public Result queryByPidTree(String pid,String treeId) {
+        List<SysDictionary> list = list(new QueryWrapper<SysDictionary>().eq(SpConstantInter.PID, pid));
+        return new Result(queryTree(list,treeId));
+    }
 
+    /**
+     *
+     * 构建树结构json数据
+     */
+    @Override
+    public List<Tree<SysDictionary>> queryTree(List<SysDictionary> list,String treeId) {
+        return super.queryTree(list,treeId);
+    }
 }

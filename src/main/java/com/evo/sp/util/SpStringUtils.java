@@ -13,4 +13,12 @@ public class SpStringUtils {
     public static String UUID() {
         return UUID.randomUUID().toString().replace("-", "");
     }
+
+    /**
+     *
+     * 根据label分割字符串，返回数组
+     */
+    public static String[] splitStr(String str,String label){
+        return str.split(label);
+    }
 }

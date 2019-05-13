@@ -24,7 +24,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      *
      * 查询用户可用菜单
      */
-    List<Tree<SysMenu>> queryMenuPath();
+    List<Tree<SysMenu>> queryMenuPath(String userId);
 
     /**
      *
@@ -43,5 +43,11 @@ public interface ISysMenuService extends IService<SysMenu> {
      * 菜单树
      */
     List<Tree<SysMenu>> queryMenuTree();
+
+    /**
+     *
+     * 根据pid获取数据（树结构）
+     */
+    List<Tree<SysMenu>> queryMenuTreeByPid(String id);
     
 }

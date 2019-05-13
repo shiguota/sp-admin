@@ -11,6 +11,7 @@ import com.evo.sp.business.system.mapper.SysMenuMapper;
 import com.evo.sp.business.system.mapper.SysMenuPermissionMapper;
 import com.evo.sp.business.system.service.ISysMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.evo.sp.common.BaseServiceImpl;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.SaveException;
 import com.evo.sp.common.ex.SessionException;
@@ -38,7 +39,7 @@ import java.util.List;
  * @since 2019-04-10
  */
 @Service
-public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
+public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
 
 
     @Autowired
@@ -50,13 +51,16 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * 查询用户可用菜单
      */
     @Override
-    public List<Tree<SysMenu>> queryMenuPath() {
+    public List<Tree<SysMenu>> queryMenuPath(String userId) {
         List<Tree<SysMenu>> trees = new ArrayList<>();
         //获取session中的用户信息
         Session session = SecurityUtils.getSubject().getSession();
         SysUser sysUser = (SysUser) session.getAttribute(session.getId());
         //校验用户信息
         if (SpAssert.isNotNull(sysUser)) {
+            if(!userId.equals(sysUser.getId())){
+                throw new SessionException();
+            }
             if (SpAssert.isNotNull(sysUser.getAccount())) {
                 List<SysMenu> sysMenus = sysMenuMapper.queryMenuPath(sysUser.getAccount());
                 //构建树结构数据
@@ -165,22 +169,23 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         return new Result(page(page, sysMenuQueryWrapper));
     }
 
+
     /**
      * 菜单树
      */
     @Override
     public List<Tree<SysMenu>> queryMenuTree() {
-        List<Tree<SysMenu>> trees = new ArrayList<>();
-        List<SysMenu> list = list();
-        for (SysMenu sysMenu : list) {
-            Tree<SysMenu> sysMenuTree = new Tree<>();
-            sysMenuTree.setText(sysMenu.getMenuName());
-            sysMenuTree.setPath(sysMenu.getMenuPath());
-            sysMenuTree.setIcon(sysMenu.getMenuIcon());
-            sysMenuTree.setId(sysMenu.getId());
-            sysMenuTree.setParentId(sysMenu.getPid());
-            trees.add(sysMenuTree);
-        }
-        return trees;
+        List<SysMenu> list = list(new QueryWrapper<SysMenu>().eq(SpConstantInter.LEVEL,1));
+        return super.queryTree(list,null);
+    }
+
+    /**
+     * 根据pid获取数据（树结构）
+     *
+     * @param pid
+     */
+    @Override
+    public List<Tree<SysMenu>> queryMenuTreeByPid(String pid) {
+        return super.queryTree(list(new QueryWrapper<SysMenu>().eq(SpConstantInter.PID,pid)),null);
     }
 }

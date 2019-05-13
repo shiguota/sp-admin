@@ -26,7 +26,7 @@ import java.util.Map;
  * @Author: sgt
  * @Date: 2019-03-28
  */
-//@Configuration
+@Configuration
 public class SpShiroConfig {
 
     private static final String FILTER_NAME = "spfilter";

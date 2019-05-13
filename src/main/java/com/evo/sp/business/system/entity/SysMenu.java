@@ -65,7 +65,34 @@ public class SysMenu extends BaseEntity {
      *字典表id
      */
     private String systemDictionaryId;
+    
+    /**
+     *
+     * 级别
+     */
+    private  Integer level;
+    
+    /**
+     *
+     *  节点状态  1打开，2关闭，默认关闭
+     */
+    private Integer isOpen;
 
+    public Integer getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(Integer isOpen) {
+        this.isOpen = isOpen;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     public String getId() {
         return id;

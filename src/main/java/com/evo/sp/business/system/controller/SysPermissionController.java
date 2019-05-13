@@ -43,6 +43,7 @@ public class SysPermissionController extends BaseController {
      * @apiHeader {applications/json} ContentType 请求参数为json格式
      * @apiParam {String} perName 权限名称
      * @apiParam {String} perCode 权限编码.
+     * @apiParam {Integer} state 状态 1可用  0禁用.
      * @apiParam {String} perDescribe 权限描述.
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess {Integer} code 操作编码.
@@ -108,6 +109,7 @@ public class SysPermissionController extends BaseController {
      * @apiHeader {applications/json} ContentType 请求参数为json格式
      * @apiParam {String} perName 权限名称
      * @apiParam {String} perCode 权限编码.
+     * @apiParam {Integer} state 状态 1可用  0禁用.
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess {Integer} code 操作编码.
      * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).

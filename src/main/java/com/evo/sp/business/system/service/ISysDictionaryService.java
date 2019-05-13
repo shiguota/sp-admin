@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.evo.sp.business.system.entity.SysDictionary;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.evo.sp.business.system.entity.vo.SysDictionaryVo;
+import com.evo.sp.common.BaseService;
 import com.evo.sp.common.parameter.PageRequestParameter;
 import com.evo.sp.common.result.Result;
+import com.evo.sp.common.tree.Tree;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ import java.util.List;
  * @author sgt
  * @since 2019-04-10
  */
-public interface ISysDictionaryService extends IService<SysDictionary> {
+public interface ISysDictionaryService extends IService<SysDictionary>, BaseService<SysDictionary> {
     /**
      *
      * 根据名称查询/pid
@@ -37,6 +39,13 @@ public interface ISysDictionaryService extends IService<SysDictionary> {
      *
      * 根据条件查询字典值
      */
-    List<SysDictionary> queryDictionaryByLevel();
+    List<Tree<SysDictionary>> queryDictionaryByLevel();
+
+    
+    /**
+     *
+     * 根据pid获取当前节点下的子节点
+     */
+    Result queryByPidTree(String pid,String treeId);
 
 }

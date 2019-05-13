@@ -21,9 +21,9 @@ public class Tree<T> {
      */
     private String text;
     /**
-     * 节点状态，open closed
+     * 节点状态
      */
-    private String state = "open";
+    private Integer isOpen;
     /**
      * 节点是否被选中 true false
      */
@@ -66,6 +66,34 @@ public class Tree<T> {
      * 级别
      */
     private Integer level;
+    
+    /**
+     *
+     * 编码
+     */
+    private String code;
+    
+    /**
+     *
+     *  状态（1 启用   2禁用）
+     */
+    private Integer state;
+
+    public Integer getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(Integer isOpen) {
+        this.isOpen = isOpen;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public Integer getLevel() {
         return level;
@@ -115,11 +143,13 @@ public class Tree<T> {
         this.text = text;
     }
 
-    public String getState() {
+
+
+    public Integer getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 
