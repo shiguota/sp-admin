@@ -108,10 +108,15 @@ public class SysServerConfigServiceImpl extends ServiceImpl<SysServerConfigMappe
      */
     @Override
     public Result queryServerConfigPage(PageRequestParameter<SysServerConfigVo> pageRequestParameter) {
+        SpAssert.isNull(pageRequestParameter);
+        if (SpAssert.isNotNull(pageRequestParameter.parameterInstance())) {
+
+        }
+
         //如果参数为空,设置默认参数
         if (!SpAssert.isNotNull(pageRequestParameter)) {
             SysServerConfigVo configVo = new SysServerConfigVo();
-            configVo.setCSortType(SpConstantInter.DESC);
+            configVo.setcSortType(SpConstantInter.DESC);
             pageRequestParameter = new PageRequestParameter();
             pageRequestParameter.setParameter(configVo);
         }

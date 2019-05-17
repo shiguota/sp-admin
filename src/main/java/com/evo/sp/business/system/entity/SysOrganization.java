@@ -1,6 +1,7 @@
 package com.evo.sp.business.system.entity;
 
-import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,7 @@ public class SysOrganization extends BaseEntity {
     /**
      * 组织机构表id
      */
+    @TableId(type = IdType.UUID)
     private String id;
 
     /**
@@ -34,12 +36,12 @@ public class SysOrganization extends BaseEntity {
     /**
      * 排序字段
      */
-    private Integer orgSort;
+    private Integer sort;
 
     /**
      * 级别
      */
-    private Integer orgLevel;
+    private Integer level;
 
     /**
      * 父id
@@ -51,6 +53,20 @@ public class SysOrganization extends BaseEntity {
      */
     private String sysAreaId;
 
+    /**
+     *
+     * 简称
+     */
+    private String orgShort;
+
+
+    public String getOrgShort() {
+        return orgShort;
+    }
+
+    public void setOrgShort(String orgShort) {
+        this.orgShort = orgShort;
+    }
 
     public String getId() {
         return id;
@@ -68,20 +84,20 @@ public class SysOrganization extends BaseEntity {
         this.orgName = orgName;
     }
 
-    public Integer getOrgSort() {
-        return orgSort;
+    public Integer getSort() {
+        return sort;
     }
 
-    public void setOrgSort(Integer orgSort) {
-        this.orgSort = orgSort;
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 
-    public Integer getOrgLevel() {
-        return orgLevel;
+    public Integer getLevel() {
+        return level;
     }
 
-    public void setOrgLevel(Integer orgLevel) {
-        this.orgLevel = orgLevel;
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public String getPid() {

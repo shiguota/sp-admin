@@ -41,9 +41,17 @@ public class SpControllerAdvice {
         Map map = new HashMap();
         if (ex instanceof SpParameterException) {//参数错误
             SpParameterException spParameterException = (SpParameterException) ex;
-            map.put(EXCEPTION_CODE, spParameterException.getCode());
+            if (SpAssert.isNotNull(spParameterException.getMsg())) {
+                map.put(EXCEPTION_MSG,spParameterException.getMsg());
+            }else{
+                map.put(EXCEPTION_MSG,ResultEnum.REQUEST_PARAMETER_ERROR.getName());
+            }
+            if(SpAssert.isNotNull(spParameterException.getCode())){
+                map.put(EXCEPTION_CODE,spParameterException.getCode());
+            }else{
+                map.put(EXCEPTION_CODE, ResultEnum.REQUEST_PARAMETER_ERROR.getValue());
+            }
             map.put(EXCEPTION_DATA, false);
-            map.put(EXCEPTION_MSG, spParameterException.getMsg());
         } else if (ex instanceof UnauthorizedException) {//未授权
             map.put(EXCEPTION_DATA, false);
             map.put(EXCEPTION_CODE, ResultEnum.PERMISSION_UNAUTHORIZED.getValue());
@@ -60,19 +68,50 @@ public class SpControllerAdvice {
             map.put(EXCEPTION_CODE, ResultEnum.LOGIN_FAIL.getValue());
             map.put(EXCEPTION_MSG, ResultEnum.LOGIN_FAIL.getName());
         } else if (ex instanceof SessionException) {//会话过期
+            SessionException sessionException  = (SessionException) ex;
+            if (SpAssert.isNotNull(sessionException.getMsg())) {
+                map.put(EXCEPTION_MSG,sessionException.getMsg());
+            }else{
+                map.put(EXCEPTION_MSG,ResultEnum.SESSION_IS_NULL.getName());
+            }
+            if(SpAssert.isNotNull(sessionException.getCode())){
+                map.put(EXCEPTION_CODE,sessionException.getCode());
+            }else{
+                map.put(EXCEPTION_CODE, ResultEnum.SESSION_IS_NULL.getValue());
+            }
             map.put(EXCEPTION_DATA, false);
-            map.put(EXCEPTION_CODE, ResultEnum.SESSION_IS_NULL.getValue());
-            map.put(EXCEPTION_MSG, ResultEnum.SESSION_IS_NULL.getName());
         }else if (ex instanceof SaveException) {//保存失败
+            SaveException saveException  = (SaveException) ex;
+            if (SpAssert.isNotNull(saveException.getMsg())) {
+                map.put(EXCEPTION_MSG,saveException.getMsg());
+            }else{
+                map.put(EXCEPTION_MSG,ResultEnum.SAVE_FAIL.getName());
+            }
+            if(SpAssert.isNotNull(saveException.getCode())){
+                map.put(EXCEPTION_CODE,saveException.getCode());
+            }else{
+                map.put(EXCEPTION_CODE, ResultEnum.SAVE_FAIL.getValue());
+            }
             map.put(EXCEPTION_DATA, false);
-            map.put(EXCEPTION_CODE, ResultEnum.SAVE_FAIL.getValue());
-            map.put(EXCEPTION_MSG, ResultEnum.SAVE_FAIL.getName());
         } else if (ex instanceof UploadException) {//文件上传
             map.put(EXCEPTION_DATA, false);
             if (!SpAssert.isNotNull(((UploadException) ex).getCode()) && !SpAssert.isNotNull(((UploadException) ex).getMsg())) {
                 map.put(EXCEPTION_CODE, ResultEnum.FILE_UPLOAD_FAIL.getValue());
                 map.put(EXCEPTION_MSG, ResultEnum.FILE_UPLOAD_FAIL.getName());
             }
+        } else if(ex instanceof DelException){ //删除异常
+            DelException delException  = (DelException) ex;
+            if (SpAssert.isNotNull(delException.getMsg())) {
+                map.put(EXCEPTION_MSG,delException.getMsg());
+            }else{
+                map.put(EXCEPTION_MSG,ResultEnum.REMOVE_FAIL.getName());
+            }
+            if(SpAssert.isNotNull(delException.getCode())){
+                map.put(EXCEPTION_CODE,delException.getCode());
+            }else{
+                map.put(EXCEPTION_CODE, ResultEnum.REMOVE_FAIL.getValue());
+            }
+            map.put(EXCEPTION_DATA, false);
         } else {
             map.put(EXCEPTION_DATA, false);
             map.put(EXCEPTION_CODE, 100);

@@ -31,11 +31,11 @@
                     and ui.phone = #{u.info.phone}
                 </if>
             </if>
-            <if test="u.USortType != null">
-                order by u.update_time ${u.USortType}
+            <if test="u.uSortType != null">
+                order by u.update_time ${u.uSortType}
             </if>
-            <if test="u.CSortType != null">
-                order by u.create_time ${u.CSortType}
+            <if test="u.cSortType != null">
+                order by u.create_time ${u.cSortType}
             </if>
         </where>
     </select>

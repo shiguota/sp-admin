@@ -20,14 +20,14 @@
         sc.update_time as updateTime
         from sys_server_config sc
         join sys_dictionary d on sc.sys_dictionary_id = d.id
-        <if test="CSortType !=null">
-            order by sc.create_time ${CSortType}
-        </if>
-        <if test="USortType != null">
-            order by sc.update_time ${USortType}
-        </if>
         <if test="serverName != null">
             where d.dic_name like '%${serverName}%'
+        </if>
+        <if test="cSortType !=null">
+            order by sc.create_time ${cSortType}
+        </if>
+        <if test="uSortType != null">
+            order by sc.update_time ${uSortType}
         </if>
 
     </select>

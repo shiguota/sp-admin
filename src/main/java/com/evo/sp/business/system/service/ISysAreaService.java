@@ -29,4 +29,10 @@ public interface ISysAreaService extends IService<SysArea> {
      * 获取区域信息，并返回构建树结构所需对象
      */
     List<Tree<SysArea>> queryAreaTree();
+    
+    /**
+     *
+     * 获取区域信息
+     */
+    List<Tree<SysArea>> queryAreaByPid(String pid,String treeId);
 }

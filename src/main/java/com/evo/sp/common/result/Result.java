@@ -17,11 +17,49 @@ public class Result implements Serializable {
      *  错误编码
      */
     private Integer code;
+
     /**
      *  错误信息
      */
-
     private Object msg;
+
+    /**
+     *
+     * 扩展字段
+     */
+    private Object extension;
+
+    public Object getDate() {
+        return date;
+    }
+
+    public void setDate(Object date) {
+        this.date = date;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public Object getMsg() {
+        return msg;
+    }
+
+    public void setMsg(Object msg) {
+        this.msg = msg;
+    }
+
+    public Object getExtension() {
+        return extension;
+    }
+
+    public void setExtension(Object extension) {
+        this.extension = extension;
+    }
 
     public Result(Object date) {
         this.date = date;
@@ -47,9 +85,23 @@ public class Result implements Serializable {
         this.msg = msg;
     }
 
+    public Result(Object date, Object extension) {
+        this.date = date;
+        this.extension = extension;
+        this.code = ResultEnum.OPERATION_SUCCESS.getValue();
+        this.msg = ResultEnum.OPERATION_SUCCESS.getName();
+    }
+
     public Result(Object date, Integer code) {
         this.date = date;
         this.code = code;
+        this.msg = MSG(code);
+
+    }
+
+
+    public static String MSG(Integer code){
+        String msg = "";
         switch (code){
             case 1001:
                 msg = ResultEnum.SAVE_SUCCESS.getName();
@@ -120,6 +172,18 @@ public class Result implements Serializable {
             case 4001:
                 msg = ResultEnum.PERMISSION_UNAUTHORIZED.getName();
                 break;
+            case 4002:
+                msg = ResultEnum.PERMISSION_SAVE_CODE.getName();
+                break;
+            case 4003:
+                msg = ResultEnum.PERMISSION_SAVE_NAME.getName();
+                break;
+            case 4004:
+                msg = ResultEnum.PERMISSION_DEL_SUCCESS.getName();
+                break;
+            case 4005:
+                msg = ResultEnum.PERMISSION_DEL_FAIL.getName();
+                break;
             case 5001:
                 msg = ResultEnum.USER_IS_EXIST.getName();
                 break;
@@ -135,31 +199,7 @@ public class Result implements Serializable {
             case 6004:
                 msg = ResultEnum.FILE_NAME_EXISTS.getName();
                 break;
-
         }
-    }
-
-    public Object getDate() {
-        return date;
-    }
-
-    public void setDate(Object date) {
-        this.date = date;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public Object getMsg() {
         return msg;
-    }
-
-    public void setMsg(Object msg) {
-        this.msg = msg;
     }
 }

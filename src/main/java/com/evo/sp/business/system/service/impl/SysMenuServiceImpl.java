@@ -10,7 +10,6 @@ import com.evo.sp.business.system.entity.vo.SysMenuVo;
 import com.evo.sp.business.system.mapper.SysMenuMapper;
 import com.evo.sp.business.system.mapper.SysMenuPermissionMapper;
 import com.evo.sp.business.system.service.ISysMenuService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.evo.sp.common.BaseServiceImpl;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.SaveException;
@@ -39,6 +38,7 @@ import java.util.List;
  * @since 2019-04-10
  */
 @Service
+@SuppressWarnings("all")
 public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
 
 
@@ -52,19 +52,20 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
      */
     @Override
     public List<Tree<SysMenu>> queryMenuPath(String userId) {
+        SpAssert.isNull(userId);
         List<Tree<SysMenu>> trees = new ArrayList<>();
         //获取session中的用户信息
         Session session = SecurityUtils.getSubject().getSession();
         SysUser sysUser = (SysUser) session.getAttribute(session.getId());
         //校验用户信息
         if (SpAssert.isNotNull(sysUser)) {
-            if(!userId.equals(sysUser.getId())){
+            if (!userId.equals(sysUser.getId())) {
                 throw new SessionException();
             }
             if (SpAssert.isNotNull(sysUser.getAccount())) {
-                List<SysMenu> sysMenus = sysMenuMapper.queryMenuPath(sysUser.getAccount());
+                List<SysMenuVo> sysMenus = sysMenuMapper.queryMenuByUserAccount(sysUser.getAccount(), null);
                 //构建树结构数据
-                for (SysMenu sysMenu : sysMenus) {
+                for (SysMenuVo sysMenu : sysMenus) {
                     Tree<SysMenu> sysMenuTree = new Tree<>();
                     sysMenuTree.setId(sysMenu.getId());
                     sysMenuTree.setParentId(sysMenu.getPid());
@@ -89,7 +90,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
      */
     @Override
     @Transactional
-    public Result menuSave(SysMenuVo sysMenuVo) {
+    public Result saveMenu(SysMenuVo sysMenuVo) {
         //声明需要保存的菜单对象
         SysMenu sysMenu = new SysMenu();
         //校验参数
@@ -128,12 +129,16 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
      */
     @Override
     public Result queryListPage(PageRequestParameter<SysMenuVo> pageRequestParameter) {
+        SpAssert.isNull(pageRequestParameter);
         //排序类型
-        boolean isAsc = false;
+        boolean isAsc = true;
         //获取分页对象
         Page page = pageRequestParameter.pageInstance();
         //获取查询条件
         SysMenuVo sysMenuVo = pageRequestParameter.parameterInstance();
+        SpAssert.sortAssert(sysMenuVo.getSort());
+        SpAssert.sortAssert(sysMenuVo.getcSortType());
+        SpAssert.sortAssert(sysMenuVo.getuSortType());
         //创建wrapper
         QueryWrapper<SysMenu> sysMenuQueryWrapper = new QueryWrapper<>();
         //校验参数
@@ -147,25 +152,27 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
                 sysMenuQueryWrapper.like(SpConstantInter.SYS_MENU_NAME, sysMenuVo.getMenuName());
             }
             //根据创建时间排序
-            if (SpAssert.isNotNull(sysMenuVo.getCSortType())) {
-                if (sysMenuVo.getCSortType().equals(SpConstantInter.ASC)) {
-                    isAsc = true;
+            if (SpAssert.isNotNull(sysMenuVo.getcSortType())) {
+                if (sysMenuVo.getcSortType().equals(SpConstantInter.DESC)) {
+                    isAsc = false;
                 }
                 sysMenuQueryWrapper.orderBy(true, isAsc, SpConstantInter.TABLE_CREATE_TIME);
                 //根据修改时间排序
-            } else if (SpAssert.isNotNull(sysMenuVo.getUSortType())) {
-                if (sysMenuVo.getUSortType().equals(SpConstantInter.ASC)) {
-                    isAsc = true;
+            } else if (SpAssert.isNotNull(sysMenuVo.getuSortType())) {
+                if (sysMenuVo.getuSortType().equals(SpConstantInter.DESC)) {
+                    isAsc = false;
                 }
                 sysMenuQueryWrapper.orderBy(true, isAsc, SpConstantInter.TABLE_UPDATE_TIME);
                 //默认通过手动排序
             } else {
-                sysMenuQueryWrapper.orderBy(true, true, SpConstantInter.SORT);
+                if (SpAssert.isNotNull(sysMenuVo.getSort())) {
+                    if (sysMenuVo.getSort().equals(SpConstantInter.DESC)) {
+                        isAsc = false;
+                    }
+                }
+                sysMenuQueryWrapper.orderBy(true, isAsc, SpConstantInter.SORT);
             }
-        } else {
-            SpAssert.isNull(sysMenuVo);
         }
-
         return new Result(page(page, sysMenuQueryWrapper));
     }
 
@@ -174,9 +181,28 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
      * 菜单树
      */
     @Override
-    public List<Tree<SysMenu>> queryMenuTree() {
-        List<SysMenu> list = list(new QueryWrapper<SysMenu>().eq(SpConstantInter.LEVEL,1));
-        return super.queryTree(list,null);
+    public List<Tree<SysMenu>> queryMenuTree(String userId) {
+        SpAssert.isNull(userId);
+        List<Tree<SysMenu>> trees = new ArrayList<>();
+        //获取session中的用户信息
+        Session session = SecurityUtils.getSubject().getSession();
+        SysUser sysUser = (SysUser) session.getAttribute(session.getId());
+        //校验用户信息
+        if (SpAssert.isNotNull(sysUser)) {
+            if (!userId.equals(sysUser.getId())) {
+                throw new SessionException();
+            }
+        } else {
+            throw new SessionException();
+        }
+        List<SysMenu> menus = new ArrayList<>();
+        List<SysMenuVo> sysMenus = sysMenuMapper.queryMenuByUserAccount(sysUser.getAccount(), 1);
+        for (SysMenuVo sysMenu : sysMenus) {
+            SysMenu menu = new SysMenu();
+            BeanUtils.copyProperties(sysMenu, menu);
+            menus.add(menu);
+        }
+        return super.queryTree(menus, null);
     }
 
     /**
@@ -186,6 +212,6 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
      */
     @Override
     public List<Tree<SysMenu>> queryMenuTreeByPid(String pid) {
-        return super.queryTree(list(new QueryWrapper<SysMenu>().eq(SpConstantInter.PID,pid)),null);
+        return super.queryTree(list(new QueryWrapper<SysMenu>().eq(SpConstantInter.PID, pid)), null);
     }
 }

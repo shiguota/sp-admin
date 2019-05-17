@@ -2,6 +2,7 @@ package com.evo.sp.business.system.controller;
 
 
 import com.evo.sp.business.system.entity.SysUserRole;
+import com.evo.sp.business.system.entity.vo.SysUserRoleVo;
 import com.evo.sp.business.system.service.ISysUserRoleService;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.SpAssert;
@@ -22,6 +23,7 @@ import com.evo.sp.common.BaseController;
  *
  * @author sgt
  * @since 2019-04-17
+ * @apiDefine UserRole 用户角色接口
  */
 @RestController
 @RequestMapping(SpConstantInter.SYS_USER_ROLE)
@@ -33,11 +35,11 @@ public class SysUserRoleController extends BaseController {
 
 
     /**
-     * @api {post} /sys/user/role/save 新增（用户分配"角色"）
+     * @api {post} /sys/user/role/save 用户授权
      * @apiName save
      * @apiGroup UserRole
      * @apiHeader {applications/json} ContentType 请求参数为json格式
-     * @apiParam {String} sysRoleId   角色id.
+     * @apiParam {Array} roleId   角色id.
      * @apiParam {String} sysUserId   用户id.
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess {Integer} code 操作编码.
@@ -60,18 +62,13 @@ public class SysUserRoleController extends BaseController {
      * }
      */
     @RequestMapping(value = SpConstantInter.SYS_USER_ROLE_SAVE, method = RequestMethod.POST)
-    public Result saveUserRole(@RequestBody SysUserRole sysUserRole) {
-        SpAssert.isNull(sysUserRole);
-        SpAssert.isNull(sysUserRole.getSysRoleId());
-        SpAssert.isNull(sysUserRole.getSysUserId());
-        return save(sysUserRole, iSysUserRoleService);
+    public Result saveUserRole(@RequestBody SysUserRoleVo sysUserRole) {
+        return iSysUserRoleService.saveUserRole(sysUserRole);
     }
 
+
     /**
-     *
-     */
-    /**
-     * @api {post} /sys/user/role/del 删除（用户删除"角色"）
+     * @api {post} /sys/user/role/del 删除 注：已弃用
      * @apiName del
      * @apiGroup UserRole
      * @apiHeader {applications/json} ContentType 请求参数为json格式

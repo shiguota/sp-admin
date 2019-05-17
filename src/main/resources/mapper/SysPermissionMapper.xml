@@ -6,37 +6,48 @@
             resultType="com.evo.sp.business.system.entity.SysPermission">
               select p.per_code from sys_role r
                 join sys_role_permission rp on r.id = rp.sys_role_id
-                join sys_menu_permission mp on rp.sys_menu_has_sys_permission_id = mp.id
+                join sys_menu_permission mp on rp.sys_permission_id = mp.id
                 join sys_menu m on mp.sys_menu_id = m.id
                 join sys_permission p on mp.sys_permission_id = p.id
               where  r.role_code = #{roleCode}
     </select>
 
     <!--根据菜单获取权限-->
-    <select id="queryPerByMenuId" parameterType="java.lang.String" resultType="SysPermission">
+    <select id="queryPerByMenuId" parameterType="java.lang.String"
+            resultType="com.evo.sp.business.system.entity.SysPermission">
         select per.id,per.per_code,per.per_name,per.create_time,per.update_time from sys_permission per
           join sys_menu_permission mp on per.id = mp.sys_permission_id
         where mp.sys_menu_id = #{sysMenuId}
     </select>
 
-    <!--根据用户账号以及菜单id，获取该菜单下，当前用户拥有的权限-->
-    <select id="queryPerByMenuUser" parameterType="java.lang.String" resultType="com.evo.sp.business.system.entity.SysPermission">
+    <!--获取用户拥有的菜单权限-->
+    <select id="queryPerByMenuUser" parameterType="java.lang.String"
+            resultType="com.evo.sp.business.system.entity.SysPermission">
         select p.id,p.per_code,p.per_name,p.per_describe from sys_permission p
-            join sys_menu_permission mp on p.id = mp.sys_permission_id
-            join sys_menu m on mp.sys_menu_id = m.i
-            join sys_role_permission sor on mp.id = sor.sys_menu_has_sys_permission_id
-            join sys_role r on sor.sys_role_id = r.id
-            join sys_user_role ur on r.id = ur.sys_role_id
-            join sys_user u on ur.sys_user_id = u.id
-        where m.id = #{menuId} and u.id = #{userId}
+        join sys_menu_permission mp on p.id = mp.sys_permission_id
+        join sys_menu m on mp.sys_menu_id = m.id
+        join sys_role_permission sor on mp.id = sor.sys_permission_id
+        join sys_role r on sor.sys_role_id = r.id
+        join sys_user_role ur on r.id = ur.sys_role_id
+        join sys_user u on ur.sys_user_id = u.id
+        <where>
+            1=1
+            <if test="menuId != null ">
+                and m.id = #{menuId}
+            </if>
+            <if test="userId !=null">
+                and u.id = #{userId}
+            </if>
+        </where>
     </select>
 
     <!--获取当前登录账号以及被勾选账号的某个菜单的权限差集-->
-    <select id="queryPerByMenuUserDifSet" parameterType="com.evo.sp.business.system.entity.vo.SysPermissionVo" resultType="SysPermission">
+    <select id="queryPerByMenuUserDifSet" parameterType="com.evo.sp.business.system.entity.vo.SysPermissionVo"
+            resultType="com.evo.sp.business.system.entity.SysPermission">
         select a.id,a.per_code,a.per_name,a.per_describe from (select p.id,p.per_code,p.per_name,p.per_describe from sys_permission p
             join sys_menu_permission mp on p.id = mp.sys_permission_id
             join sys_menu m on mp.sys_menu_id = m.id
-            join sys_role_permission sor on mp.id = sor.sys_menu_has_sys_permission_id
+            join sys_role_permission sor on mp.id = sor.sys_permission_id
             join sys_role r on sor.sys_role_id = r.id
             join sys_user_role ur on r.id = ur.sys_role_id
             join sys_user u on ur.sys_user_id = u.id
@@ -44,7 +55,7 @@
             left join (select p.id,p.per_code,p.per_name,p.per_describe from sys_permission p
             join sys_menu_permission mp on p.id = mp.sys_permission_id
             join sys_menu m on mp.sys_menu_id = m.id
-            join sys_role_permission sor on mp.id = sor.sys_menu_has_sys_permission_id
+            join sys_role_permission sor on mp.id = sor.sys_permission_id
             join sys_role r on sor.sys_role_id = r.id
             join sys_user_role ur on r.id = ur.sys_role_id
             join sys_user u on ur.sys_user_id = u.id
@@ -52,4 +63,37 @@
             where a.id is null
     </select>
 
+    <!--菜单授权  0不存在  1存在-->
+    <select id="queryPerByUIdMIdRId" parameterType="com.evo.sp.business.system.entity.vo.SysPermissionVo"
+            resultType="com.evo.sp.business.system.entity.vo.SysPermissionVo">
+        select p.per_name as perName,
+        p.per_code as perCode,
+        p.id as id,
+        p.create_time as createTime,
+        p.update_time as updateTime,
+        if(1=1,1,0) as isExist
+        from sys_permission p
+        join sys_menu_permission mp on p.id = mp.sys_permission_id
+        join sys_role_permission srp on mp.id = srp.sys_permission_id
+        <if test="roleId != null">
+            <where>srp.sys_role_id = #{roleId}</where>
+        </if>
+        UNION
+        select p.per_name,p.per_code, p.id as id,p.create_time,p.update_time,if(1=1,0,1) as isExist from sys_permission p
+        join sys_menu_permission mp on p.id = mp.sys_permission_id
+        join sys_role_permission srp on mp.id = srp.sys_permission_id
+        join sys_role r on r.id = srp.sys_role_id
+        join sys_user_role ur on r.id = ur.sys_role_id
+        <if test="userId !=null &amp;&amp; menuId != null">
+            <where>
+                1=1
+                <if test="userId !=null">
+                    and ur.sys_user_id = #{userId}
+                </if>
+                <if test="menuId !=null">
+                    and mp.sys_menu_id = #{menuId}
+                </if>
+            </where>
+        </if>
+    </select>
 </mapper>

@@ -7,25 +7,30 @@
         select r.role_code from sys_user u
         join sys_user_role ur on u.id = ur.sys_user_id
         join sys_role r on ur.sys_role_id = r.id
-        where u.account = #{account}
+        <if test="account != null">
+            <where>u.account = #{account}</where>
+        </if>
     </select>
 
     <!--根据机构查询角色（分页）-->
-    <select id="queryByNameOrg" parameterType="com.evo.sp.business.system.entity.vo.SysRoleVo" resultType="com.evo.sp.business.system.entity.SysRole">
-        select r.role_name,r.role_code,r.create_time,r.update_time from sys_role r
+    <select id="queryByNameOrg" parameterType="com.evo.sp.business.system.entity.vo.SysRoleVo"
+            resultType="com.evo.sp.business.system.entity.SysRole">
+        select r.id,r.role_name,r.role_code,r.create_time,r.update_time,r.state,r.role_description from sys_role r
         join sys_organization_role sor on r.id = sor.sys_role_id
         join sys_organization o on sor.sys_organization_id = o.id
-        <where>
-            o.id = #{orgId}
-            <if test="roleName != null">
-              and role_name = #{roleName}
-            </if>
-            <if test="u.USortType != null">
-                order by u.update_time ${u.USortType}
-            </if>
-            <if test="u.CSortType != null">
-                order by u.create_time ${u.CSortType}
-            </if>
-        </where>
+        <if test="role.orgId != null">
+            <where>
+                o.id = #{role.orgId}
+                <if test="role.roleName != null">
+                    and role_name like '%${roleName}%'
+                </if>
+                <if test="role.uSortType != null">
+                    order by r.update_time ${role.uSortType}
+                </if>
+                <if test="role.cSortType != null">
+                    order by r.create_time ${role.cSortType}
+                </if>
+            </where>
+        </if>
     </select>
 </mapper>

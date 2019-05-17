@@ -7,6 +7,7 @@ import com.evo.sp.business.system.entity.vo.SysAreaVo;
 import com.evo.sp.business.system.mapper.SysAreaMapper;
 import com.evo.sp.business.system.service.ISysAreaService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.evo.sp.common.BaseServiceImpl;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.parameter.PageRequestParameter;
@@ -27,7 +28,7 @@ import java.util.List;
  * @since 2019-04-10
  */
 @Service
-public class SysAreaServiceImpl extends ServiceImpl<SysAreaMapper, SysArea> implements ISysAreaService {
+public class SysAreaServiceImpl extends BaseServiceImpl<SysAreaMapper, SysArea> implements ISysAreaService {
 
 
     @Autowired
@@ -40,30 +41,21 @@ public class SysAreaServiceImpl extends ServiceImpl<SysAreaMapper, SysArea> impl
      */
     @Override
     public Result queryListPage(PageRequestParameter<SysAreaVo> sysAreaVoPageRequestParameter) {
-        boolean sortType = false;
         //获取分页对象
         Page page = sysAreaVoPageRequestParameter.pageInstance();
         //获取条件参数对象
         SysAreaVo sysAreaVo = sysAreaVoPageRequestParameter.parameterInstance();
         //校验参数
         SpAssert.isNull(sysAreaVo);
-        //创建查询对象
-        QueryWrapper<SysArea> sysAreaQueryWrapper = new QueryWrapper<>();
         SpAssert.isNull(sysAreaVo.getId());
-        sysAreaQueryWrapper.eq(SpConstantInter.PID,sysAreaVo.getId());
-        //如果区域名称不为空，则添加查询条件
-        if (SpAssert.isNotNull(sysAreaVo.getAreaName())) {
-            sysAreaQueryWrapper.like(SpConstantInter.SYS_AREA_NAME,sysAreaVo.getAreaName());
+        SpAssert.sortAssert(sysAreaVo.getSort());
+        SpAssert.sortAssert(sysAreaVo.getcSortType());
+        SpAssert.sortAssert(sysAreaVo.getuSortType());
+        //默认排序为sort字段ASC
+        if (!SpAssert.isNotNull(sysAreaVo.getuSortType()) && !SpAssert.isNotNull(sysAreaVo.getcSortType())) {
+            sysAreaVo.setSort(SpConstantInter.ASC);
         }
-        //根据排序类型的值，改变排序的方式。默认是desc排序
-        if (SpAssert.isNotNull(sysAreaVo.getSort())) {
-            if (sysAreaVo.getSort().equals(SpConstantInter.ASC)) {
-                sortType = true;
-            }
-        }
-        sysAreaQueryWrapper.orderBy(true,sortType,SpConstantInter.SORT);
-
-        return new Result(page(page,sysAreaQueryWrapper));
+        return new Result(sysAreaMapper.queryAreaPage(page,sysAreaVo));
     }
 
     /**
@@ -71,18 +63,19 @@ public class SysAreaServiceImpl extends ServiceImpl<SysAreaMapper, SysArea> impl
      */
     @Override
     public List<Tree<SysArea>> queryAreaTree() {
-        //创建树结构需要对象类型
-        List<Tree<SysArea>> trees = new ArrayList<>();
         //获取区域数据
-        List<SysArea> list = list();
-        //便利区域数据
-        for (SysArea sysArea : list) {
-            Tree<SysArea> tree = new Tree<SysArea>();
-            tree.setId(sysArea.getId());
-            tree.setParentId(sysArea.getPid());
-            tree.setText(sysArea.getAreaName());
-            trees.add(tree);
-        }
-        return trees;
+        List<SysArea> list = list(new QueryWrapper<SysArea>().eq(SpConstantInter.LEVEL,1));
+        return super.queryTree(list, null);
+    }
+
+    /**
+     * 获取区域信息
+     *
+     * @param pid
+     */
+    @Override
+    public List<Tree<SysArea>> queryAreaByPid(String pid,String treeId) {
+        List<SysArea> list = list(new QueryWrapper<SysArea>().eq(SpConstantInter.PID,pid));
+        return super.queryTree(list, treeId);
     }
 }

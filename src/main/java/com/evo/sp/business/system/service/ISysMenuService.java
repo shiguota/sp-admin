@@ -30,7 +30,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      *
      * 增加菜单
      */
-    Result menuSave(SysMenuVo sysMenuVo);
+    Result saveMenu(SysMenuVo sysMenuVo);
 
     /**
      *
@@ -42,7 +42,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      *
      * 菜单树
      */
-    List<Tree<SysMenu>> queryMenuTree();
+    List<Tree<SysMenu>> queryMenuTree(String userId);
 
     /**
      *

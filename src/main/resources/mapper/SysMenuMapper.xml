@@ -2,18 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evo.sp.business.system.mapper.SysMenuMapper">
     <!--查询用户可用菜单-->
-    <select id="queryMenuPath" parameterType="java.lang.String" resultType="com.evo.sp.business.system.entity.SysMenu">
-        select m.id,m.menu_name,m.menu_code,m.menu_path,m.pid from sys_menu m
-            join sys_menu_permission mp on m.id = mp.sys_menu_id
-            join sys_role_permission rp on mp.id = rp.sys_menu_has_sys_permission_id
-            join sys_role r on rp.sys_menu_has_sys_permission_id = r.id
-            join sys_user_role ur on r.id = ur.sys_role_id
-            join sys_user u on ur.sys_user_id = u.id
-            <where>
-                m.state = 1
-                <if test="account != null">
-                  and u.account = #{account}
-                </if>
-            </where>
+    <select id="queryMenuByUserAccount" parameterType="java.lang.Object"
+            resultType="com.evo.sp.business.system.entity.vo.SysMenuVo">
+        select m.id as id,
+        m.menu_icon as menuIcon,
+        m.pid as pid,
+        m.menu_name as menuName,
+        m.menu_code as menuCode,
+        m.menu_path as menuPath,
+        m.pid as pid,
+        m.level as level
+        from sys_menu m
+        join sys_menu_permission mp on m.id = mp.sys_menu_id
+        join sys_role_permission rp on mp.id = rp.sys_permission_id
+        join sys_role r on rp.sys_role_id = r.id
+        join sys_user_role ur on r.id = ur.sys_role_id
+        join sys_user u on ur.sys_user_id = u.id
+        join sys_permission  p on p.id = mp.sys_permission_id
+        <where>
+            m.state = 1
+            <if test="account != null">
+                and u.account = #{account}
+            </if>
+            <if test="level != null">
+                and m.level = #{level}
+            </if>
+            and p.per_code ='access'
+        </where>
+        group by m.menu_path
     </select>
 </mapper>

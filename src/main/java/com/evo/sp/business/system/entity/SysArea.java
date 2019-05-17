@@ -2,6 +2,9 @@ package com.evo.sp.business.system.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,6 +25,7 @@ public class SysArea extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(type = IdType.UUID)
     private String id;
 
     /**

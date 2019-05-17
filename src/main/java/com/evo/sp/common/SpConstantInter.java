@@ -40,8 +40,14 @@ public class SpConstantInter {
     public static final String SYS_ORG_ROLEID="sys_role_id";
     //角色权限表
     public static final String SYS_ROLE_PERMISSION_ROLEID = "sys_role_id";
+    //菜单权限表
+    public static final String SYS_MENU_PERMISSION_MENUID = "sys_menu_id";
     //公告表
     public static final String APPLICATION_ANNOUNCEMENT_TITLE = "title";
+    //权限表
+    public static final String SYS_PERMISSION_CODE = "per_code";
+    public static final String SYS_PERMISSION_NAME = "per_name";
+
 
     /*******************************************控制器URL**********************************/
 
@@ -87,10 +93,11 @@ public class SpConstantInter {
      *
      * 用户信息
      */
-    public static final String SYS_USER_INFO = "/sys/user/info";
+        public static final String SYS_USER_INFO = "/sys/user/info";
     public static final String SYS_USER_INFO_SAVE = "/save";
     public static final String SYS_USER_INFO_DEL = "/del";
     public static final String SYS_USER_INFO_MODIFY = "/modify";
+    public static final String SYS_USER_INFO_ID = "/id";
 
     /**
      *
@@ -120,6 +127,7 @@ public class SpConstantInter {
     public static final String SYS_PERMISSION_DEL = "/del";
     public static final String SYS_PERMISSION_MODIFY = "/modify";
     public static final String SYS_PERMISSION_PAGE = "/page";
+    public static final String SYS_PERMISSION_ROLE = "/role";
     public static final String SYS_PERMISSION_MENU = "/menu";
     public static final String SYS_PERMISSION_MENU_USER = "/menu/user";
     public static final String SYS_PERMISSION_MENU_USER_DIF_SET = "/menu/user/difset";
@@ -158,6 +166,7 @@ public class SpConstantInter {
     public static final String SYS_MENU_PERMISSION_DEL = "/del";
     public static final String SYS_MENU_PERMISSION_MPODIFY = "/modify";
     public static final String SYS_MENU_PERMISSION_TREE = "/tree";
+    public static final String SYS_MENU_PERMISSION_BAN_SAVE = "/ban/save";
 
     /**
      *
@@ -170,6 +179,8 @@ public class SpConstantInter {
     public static final String SYS_AREA_TREE = "tree";
     public static final String SYS_AREA_QUERY = "query";
     public static final String SYS_AREA_PAGE = "page";
+    public static final String SYS_AREA_ID = "id";
+    public static final String SYS_AREA_PID = "pid";
 
     /**
      *
@@ -206,6 +217,7 @@ public class SpConstantInter {
     public static final String APPLICATION_ANNOUNCEMENT_MODIFY="/modify";
     public static final String APPLICATION_ANNOUNCEMENT_DEL="/del";
     public static final String APPLICATION_ANNOUNCEMENT_PAGE="/page";
+    public static final String APPLICATION_ANNOUNCEMENT_ID="/id";
     /**
      *
      * 服务配置

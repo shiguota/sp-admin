@@ -1,5 +1,6 @@
 package com.evo.sp.common.ex;
 
+import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.SpParameterException;
 import com.evo.sp.common.result.ResultEnum;
 
@@ -111,6 +112,19 @@ public abstract class SpAssert {
     }
 
 
+    /**
+     *
+     * 校验排序字段值
+     */
+    public static void sortAssert(String sort){
+        if (isNotNull(sort)) {
+            if (!sort.equals(SpConstantInter.ASC)) {
+                if (!sort.equals(SpConstantInter.DESC)) {
+                    throw  new SpParameterException();
+                }
+            }
+        }
+    }
 
     /**
      * @Description:测试类，生产环境下需要删除

@@ -38,7 +38,7 @@ public class SysDictionaryVo extends BaseEntityVo {
     /**
      * 排序
      */
-    private Integer dicSort;
+    private String dicSort;
 
     /**
      * 状态
@@ -81,11 +81,11 @@ public class SysDictionaryVo extends BaseEntityVo {
         this.dicCode = dicCode;
     }
 
-    public Integer getDicSort() {
+    public String getDicSort() {
         return dicSort;
     }
 
-    public void setDicSort(Integer dicSort) {
+    public void setDicSort(String dicSort) {
         this.dicSort = dicSort;
     }
 

@@ -7,9 +7,11 @@ import com.evo.sp.business.system.mapper.SysRolePermissionMapper;
 import com.evo.sp.business.system.service.ISysRolePermissionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.evo.sp.common.SpConstantInter;
+import com.evo.sp.common.ex.DelException;
 import com.evo.sp.common.ex.SaveException;
 import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.result.Result;
+import com.evo.sp.common.result.ResultEnum;
 import com.sun.xml.internal.xsom.impl.scd.SCDParserConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,19 +46,21 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
         //校验参数
         SpAssert.isNull(sysRolePermissionVo);
         SpAssert.isNull(sysRolePermissionVo.getSysRoleId());
-        SpAssert.isNull(sysRolePermissionVo.getSysMenuHasSysPermissionId());
+        SpAssert.isNull(sysRolePermissionVo.getPermissionId());
         //创建角色权限集合
         List<SysRolePermission> sysRolePermissions = new ArrayList<>();
         QueryWrapper<SysRolePermission> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(SpConstantInter.SYS_ROLE_PERMISSION_ROLEID,sysRolePermissionVo.getSysRoleId());
         //清空当前角色拥有的权限
-        if (sysRolePermissionMapper.delete(queryWrapper) == SpConstantInter.CURDVAL) {
+        if (remove(queryWrapper)) {
             //获取权限数组
-            String[] sysMenuHasSysPermissionId = sysRolePermissionVo.getSysMenuHasSysPermissionId();
+            String[] sysMenuHasSysPermissionId = sysRolePermissionVo.getPermissionId();
             //遍历菜单权限数组
             for (String s : sysMenuHasSysPermissionId) {
                 sysRolePermissions.add(new SysRolePermission(s,sysRolePermissionVo.getSysRoleId()));
             }
+        }else{
+            throw new DelException(ResultEnum.PERMISSION_DEL_FAIL.getValue(),ResultEnum.PERMISSION_DEL_FAIL.getName());
         }
         if (!super.saveBatch(sysRolePermissions)) {
             throw new SaveException();

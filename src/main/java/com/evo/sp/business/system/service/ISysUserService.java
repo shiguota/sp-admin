@@ -52,4 +52,22 @@ public interface ISysUserService extends IService<SysUser> {
      * @param seleId  被选中账号的用户id
      */
     Result queryUnRoleById(String loginId,String seleId);
+
+    /**
+     *
+     * 登录
+     */
+    Result login(String account, String password);
+    
+    /**
+     *
+     * 注销
+     */
+    Result userLoginOut();
+    
+    /**
+     *
+     * 删除
+     */
+    Result dels(List<SysUserVo> sysUserVos);
 }

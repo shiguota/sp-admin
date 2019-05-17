@@ -46,5 +46,11 @@ public interface ISysRoleService extends IService<SysRole> {
      * 修改角色
      */
     Result modifyRole(SysRoleVo sysRoleVo);
+    
+    /**
+     *
+     * 删除角色
+     */
+    Result delRoles(List<String> ids);
 
 }

@@ -1,8 +1,9 @@
-package com.evo.sp.business.system.entity;
+package com.evo.sp.business.system.entity.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.common.BaseEntity;
+import com.evo.sp.common.BaseEntityVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -15,10 +16,7 @@ import lombok.experimental.Accessors;
  * @author sgt
  * @since 2019-04-17
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
-public class SysUserRole extends BaseEntity {
+public class SysUserRoleVo extends BaseEntityVo {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +24,6 @@ public class SysUserRole extends BaseEntity {
      *
      * id
      */
-    @TableId(type = IdType.UUID)
     private String  id;
 
     /**
@@ -39,13 +36,18 @@ public class SysUserRole extends BaseEntity {
      */
     private String sysUserId;
 
+    /**
+     *
+     * 角色id集合
+     */
+    private String[] roleId;
 
-    public SysUserRole() {
+    public String[] getRoleId() {
+        return roleId;
     }
 
-    public SysUserRole(String sysRoleId, String sysUserId) {
-        this.sysRoleId = sysRoleId;
-        this.sysUserId = sysUserId;
+    public void setRoleId(String[] roleId) {
+        this.roleId = roleId;
     }
 
     public String getId() {

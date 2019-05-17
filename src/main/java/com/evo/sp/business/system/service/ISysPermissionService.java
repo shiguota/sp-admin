@@ -6,6 +6,7 @@ import com.evo.sp.business.system.entity.vo.SysPermissionVo;
 import com.evo.sp.common.result.Result;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -48,4 +49,24 @@ public interface ISysPermissionService extends IService<SysPermission> {
      * 获取当前登录账号以及被勾选账号的某个菜单的权限差集
      */
     Result queryPerByMenuUserDifSet(SysPermissionVo sysPermissionVo);
+
+    /**
+     *
+     * 新增（返回id）
+     */
+    Map<String, Object> savePerBackId(SysPermission sysPermission);
+    
+    /**
+     *
+     * 修改
+     */
+   boolean modifyPermission(SysPermission sysPermission);
+
+
+   /**
+    *
+    * 查询角色权限
+    */
+   Result queryPerByUIdMIdRId(SysPermissionVo sysPermissionVo);
+
 }

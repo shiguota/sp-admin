@@ -62,12 +62,6 @@ public class SysMenu extends BaseEntity {
 
     /**
      *
-     *字典表id
-     */
-    private String systemDictionaryId;
-    
-    /**
-     *
      * 级别
      */
     private  Integer level;
@@ -150,11 +144,5 @@ public class SysMenu extends BaseEntity {
         this.pid = pid;
     }
 
-    public String getSystemDictionaryId() {
-        return systemDictionaryId;
-    }
 
-    public void setSystemDictionaryId(String systemDictionaryId) {
-        this.systemDictionaryId = systemDictionaryId;
-    }
 }

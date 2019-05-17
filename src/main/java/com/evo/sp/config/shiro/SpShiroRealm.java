@@ -98,6 +98,4 @@ public class SpShiroRealm extends AuthorizingRealm {
         session.setTimeout(1000*60*1000);
         return simpleAuthenticationInfo;
     }
-
-
 }

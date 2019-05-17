@@ -1,5 +1,7 @@
 package com.evo.sp.common.ex;
 
+import com.evo.sp.common.result.Result;
+
 public class BaseException extends RuntimeException {
 
     private Integer code;
@@ -14,6 +16,16 @@ public class BaseException extends RuntimeException {
     public BaseException(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
+    }
+
+    /**
+     * Constructs a new runtime exception with {@code null} as its
+     * detail message.  The cause is not initialized, and may subsequently be
+     * initialized by a call to {@link #initCause}.
+     */
+    public BaseException(Integer code) {
+        this.code = code;
+        this.msg =  Result.MSG(code);
     }
 
     /**

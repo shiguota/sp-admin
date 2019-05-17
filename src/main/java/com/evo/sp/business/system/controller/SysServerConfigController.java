@@ -28,6 +28,7 @@ import java.util.List;
  *
  * @author sgt
  * @since 2019-04-25
+ * @apiDefine ServerConfig 服务配置接口
  */
 @RestController
 @RequestMapping(SpConstantInter.APPLICATION_SERVER_CONFIG)
@@ -158,7 +159,6 @@ public class SysServerConfigController extends BaseController {
         return iSysServerConfigService.modifyServerConfig(sysServerConfig);
     }
 
-
     /**
      * @api {post} /sys/server/config/querybyid 根据id查询
      * @apiName querybyid
@@ -267,7 +267,6 @@ public class SysServerConfigController extends BaseController {
     public Result queryServerConfigPage(@RequestBody PageRequestParameter parameter) {
         return iSysServerConfigService.queryServerConfigPage(parameter);
     }
-
 
     /**
      * @api {post} /sys/server/config/page/dis

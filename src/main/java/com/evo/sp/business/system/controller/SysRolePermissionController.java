@@ -24,6 +24,7 @@ import java.io.Serializable;
  *
  * @author sgt
  * @since 2019-04-10
+ * @apiDefine RolePermission 角色权限接口
  */
 @RestController
 @RequestMapping(SpConstantInter.SYS_ROLE_PERMISSION)
@@ -40,7 +41,7 @@ public class SysRolePermissionController extends BaseController {
      * @apiGroup RolePermission
      * @apiHeader {applications/json} ContentType 请求参数为json格式
      * @apiParam  {String} sysRoleId 角色id
-     * @apiParam {Array[String]} sysMenuHasSysPermissionId 权限id数组.
+     * @apiParam {Array} permissionId 权限id数组.
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess {Integer} code 操作编码.
      * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).

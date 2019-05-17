@@ -27,7 +27,7 @@ public class SysRole extends BaseEntity {
     /**
      * 主键id
      */
-    @TableId(type = IdType.UUID,value="id")
+    @TableId(type = IdType.UUID)
     private String id;
 
     /**

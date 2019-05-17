@@ -7,19 +7,27 @@ import com.evo.sp.business.system.entity.SysUserInfo;
 import com.evo.sp.business.system.entity.vo.SysUserVo;
 import com.evo.sp.business.system.mapper.SysUserInfoMapper;
 import com.evo.sp.business.system.mapper.SysUserMapper;
+import com.evo.sp.business.system.service.ISysUserInfoService;
 import com.evo.sp.business.system.service.ISysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.evo.sp.common.SpConstantInter;
+import com.evo.sp.common.ex.DelException;
 import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.result.Result;
 import com.evo.sp.common.result.ResultEnum;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,12 +40,14 @@ import java.util.List;
  */
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
-
+    private final String USER_PERMISSIONS = "permission";
 
     @Autowired
     private SysUserMapper sysUserMapper;
     @Autowired
     private SysUserInfoMapper sysUserInfoMapper;
+    @Autowired
+    private ISysUserInfoService iSysUserInfoService;
     /**
      * 新增用户
      *
@@ -122,5 +132,72 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SpAssert.isNull(loginId);
         SpAssert.isNull(seleId);
         return new Result(sysUserMapper.queryUnRoleById(loginId,seleId));
+    }
+
+    /**
+     * 登录
+     *
+     * @param account
+     * @param password
+     */
+    @Override
+    public Result login(String account, String password) {
+        Result result = null;
+        SpAssert.isNull(account);
+        SpAssert.isNull(password);
+        Subject currentUser = SecurityUtils.getSubject();
+        Session session = currentUser.getSession();
+        if (!currentUser.isAuthenticated()) {
+            UsernamePasswordToken token = new UsernamePasswordToken(account, password);
+            // token.setRememberMe(true);
+            currentUser.login(token);
+            currentUser.isPermitted(USER_PERMISSIONS);
+            result = new Result(session.getAttribute(session.getId()), ResultEnum.LOGIN_SUCCESS.getValue(), ResultEnum.LOGIN_SUCCESS.getName());
+        } else {
+            result = new Result(session.getAttribute(session.getId()), ResultEnum.LOGIN_SUCCESS.getValue(), ResultEnum.LOGIN_SUCCESS.getName());
+        }
+        return result;
+    }
+
+    /**
+     * 注销
+     */
+    @Override
+    public Result userLoginOut() {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (currentUser.isAuthenticated()) {
+            currentUser.logout();
+        }
+        return new Result(true, ResultEnum.LOGIN_OUT_SUCCESS.getValue(), ResultEnum.LOGIN_OUT_SUCCESS.getName());
+    }
+
+    /**
+     * 删除
+     *
+     * @param sysUserVos
+     */
+    @Override
+    @Transactional
+    public Result dels(List<SysUserVo> sysUserVos) {
+        //校验参数
+        SpAssert.isNull(sysUserVos);
+        List<String> userIds = new ArrayList<>();
+        List<String> userInfoIds = new ArrayList<>();
+        //向集合中填充数据
+        for (SysUserVo sysUserVo : sysUserVos) {
+            userIds.add(sysUserVo.getId());
+            userInfoIds.add(sysUserVo.getSysUserInfoId());
+        }
+        //删除用户
+        if (removeByIds(userIds)) {
+            //删除用户信息
+            if (iSysUserInfoService.removeByIds(userInfoIds)) {
+                return new Result(true);
+            }else{
+                throw new DelException(ResultEnum.REMOVE_SUCCESS.getValue(),ResultEnum.REMOVE_SUCCESS.getName());
+            }
+        }else{
+            throw new DelException(ResultEnum.REMOVE_SUCCESS.getValue(),ResultEnum.REMOVE_SUCCESS.getName());
+        }
     }
 }

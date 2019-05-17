@@ -58,13 +58,20 @@ public class SysDictionaryServiceImpl extends BaseServiceImpl<SysDictionaryMappe
      */
     @Override
     public Page<SysDictionary> queryByNamePid(PageRequestParameter<SysDictionaryVo> pageRequestParameter) {
+        SpAssert.isNull(pageRequestParameter);
         //获取分页对象
         Page page = pageRequestParameter.pageInstance();
         //获取条件参数对象
         SysDictionaryVo sysDictionaryVo = pageRequestParameter.parameterInstance();
+        //校验参数
+        SpAssert.sortAssert(sysDictionaryVo.getDicSort());
+        SpAssert.sortAssert(sysDictionaryVo.getcSortType());
+        SpAssert.sortAssert(sysDictionaryVo.getuSortType());
         if (SpAssert.isNotNull(sysDictionaryVo)) {
-            if (SpAssert.isNotNull(sysDictionaryVo.getCSortType()) || SpAssert.isNotNull(sysDictionaryVo.getUSortType())) {
+            if (SpAssert.isNotNull(sysDictionaryVo.getcSortType()) || SpAssert.isNotNull(sysDictionaryVo.getuSortType())) {
                 sysDictionaryVo.setDicSort(null);
+            }else{
+                sysDictionaryVo.setDicSort(SpConstantInter.ASC);
             }
         }
         return sysDictionaryMapper.queryByNamePid(page,sysDictionaryVo);

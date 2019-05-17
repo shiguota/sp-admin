@@ -2,4 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evo.sp.business.announcement.mapper.ApplicationAnnouncementMapper">
 
+
+    <!--公告列表-->
+    <select id="queryAnnouncementPage"
+            parameterType="com.evo.sp.business.announcement.entity.vo.ApplicationAnnouncementVo"
+            resultType="com.evo.sp.business.announcement.entity.vo.ApplicationAnnouncementVo">
+        select a.id,
+        a.create_time as createTime,
+        a.end_time as endTime,
+        a.start_time as startTime,
+        a.state as state,
+        a.title as title,
+        a.update_time as updateTime,
+        i.nickname as nickName,
+        d.dic_name as dicName
+        from application_announcement as a,sys_user as u,sys_dictionary as d ,sys_user_info i
+        <where>
+            a.sys_user_id = u.id and a.state = d.dic_code and u.sys_user_info_id = i.id
+            and a.sys_user_id = u.id and a.state = d.dic_code
+        </where>
+        <if test="announcement.startTime !=null">
+            order by a.start_time ${announcement.startTime}
+        </if>
+        <if test="announcement.endTime != null">
+            order by a.end_time ${announcement.endTime}
+        </if>
+        <if test="announcement.cSortType != null">
+            order by a.create_time ${announcement.cSortType}
+        </if>
+        <if test="announcement.uSortType != null">
+            order by a.update_time ${announcement.uSortType}
+        </if>
+    </select>
 </mapper>

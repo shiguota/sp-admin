@@ -2,4 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evo.sp.business.system.mapper.SysAreaMapper">
 
+    <select id="queryAreaPage" parameterType="com.evo.sp.business.system.entity.vo.SysAreaVo"
+            resultType="com.evo.sp.business.system.entity.SysArea">
+        select a.area_name,a.lat,a.lon,a.level,a.short_name,a.sort,a.create_time,a.update_time
+        from sys_area a
+        <where>a.pid = #{vo.pid}</where>
+        <if test="vo.cSortType !=null ">
+            order by a.create_time ${vo.cSortType}
+        </if>
+        <if test="vo.uSortType !=null ">
+            order by a.update_time ${vo.uSortType}
+        </if>
+        <if test="vo.cSortType == null and vo.uSortType == null">
+            order by sort ${vo.sort}
+        </if>
+    </select>
 </mapper>

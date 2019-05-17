@@ -1,6 +1,7 @@
 package com.evo.sp.business.system.entity.vo;
 
 import com.evo.sp.business.system.entity.SysMenuPermission;
+import com.evo.sp.business.system.entity.SysPermission;
 import com.evo.sp.common.BaseEntity;
 import com.evo.sp.common.BaseEntityVo;
 import lombok.Data;
@@ -49,7 +50,7 @@ public class SysMenuVo extends BaseEntityVo {
     /**
      * 排序
      */
-    private Integer sort;
+    private String sort;
 
     /**
      * 父id
@@ -64,9 +65,29 @@ public class SysMenuVo extends BaseEntityVo {
 
     /**
      *
-     *  菜单权限表
+     * 级别
+     */
+    private Integer level;
+    
+    /**
+     *
+     *  菜单权限集合
      */
     private List<SysMenuPermission> sysMenuPermission;
+    
+    /**
+     *
+     * 权限集合
+     */
+    private List<SysPermission> pers;
+
+    public List<SysPermission> getPers() {
+        return pers;
+    }
+
+    public void setPers(List<SysPermission> pers) {
+        this.pers = pers;
+    }
 
     public List<SysMenuPermission> getSysMenuPermission() {
         return sysMenuPermission;
@@ -74,6 +95,14 @@ public class SysMenuVo extends BaseEntityVo {
 
     public void setSysMenuPermission(List<SysMenuPermission> sysMenuPermission) {
         this.sysMenuPermission = sysMenuPermission;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public String getId() {
@@ -116,11 +145,11 @@ public class SysMenuVo extends BaseEntityVo {
         this.menuPath = menuPath;
     }
 
-    public Integer getSort() {
+    public String getSort() {
         return sort;
     }
 
-    public void setSort(Integer sort) {
+    public void setSort(String sort) {
         this.sort = sort;
     }
 

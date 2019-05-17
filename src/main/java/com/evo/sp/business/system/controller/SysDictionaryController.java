@@ -22,7 +22,9 @@ import java.util.List;
  *
  * @author sgt
  * @since 2019-04-10
+ * @apiDefine Dictionary 字典接口
  */
+
 @RestController
 @RequestMapping(SpConstantInter.SYS_DICTIONNARY)
 @Api(tags = "字典表")
@@ -138,7 +140,7 @@ public class SysDictionaryController extends BaseController {
     }
 
     /**
-     * @api {post} /sys/dictionary/page  根据字典名称/Pid查询（模糊分页查询）
+     * @api {post} /sys/dictionary/page  字典列表
      * @apiName page
      * @apiGroup Dictionary
      * @apiHeader {applications/json} ContentType 请求参数为json格式
@@ -147,18 +149,21 @@ public class SysDictionaryController extends BaseController {
      * @apiParam {OBJECTJSON} parameter JSON数据对象
      * @apiParam (parameter){String} [dicName]  字典名称.
      * @apiParam (parameter){String} pid  父id.
+     * @apiParam (parameter){String} [dicSort]  排序（desc/asc）.
+     * @apiParam (parameter){String} [cSortType]  创建时间排序（desc/asc）.
+     * @apiParam (parameter){String} [uSortType]  修改时间排序（desc/asc）.
      * @apiSuccess {JSONOBJECT} data JSON格式数据.
-     * @apiSuccess (data){List} records JSON格式数据（列表数据）.
-     * @apiSuccess (data){Integer} total 数据总数.
-     * @apiSuccess (data){Integer} size 每页行数.
-     * @apiSuccess (data){Integer} current 当前页.
-     * @apiSuccess (data){Integer} pages 总页数.
-     * @apiSuccess (data){String} dicCode 字典编码.
-     * @apiSuccess (data){Integer} state   状态（1 可用 0禁用,注：默认为1）.
-     * @apiSuccess (data){String} dicName 字典名称.
-     * @apiSuccess (data){integer} sort 排序.
-     * @apiSuccess (data){Date} createTime 创建时间.
-     * @apiSuccess (data){Date} updateTime 修改时间.
+     * @apiSuccess (data){Array} records JSON格式数据（列表数据）.
+     * @apiSuccess (records){Integer} total 数据总数.
+     * @apiSuccess (records){Integer} size 每页行数.
+     * @apiSuccess (records){Integer} current 当前页.
+     * @apiSuccess (records){Integer} pages 总页数.
+     * @apiSuccess (records){String} dicCode 字典编码.
+     * @apiSuccess (records){Integer} state   状态（1 可用 0禁用,注：默认为1）.
+     * @apiSuccess (records){String} dicName 字典名称.
+     * @apiSuccess (records){integer} sort 排序.
+     * @apiSuccess (records){Date} createTime 创建时间.
+     * @apiSuccess (records){Date} updateTime 修改时间.
      * @apiSuccess {Integer} code 操作编码.
      * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiSuccessExample 成功响应:
@@ -185,7 +190,7 @@ public class SysDictionaryController extends BaseController {
 
 
     /**
-     * @api {post} /sys/dictionary/code  根据code编码查询
+     * @api {post} /sys/dictionary/code  code编码查询字典
      * @apiName code
      * @apiGroup Dictionary
      * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
@@ -221,7 +226,7 @@ public class SysDictionaryController extends BaseController {
 
 
     /**
-     * @api {post} /sys/dictionary/level 字典树
+     * @api {post} /sys/dictionary/level 字典Tree查询
      * @apiName level
      * @apiGroup Dictionary
      * @apiSuccess {JSONOBJECT} data 接口返回的数据对象.
@@ -280,7 +285,7 @@ public class SysDictionaryController extends BaseController {
 
 
     /**
-     * @api {post} /sys/dictionary/id  根据id查询
+     * @api {post} /sys/dictionary/id  id查询字典
      * @apiName id
      * @apiGroup Dictionary
      * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
@@ -318,11 +323,11 @@ public class SysDictionaryController extends BaseController {
 
 
     /**
-     * @api {post} /sys/dictionary/pid 根据pid查询（返回树结构json数据）
+     * @api {post} /sys/dictionary/pid 查询子节点
      * @apiName pid
      * @apiGroup Dictionary
      * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
-     * @apiParam {String} pid 父id.
+     * @apiParam {String} pid 选中子节点的id.
      * @apiParam {String} treeId   树id.
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess (data){String} dicName 字典名称.

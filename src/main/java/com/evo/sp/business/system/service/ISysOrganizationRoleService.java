@@ -2,6 +2,7 @@ package com.evo.sp.business.system.service;
 
 import com.evo.sp.business.system.entity.SysOrganizationRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.evo.sp.common.result.Result;
 
 /**
  * <p>
@@ -13,4 +14,16 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysOrganizationRoleService extends IService<SysOrganizationRole> {
 
+
+    /**
+     *
+     * 删除（根据角色id）
+     */
+    Result roleDel(String roleId);
+
+    /**
+     *
+     * 删除 （根据机构id）
+     */
+    Result orgDel(String orgId);
 }

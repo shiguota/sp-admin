@@ -40,4 +40,10 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * 获取当前登录账号以及被勾选账号的某个菜单的权限差集
      */
     List<SysPermission> queryPerByMenuUserDifSet(SysPermissionVo sysPermissionVo);
+
+    /**
+     *
+     * 获取角色已有权限以及为赋的权限
+     */
+    List<SysPermission> queryPerByUIdMIdRId(SysPermissionVo sysPermissionVo);
 }

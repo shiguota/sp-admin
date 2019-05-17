@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
-public class IpUtil {
+public class HttpIp {
 
     public final static String ERROR_IP = "127.0.0.1";
 

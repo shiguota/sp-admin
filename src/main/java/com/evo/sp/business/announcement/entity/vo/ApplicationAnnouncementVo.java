@@ -1,13 +1,14 @@
-package com.evo.sp.business.announcement.entity;
-
-import java.time.LocalDateTime;
+package com.evo.sp.business.announcement.entity.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.common.BaseEntity;
+import com.evo.sp.common.BaseEntityVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -17,17 +18,13 @@ import lombok.experimental.Accessors;
  * @author sgt
  * @since 2019-04-25
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
-public class ApplicationAnnouncement extends BaseEntity {
+public class ApplicationAnnouncementVo extends BaseEntityVo {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 应用公告表id
      */
-    @TableId(type = IdType.UUID)
     private String id;
 
     /**
@@ -43,17 +40,52 @@ public class ApplicationAnnouncement extends BaseEntity {
     /**
      * 开始时间
      */
-    private LocalDateTime startTime;
+    private String startTime;
 
     /**
      * 结束时间
      */
-    private LocalDateTime endTime;
+    private String endTime;
 
     /**
      * 发布人id
      */
     private String sysUserId;
+
+    /**
+     *
+     * 用户昵称
+     */
+    private String nickName;
+
+    /**
+     *
+     * 字典名称
+     */
+    private String dicName;
+
+    public ApplicationAnnouncementVo() {
+    }
+
+    public ApplicationAnnouncementVo(String cSortType) {
+        this.setcSortType(cSortType);
+    }
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getDicName() {
+        return dicName;
+    }
+
+    public void setDicName(String dicName) {
+        this.dicName = dicName;
+    }
+
 
     public String getId() {
         return id;
@@ -79,19 +111,19 @@ public class ApplicationAnnouncement extends BaseEntity {
         this.content = content;
     }
 
-    public LocalDateTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 

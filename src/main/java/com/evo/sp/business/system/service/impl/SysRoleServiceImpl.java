@@ -1,7 +1,10 @@
 package com.evo.sp.business.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.evo.sp.business.system.controller.SysOrganizationRoleController;
 import com.evo.sp.business.system.entity.SysOrganizationRole;
 import com.evo.sp.business.system.entity.SysRole;
 import com.evo.sp.business.system.entity.SysRolePermission;
@@ -9,14 +12,17 @@ import com.evo.sp.business.system.entity.vo.SysRoleVo;
 import com.evo.sp.business.system.mapper.SysOrganizationRoleMapper;
 import com.evo.sp.business.system.mapper.SysRoleMapper;
 import com.evo.sp.business.system.mapper.SysRolePermissionMapper;
+import com.evo.sp.business.system.service.ISysOrganizationRoleService;
 import com.evo.sp.business.system.service.ISysRolePermissionService;
 import com.evo.sp.business.system.service.ISysRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.evo.sp.common.SpConstantInter;
+import com.evo.sp.common.ex.DelException;
 import com.evo.sp.common.ex.SaveException;
 import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.ex.SpParameterException;
 import com.evo.sp.common.result.Result;
+import com.evo.sp.common.result.ResultEnum;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +47,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Autowired
     private ISysRolePermissionService iSysRolePermissionService;
     @Autowired
-    private SysOrganizationRoleMapper sysOrganizationRoleMapper;
+    private ISysOrganizationRoleService iSysOrganizationRoleService;
 
     /**
      * 根据账号获取角色
@@ -60,15 +66,19 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
      * @param sysRoleVo
      */
     @Override
-    public Result queryByNameOrg(Page page,SysRoleVo sysRoleVo) {
+    public Result queryByNameOrg(Page page, SysRoleVo sysRoleVo) {
         //校验参数
         SpAssert.isNull(sysRoleVo);
         SpAssert.isNull(sysRoleVo.getOrgId());
+        SpAssert.sortAssert(sysRoleVo.getcSortType());
+        SpAssert.sortAssert(sysRoleVo.getuSortType());
         //排序功能不支持同时多个字段
-        if (SpAssert.isNotNull(sysRoleVo.getCSortType()) && SpAssert.isNotNull(sysRoleVo.getUSortType())) {
+        if (SpAssert.isNotNull(sysRoleVo.getcSortType()) && SpAssert.isNotNull(sysRoleVo.getuSortType())) {
             throw new SpParameterException();
+        }else if(!SpAssert.isNotNull(sysRoleVo.getcSortType()) && !SpAssert.isNotNull(sysRoleVo.getuSortType())){
+            sysRoleVo.setcSortType(SpConstantInter.DESC);
         }
-        return new Result(sysRoleMapper.queryByNameOrg(page,sysRoleVo));
+        return new Result(sysRoleMapper.queryByNameOrg(page, sysRoleVo));
     }
 
     /**
@@ -87,11 +97,19 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         SpAssert.isNull(sysRoleVo.getRoleCode());
         SpAssert.isNull(sysRoleVo.getRoleName());
         //转换类型
-        BeanUtils.copyProperties(sysRoleVo,sysRole);
+        BeanUtils.copyProperties(sysRoleVo, sysRole);
         //判断是否添加成功
         int saveRple = sysRoleMapper.insert(sysRole);
         if (saveRple != SpConstantInter.CURDVAL) {
             throw new SaveException();
+        } else {
+            //新增机构角色数据
+            SysOrganizationRole sysOrganizationRole = new SysOrganizationRole();
+            sysOrganizationRole.setSysRoleId(sysRole.getId());
+            sysOrganizationRole.setSysOrganizationId(sysRoleVo.getOrgId());
+            if (!iSysOrganizationRoleService.save(sysOrganizationRole)) {
+                throw new SaveException();
+            }
         }
         return new Result(true);
     }
@@ -134,22 +152,46 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         SpAssert.isNull(sysRoleVo);
         SpAssert.isNull(sysRoleVo.getRoleId());
         SysRole sysRole = new SysRole();
-        BeanUtils.copyProperties(sysRoleVo,sysRole);
+        BeanUtils.copyProperties(sysRoleVo, sysRole);
+        sysRole.setId(sysRoleVo.getRoleId());
         if (!updateById(sysRole)) {
             throw new SaveException();
         }
         //机构id是否为空
-        if(SpAssert.isNotNull(sysRoleVo.getOrgId())){
+        if (SpAssert.isNotNull(sysRoleVo.getOrgId())) {
             //如果组织机构id不为空，做更新操作
             SysOrganizationRole organizationRole = new SysOrganizationRole();
             organizationRole.setSysRoleId(sysRoleVo.getOrgId());
             QueryWrapper<SysOrganizationRole> wrapper = new QueryWrapper<>();
-            wrapper.eq(SpConstantInter.SYS_ORG_ROLEID,sysRoleVo.getRoleId());
-            if (sysOrganizationRoleMapper.update(organizationRole, wrapper) != SpConstantInter.CURDVAL) {
+            wrapper.eq(SpConstantInter.SYS_ORG_ROLEID, sysRoleVo.getRoleId());
+            if (!iSysOrganizationRoleService.update(organizationRole, wrapper)) {
                 throw new SaveException();
             }
 
         }
         return new Result(true);
+    }
+
+    /**
+     * 删除角色，同时删除机构角色表中的相关信息
+     *
+     * @param ids
+     */
+    @Override
+    @Transactional
+    public Result delRoles(List<String> ids) {
+        if (removeByIds(ids)) { //删除角色表信息
+            for (String id : ids) {
+                if (iSysOrganizationRoleService.remove( // 删除机构角色表信息
+                        new UpdateWrapper<SysOrganizationRole>().eq(SpConstantInter.SYS_ORG_ROLEID, id))) {
+                    return new Result(ResultEnum.REMOVE_SUCCESS.getValue());
+                } else {
+                    throw new DelException();
+                }
+            }
+        } else {
+            throw new DelException();
+        }
+        return null;
     }
 }

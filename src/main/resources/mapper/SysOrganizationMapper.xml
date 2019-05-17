@@ -2,19 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evo.sp.business.system.mapper.SysOrganizationMapper">
 
-    <!--根据添加获取机构列表（分页）-->
-    <select id="queryListPage" parameterType="java.lang.String" resultType="com.evo.sp.business.system.entity.vo.SysOrganizationVo">
-        select o.org_name,
-        o.sort,
-        a.area_name,
-        o.create_time,
-        o.update_time
+    <!--根据账号获取机构列表（分页）-->
+    <select id="queryListPage" parameterType="java.lang.String"
+            resultType="com.evo.sp.business.system.entity.vo.SysOrganizationVo">
+        select o.id as id,
+        o.org_name as orgName,
+        o.sort as sort,
+        a.area_name as areaName,
+        o.create_time as createTime,
+        o.update_time as updateTime,
+        o.pid as pid,
+        o.level as level
         from sys_organization o
-            join sys_area a on o.sys_area_id = a.id
-            join sys_organization_role sor on o.id = sor.sys_organization_id
-            join sys_role r on r.id = sor.sys_organization_id
-            join sys_user_role ur on r.id = ur.sys_role_id
-            join sys_user u on ur.sys_user_id = u.id
-        where u.account = #{account}
+        join sys_area a on o.sys_area_id = a.id
+        join sys_organization_role sor on o.id = sor.sys_organization_id
+        join sys_role r on r.id = sor.sys_organization_id
+        join sys_user_role ur on r.id = ur.sys_role_id
+        join sys_user u on ur.sys_user_id = u.id
+        <if test="account != null">
+            <where>u.account = #{account}</where>
+        </if>
+    </select>
+
+
+    <!--根据用户id查询机构-->
+    <select id="queryOrgByUserId" parameterType="java.lang.String"
+            resultType="com.evo.sp.business.system.entity.SysOrganization">
+        select o.id ,
+        o.org_name ,
+        o.sort ,
+        o.create_time ,
+        o.update_time ,
+        o.pid ,
+        o.level from sys_organization o
+        join sys_organization_role sor on sor.sys_organization_id = o.id
+        join sys_role r on r.id = sor.sys_role_id
+        join sys_user_role ur on ur.sys_role_id = r.id
+        <if test="userId != null">
+            <where>
+                ur.sys_user_id = #{userId}
+            </where>
+        </if>
     </select>
 </mapper>

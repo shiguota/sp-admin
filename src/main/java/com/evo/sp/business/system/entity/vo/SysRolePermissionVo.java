@@ -19,19 +19,19 @@ public class SysRolePermissionVo  {
     /**
      * 角色权限表id
      */
-    private String[] sysMenuHasSysPermissionId;
+    private String[] permissionId;
 
     /**
      * 角色id
      */
     private String sysRoleId;
 
-    public String[] getSysMenuHasSysPermissionId() {
-        return sysMenuHasSysPermissionId;
+    public String[] getPermissionId() {
+        return permissionId;
     }
 
-    public void setSysMenuHasSysPermissionId(String[] sysMenuHasSysPermissionId) {
-        this.sysMenuHasSysPermissionId = sysMenuHasSysPermissionId;
+    public void setPermissionId(String[] permissionId) {
+        this.permissionId = permissionId;
     }
 
     public String getSysRoleId() {

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.evo.sp.business.announcement.entity.ApplicationAnnouncement;
+import com.evo.sp.business.announcement.entity.vo.ApplicationAnnouncementVo;
 import com.evo.sp.business.announcement.mapper.ApplicationAnnouncementMapper;
 import com.evo.sp.business.announcement.service.IApplicationAnnouncementService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -35,19 +36,23 @@ public class ApplicationAnnouncementServiceImpl extends ServiceImpl<ApplicationA
      * @param pageRequestParameter
      */
     @Override
-    public Result queryAnnouncementPage(PageRequestParameter<ApplicationAnnouncement> pageRequestParameter) {
+    public Result queryAnnouncementPage(PageRequestParameter<ApplicationAnnouncementVo> pageRequestParameter) {
         Result result = null;
         //校验参数
         SpAssert.isNull(pageRequestParameter);
         Page page = pageRequestParameter.pageInstance();
         SpAssert.isNull(page);
-        ApplicationAnnouncement applicationAnnouncement = pageRequestParameter.parameterInstance();
+        ApplicationAnnouncementVo applicationAnnouncement = pageRequestParameter.parameterInstance();
         if (SpAssert.isNotNull(applicationAnnouncement)) {//带条件查询分页
-            QueryWrapper<ApplicationAnnouncement> wrapper = new QueryWrapper<>();
-            wrapper.like(SpConstantInter.APPLICATION_ANNOUNCEMENT_TITLE,applicationAnnouncement.getTitle());
-            result = new Result(page(page, wrapper));
-        }else { //无条件查询分页
-            result = new Result(page(page));
+            //校验排序字段值
+            SpAssert.sortAssert(applicationAnnouncement.getcSortType());
+            SpAssert.sortAssert(applicationAnnouncement.getuSortType());
+            SpAssert.sortAssert(applicationAnnouncement.getStartTime());
+            SpAssert.sortAssert(applicationAnnouncement.getEndTime());
+            result =  new Result(mapper.queryAnnouncementPage(page,applicationAnnouncement));
+        }else { //默认已创建时间到倒序查询
+            applicationAnnouncement = new ApplicationAnnouncementVo(SpConstantInter.DESC);
+            result = new Result(mapper.queryAnnouncementPage(page,applicationAnnouncement));
         }
         return result;
     }

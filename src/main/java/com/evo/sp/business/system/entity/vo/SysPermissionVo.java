@@ -35,28 +35,53 @@ public class SysPermissionVo extends BaseEntityVo {
     private String perCode;
 
     /**
-     *
      * 菜单id
      */
     private String menuId;
-    
+
     /**
-     *
      * 系统当前登录用户id
      */
     private String LUserId;
 
     /**
-     *
      * 用户id
      */
     private String userId;
 
     /**
      *
-     *  菜单权限表
+     *  角色id
+     */
+    private String roleId;
+    
+    /**
+     *
+     *   权限是否存在（当前角色）
+     */
+    private String isExist;
+
+    /**
+     * 菜单权限表
      */
     private SysMenuPermission sysMenuPermission;
+
+
+    public String getIsExist() {
+        return isExist;
+    }
+
+    public void setIsExist(String isExist) {
+        this.isExist = isExist;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
 
     public SysMenuPermission getSysMenuPermission() {
         return sysMenuPermission;

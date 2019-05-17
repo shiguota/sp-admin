@@ -1,6 +1,9 @@
 package com.evo.sp.business.system.entity;
 
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.evo.sp.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +24,12 @@ public class SysOrganizationRole extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     *
+     * id
+     */
+    @TableId(type = IdType.UUID)
+    private String id;
     /**
      * 组织机构id
      */
@@ -46,5 +55,13 @@ public class SysOrganizationRole extends BaseEntity {
 
     public void setSysRoleId(String sysRoleId) {
         this.sysRoleId = sysRoleId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

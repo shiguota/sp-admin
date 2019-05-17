@@ -31,7 +31,7 @@ public class SysOrganizationVo extends BaseEntityVo {
     /**
      * 排序字段
      */
-    private Integer orgSort;
+    private String  orgSort;
 
     /**
      * 级别
@@ -79,11 +79,11 @@ public class SysOrganizationVo extends BaseEntityVo {
         this.orgName = orgName;
     }
 
-    public Integer getOrgSort() {
+    public String getOrgSort() {
         return orgSort;
     }
 
-    public void setOrgSort(Integer orgSort) {
+    public void setOrgSort(String orgSort) {
         this.orgSort = orgSort;
     }
 

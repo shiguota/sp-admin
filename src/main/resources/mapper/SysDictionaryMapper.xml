@@ -17,11 +17,11 @@
                 <if test="vo.pid == null">
                     and pid is null
                 </if>
-                <if test="vo.CSortType != null">
-                    order by create_time ${vo.CSortType}
+                <if test="vo.cSortType != null">
+                    order by create_time ${vo.cSortType}
                 </if>
-                <if test="vo.USortType != null">
-                    order by update_time ${vo.USortType}
+                <if test="vo.uSortType != null">
+                    order by update_time ${vo.uSortType}
                 </if>
                 <if test="vo.dicSort != null">
                     order by dic_sort asc

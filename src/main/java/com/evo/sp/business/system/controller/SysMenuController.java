@@ -1,29 +1,19 @@
 package com.evo.sp.business.system.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.evo.sp.business.system.entity.SysMenu;
-import com.evo.sp.business.system.entity.SysUser;
 import com.evo.sp.business.system.entity.vo.SysMenuVo;
 import com.evo.sp.business.system.service.ISysMenuService;
 import com.evo.sp.common.SpConstantInter;
-import com.evo.sp.common.ex.SpAssert;
 import com.evo.sp.common.parameter.PageRequestParameter;
 import com.evo.sp.common.result.Result;
-import com.evo.sp.common.result.ResultEnum;
 import com.evo.sp.common.tree.Tree;
 import io.swagger.annotations.Api;
-import javafx.scene.input.Mnemonic;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.evo.sp.common.BaseController;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +23,7 @@ import java.util.List;
  *
  * @author sgt
  * @since 2019-04-10
+ * @apiDefine Menu 菜单接口
  */
 @RestController
 @RequestMapping(SpConstantInter.SYS_MENU)
@@ -54,6 +45,7 @@ public class SysMenuController extends BaseController {
      * @apiParam {String} menuCode   菜单编码.
      * @apiParam {String} menuIcon   菜单Icon.
      * @apiParam {String} menuPath   菜单路径.
+     * @apiParam {Integer} level   级别.
      * @apiParam {Integer} [state]   状态 1可用  0禁用  默认为1.
      * @apiParam {String} pid   菜单pid.
      * @apiParam {Integer} [sort]  排序.
@@ -81,7 +73,7 @@ public class SysMenuController extends BaseController {
      */
     @RequestMapping(value = SpConstantInter.SYS_MENU_SAVE, method = RequestMethod.POST)
     public Result saveMenu(@RequestBody SysMenuVo sysMenuVo) {
-        return iSysMenuService.menuSave(sysMenuVo);
+        return iSysMenuService.saveMenu(sysMenuVo);
     }
 
 
@@ -90,7 +82,7 @@ public class SysMenuController extends BaseController {
      * @apiName del
      * @apiGroup Menu
      * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
-     * @apiParam {String} id   菜单id.
+     * @apiParam {Array} ids   菜单id.
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess {Integer} code 操作编码.
      * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
@@ -112,8 +104,8 @@ public class SysMenuController extends BaseController {
      * }
      */
     @RequestMapping(value = SpConstantInter.SYS_MENU_DEL, method = RequestMethod.POST)
-    public Result delMenu(Serializable id) {
-        return del(id, iSysMenuService);
+    public Result delMenu(@RequestBody List<String> ids) {
+        return dels(ids, iSysMenuService);
     }
 
 
@@ -128,6 +120,7 @@ public class SysMenuController extends BaseController {
      * @apiParam {String} menuPath   菜单路径.
      * @apiParam {Integer} state   状态  1可用  0禁用.
      * @apiParam {String} pid   菜单pid.
+     * @apiParam {Integer} level   级别.
      * @apiParam {Integer} [sort]  排序.
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess {Integer} code 操作编码.
@@ -162,7 +155,12 @@ public class SysMenuController extends BaseController {
      * @apiHeader {applications/json} ContentType 请求参数为json格式
      * @apiParam {Integer} page 当前页.
      * @apiParam {Integer} size 每页行数.
-     * @apiParam {String} [menuName]  菜单名称.
+     * @apiParam {OBJECT} parameter 参数对象.
+     * @apiParam (parameter){String} id  菜单id.
+     * @apiParam (parameter){String} [menuName]  菜单名称.
+     * @apiParam (parameter){String} [sort]  排序（desc/asc）.
+     * @apiParam (parameter){String} [cSortType]  创建时间排序（desc/asc）.
+     * @apiParam (parameter){String} [uSortType]  修改时间排序（desc/asc）.
      * @apiSuccess {JSONOBJECT} data JSON格式数据.
      * @apiSuccess (data){List} records JSON格式数据（列表数据）.
      * @apiSuccess (data){Integer} total 数据总数.
@@ -228,7 +226,6 @@ public class SysMenuController extends BaseController {
      * "msg": "xxxxxxxx"
      * }
      */
-
     @RequestMapping(value = SpConstantInter.SYS_MENU_PATH, method = RequestMethod.POST)
     public Result queryMenus(String userId) {
         List<Tree<SysMenu>> sysMenus = iSysMenuService.queryMenuPath(userId);
@@ -239,6 +236,8 @@ public class SysMenuController extends BaseController {
      * @api {post} /sys/menu/tree  菜单树
      * @apiName tree
      * @apiGroup Menu
+     * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
+     * @apiParam {String} userId 用户id.
      * @apiSuccess {JSONOBJECT} data 接口返回的数据对象.
      * @apiSuccess (data){String} id 节点id.
      * @apiSuccess (data){Integer} isOpen 节点是否打开（1 打开，2关闭）.
@@ -299,8 +298,8 @@ public class SysMenuController extends BaseController {
      * }
      */
     @PostMapping(value = SpConstantInter.SYS_MENU_PERMISSION_TREE)
-    public Result queryMenuTree() {
-        return queryTreeData(iSysMenuService.queryMenuTree(), TOP_NODE_NAME);
+    public Result queryMenuTree(String userId) {
+        return queryTreeData(iSysMenuService.queryMenuTree(userId), TOP_NODE_NAME);
     }
 
     /**

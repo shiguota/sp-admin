@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.evo.sp.common.BaseController;
 
+import java.util.List;
+
 
 /**
  * <p>
@@ -27,13 +29,14 @@ import com.evo.sp.common.BaseController;
  * </p>
  *
  * @author sgt
+ * @apiDefine User 用户接口
  * @since 2019-04-10
  */
 @RestController
 @RequestMapping(SpConstantInter.SYS_USER)
 @Api(tags = "用户")
 public class SysUserController extends BaseController {
-    private final String USER_PERMISSIONS = "permission";
+
     @Autowired
     private ISysUserService iSysUserService;
 
@@ -55,11 +58,11 @@ public class SysUserController extends BaseController {
      * HTTP/1.1 200 OK
      * {
      * "data": {
-     *          "id": "75845fd5fdb7441137ec100b9af5bf33",
-     *          "account": "aa",
-     *          "sysOrganizationId": "1",
-     *          "sysUserInfoId": "81c18d45398c0927bb39a8c89aa33e53"
-     *          },
+     * "id": "75845fd5fdb7441137ec100b9af5bf33",
+     * "account": "aa",
+     * "sysOrganizationId": "1",
+     * "sysUserInfoId": "81c18d45398c0927bb39a8c89aa33e53"
+     * },
      * "code": 2002,
      * "msg": "登录成功"
      * }
@@ -75,23 +78,8 @@ public class SysUserController extends BaseController {
      */
     @PostMapping(value = SpConstantInter.SYS_USER_LOGIN)
     public Result userLogin(String account, String password) {
-        Result result = null;
-        SpAssert.isNull(account);
-        SpAssert.isNull(password);
-        Subject currentUser = SecurityUtils.getSubject();
-        Session session = currentUser.getSession();
-        if (!currentUser.isAuthenticated()) {
-            UsernamePasswordToken token = new UsernamePasswordToken(account, password);
-            // token.setRememberMe(true);
-            currentUser.login(token);
-            currentUser.isPermitted(USER_PERMISSIONS);
-            result = new Result(session.getAttribute(session.getId()), ResultEnum.LOGIN_SUCCESS.getValue(), ResultEnum.LOGIN_SUCCESS.getName());
-        } else {
-            result = new Result(session.getAttribute(session.getId()), ResultEnum.LOGIN_SUCCESS.getValue(), ResultEnum.LOGIN_SUCCESS.getName());
-        }
-        return result;
+        return iSysUserService.login(account, password);
     }
-
 
     /**
      * @api {post} /sys/user/loginout 注销
@@ -118,13 +106,7 @@ public class SysUserController extends BaseController {
      */
     @RequestMapping(value = SpConstantInter.SYS_USER_LOGIN_OUT, method = RequestMethod.POST)
     public Result userLoginOut() {
-        Result result = null;
-        Subject currentUser = SecurityUtils.getSubject();
-        if (currentUser.isAuthenticated()) {
-            currentUser.logout();
-        }
-        result = new Result(true, ResultEnum.LOGIN_OUT_SUCCESS.getValue(), ResultEnum.LOGIN_OUT_SUCCESS.getName());
-        return result;
+        return iSysUserService.userLoginOut();
     }
 
     /**
@@ -179,11 +161,12 @@ public class SysUserController extends BaseController {
     }
 
     /**
-     * @api {post} /sys/user/del 删除（根据id）
+     * @api {post} /sys/user/del 删除
      * @apiName del
      * @apiGroup User
-     * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
+     * @apiHeader {applications/json} ContentType 请求参数为json格式
      * @apiParam {String} id 用户id
+     * @apiParam {String} sysUserInfoId 用户详情id
      * @apiSuccess {Integer} code 操作编码.
      * @apiSuccess {String} msg 描述(根据code值去码表中查询对应的描述信息).
      * @apiSuccessExample 成功响应:
@@ -204,12 +187,12 @@ public class SysUserController extends BaseController {
      * }
      */
     @PostMapping(value = SpConstantInter.SYS_USER_DEL)
-    public Result delUser(String id) {
-        return del(id, iSysUserService);
+    public Result delUser(@RequestBody List<SysUserVo> ids) {
+        return iSysUserService.dels(ids);
     }
 
     /**
-     * @api {post} /sys/user/modify  修改（根据id）
+     * @api {post} /sys/user/modify  修改
      * @apiName modify
      * @apiGroup User
      * @apiHeader {applications/json} ContentType 请求参数为json格式
@@ -247,7 +230,7 @@ public class SysUserController extends BaseController {
     }
 
     /**
-     * @api {post} /sys/user/one  查询用户(一条)
+     * @api {post} /sys/user/one  查询用户
      * @apiName one
      * @apiGroup User
      * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
@@ -286,7 +269,7 @@ public class SysUserController extends BaseController {
 
 
     /**
-     * @api {post} /sys/user/page  用户列表（分页）
+     * @api {post} /sys/user/page  用户列表
      * @apiName page
      * @apiGroup User
      * @apiHeader {applications/json} ContentType 请求参数为json格式
@@ -380,11 +363,11 @@ public class SysUserController extends BaseController {
     //当前账号下的角色（不包括，已经分配给选中的当前账号的角色）
 
     /**
-     * @api {post} /sys/user/unrole 查询角色（当前登录用户）
+     * @api {post} /sys/user/unrole 查询角色
      * @apiName unrole
      * @apiGroup User
      * @apiHeader {application/x-www-form-urlencoded} ContentType 请求参数为from方式提交
-     * @apiParam {String} loginId 当前登录用户id
+     * @apiParam {String} loginId 用户id
      * @apiParam {String} seleId 选中用户id
      * @apiSuccess {Object} data 接口返回的数据对象.
      * @apiSuccess (data) {String} roleCode 角色编码.

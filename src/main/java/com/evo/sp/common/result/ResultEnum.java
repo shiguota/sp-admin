@@ -4,6 +4,10 @@ import com.baomidou.mybatisplus.annotation.EnumValue;
 
 import java.lang.annotation.Annotation;
 
+/**
+ *
+ *  @apiDefine CodeTable 码表
+ */
 public enum ResultEnum implements EnumValue {
     /**
      * @api {post} /# 码表
@@ -32,6 +36,8 @@ public enum ResultEnum implements EnumValue {
      * @apiError 3001 参数错误.
      * @apiError 3002 参数不能为空.
      * @apiError 4001 未授权.
+     * @apiError 4002 已存在相同CODE权限信息.
+     * @apiError 4003 已存在相同NAME权限信息.
      * @apiError 5001 当前用户已存在.
      * @apiError 6001 请选择文件.
      * @apiError 6002 上传成功.
@@ -66,6 +72,10 @@ public enum ResultEnum implements EnumValue {
 
     //    权限
     PERMISSION_UNAUTHORIZED(4001, "未授权"),
+    PERMISSION_SAVE_CODE(4002, "已存在相同CODE权限信息"),
+    PERMISSION_SAVE_NAME(4003, "已存在相同NAME权限信息"),
+    PERMISSION_DEL_SUCCESS(4004, "删除权限成功"),
+    PERMISSION_DEL_FAIL(4005, "删除权限失败"),
 
     //    用户
     USER_IS_EXIST(5001, "当前用户已存在"),

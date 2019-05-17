@@ -42,7 +42,7 @@ public class BaseController<T> {
         return result;
 
     }
-    
+
     /**
      *
      * 新增（批量）
