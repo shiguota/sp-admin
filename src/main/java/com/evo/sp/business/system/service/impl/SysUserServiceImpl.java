@@ -95,6 +95,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public Result queryUserByOrg(Page page, SysUserVo userVo) {
+        SpAssert.isNull(userVo);
+        if (SpAssert.isNotNull(userVo)) {
+            SpAssert.sortAssert(userVo.getcSortType());
+            SpAssert.sortAssert(userVo.getuSortType());
+        }
         SpAssert.isNull(userVo.getSysOrganizationId());
         return new Result(sysUserMapper.queryUserByOrg(page, userVo));
     }

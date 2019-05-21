@@ -36,37 +36,9 @@ public class ss {
         List<Sheet> sheets = getSheets(workbook);
         Sheet sheet = sheets.get(4);
         //sheet.removeRow(sheet.getRow(1));
-        for (int i = 0; i < sheets.size(); i++) {
-            System.out.println("SHEET:"+i);
-            for (Row row : sheets.get(i)) {
-                for (Cell cell : row) {
-                    // Alternatively, get the value and format it yourself
-                    switch (cell.getCellType()) {
-                        case STRING:
-                            System.out.println(cell.getRichStringCellValue().getString());
-                            break;
-                        case NUMERIC:
-                            if (DateUtil.isCellDateFormatted(cell)) {
-                                System.out.println(cell.getDateCellValue());
-                            } else {
-                                System.out.println(cell.getNumericCellValue());
-                            }
-                            break;
-                        case BOOLEAN:
-                            System.out.println(cell.getBooleanCellValue());
-                            break;
-                        case FORMULA:
-                            System.out.println(cell.getCellFormula());
-                            break;
-                        case BLANK:
-                            System.out.println();
-                            break;
-                        default:
-                            System.out.println();
-                    }
-                }
-            }
-        }
+        sheet.removeRow(sheet.getRow(5));
+        Integer[] strings = new Integer[]{5,8};
+        getSheelInRows(sheet,strings);
     }
 
 
@@ -128,23 +100,28 @@ public class ss {
             Sheet sheet = sheets.get(key);
             String[] strings = SpStringUtils.splitStr((String) entry.getValue(), "/");
             //读取数据
-            getSheelInRows(sheet, strings);
+            getSheelInRows(sheet, SpStringUtils.StringToInt(strings));
         }
         return null;
     }
 
     /**
-     * 读取指定key中指定范围的行
+     * 读取指定工作表（Sheet）中指定范围的行
      */
-    public static void getSheelInRows(Sheet sheet, String[] rows) {
+    public static void getSheelInRows(Sheet sheet, Integer[] rows) {
         //校验参数
         SpAssert.isNull(sheet);
         //判断行数数组是否为null
         if (SpAssert.isNotNull(rows)) {
             //判断当前sheet中是否制定了，读取的行数范围
-            if (SpAssert.isNotNull(rows) && rows.length == 2) {
-                sheet.removeRowBreak(Integer.valueOf(rows[1]));
-                Row row = sheet.getRow(Integer.valueOf(rows[1]));
+            if (rows.length == 2) {
+                //删除指定范围外的所有行
+                for (int i = rows[0] -2; i >= 0 ; i--) {
+                    sheet.removeRow(sheet.getRow(i));
+                }
+                for (int k = rows[1]; k <sheet.getLastRowNum()+1 ; k++) {
+                    sheet.removeRow(sheet.getRow(k));
+                }
             }
         }
         for (Row row : sheet) {
@@ -195,5 +172,4 @@ public class ss {
             e.printStackTrace();
         }
     }
-
 }

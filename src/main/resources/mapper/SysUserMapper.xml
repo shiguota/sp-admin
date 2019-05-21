@@ -7,7 +7,7 @@
             resultType="com.evo.sp.business.system.entity.vo.SysUserVo">
         select u.id,
         u.account,
-        ui.nickname,
+        ui.nickname as nickName,
         o.org_name as orgName,
         ui.email,
         ui.phone,
@@ -48,7 +48,7 @@
     </select>
 
     <!--根据用户id获取账号已存在的角色-->
-    <select id="queryRoleById" parameterType="java.lang.String" resultType="java.util.Map">
+    <select id="queryRoleById" parameterType="java.lang.String" resultType="com.evo.sp.business.system.entity.vo.SysRoleVo">
         select r.id,
                r.role_name AS roleName,
                r.role_code AS roleCode
@@ -59,7 +59,7 @@
     </select>
 
     <!--通过当前登录账号的信息，获取当前账号下的角色（不包括，已经分配给选中的当前账号的角色）-->
-    <select id="queryUnRoleById" parameterType="java.lang.String" resultType="java.util.Map">
+    <select id="queryUnRoleById" parameterType="java.lang.String" resultType="com.evo.sp.business.system.entity.vo.SysRoleVo">
         select r.id,
                r.role_name AS roleName,
                r.role_code AS roleCode

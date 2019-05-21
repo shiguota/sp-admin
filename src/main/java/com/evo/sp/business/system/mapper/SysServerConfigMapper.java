@@ -27,10 +27,10 @@ public interface SysServerConfigMapper extends BaseMapper<SysServerConfig> {
      *
      * 查询服务配置信息
      */
-    IPage queryServerConfig(Page page, SysServerConfigVo configVo);
+    IPage<SysServerConfigVo> queryServerConfig(Page page, SysServerConfigVo vo);
     /**
      *
      * 根据字典id查询服务配置信息
      */
-    IPage queryServerConfigPageByDisId(Page page,String sysDictionaryId);
+    Map<String,Object> queryServerConfigPageByDisId(Page page,String sysDictionaryId);
 }

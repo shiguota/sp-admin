@@ -41,7 +41,7 @@ public class SysServerConfigController extends BaseController {
     /**
      * 文件上传
      */
-    @PostMapping(value = "/upload")
+    @PostMapping(value = SpConstantInter.APPLICATION_SERVER_CONFIG_UPLOAD)
     public Result upload(@RequestParam("file") MultipartFile file) {
         //校验参数
         if (!SpAssert.isNotNull(file)) {
@@ -232,8 +232,9 @@ public class SysServerConfigController extends BaseController {
      * @apiParam {Integer} size 每页行数
      * @apiParam {JSONOBJECT} parameter JSON格式数据
      * @apiParam (parameter) {String} [serverName] 服务商名称
-     * @apiParam (parameter) {String} [CSortType] 创建时间排序 值为asc/desc （创建时间和修改时间同时只能有一个属性有值）
-     * @apiParam (parameter) {String} [USortType] 修改时间排序 值为asc/desc（创建时间和修改时间同时只能有一个属性有值）
+     * @apiParam (parameter){String} [sort]  排序（desc/asc）.
+     * @apiParam (parameter){String} [cSortType]  创建时间排序（desc/asc）.
+     * @apiParam (parameter){String} [uSortType]  修改时间排序（desc/asc）.
      * @apiSuccess {JSONOBJECT} data JSON格式数据.
      * @apiSuccess (data){List} records JSON格式数据（列表数据）.
      * @apiSuccess (data){Integer} total 数据总数.

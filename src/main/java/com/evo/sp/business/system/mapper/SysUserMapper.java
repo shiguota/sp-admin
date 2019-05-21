@@ -25,7 +25,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      *
      * 查询用户信息，根据组织（机构）id
      */
-    Page<Map> queryUserByOrg(Page page, SysUserVo u);
+    Page<SysUserVo> queryUserByOrg(Page page, SysUserVo u);
     
     /**
      *

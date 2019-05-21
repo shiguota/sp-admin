@@ -1,5 +1,6 @@
 package com.evo.sp.common.ex;
 
+import com.evo.sp.common.BaseEntityVo;
 import com.evo.sp.common.SpConstantInter;
 import com.evo.sp.common.ex.SpParameterException;
 import com.evo.sp.common.result.ResultEnum;
@@ -121,6 +122,22 @@ public abstract class SpAssert {
             if (!sort.equals(SpConstantInter.ASC)) {
                 if (!sort.equals(SpConstantInter.DESC)) {
                     throw  new SpParameterException();
+                }
+            }
+        }
+    }
+    
+    /**
+     *
+     * 校验排序参数，并设置默认排序参数值
+     */
+    public static void setSort(BaseEntityVo sort){
+        if (SpAssert.isNotNull(sort)) {
+            SpAssert.sortAssert(sort.getcSortType());
+            SpAssert.sortAssert(sort.getuSortType());
+            if (SpAssert.isNotNull(sort.getcSortType())) {
+                if (SpAssert.isNotNull(sort.getuSortType())) {
+                    sort.setcSortType(SpConstantInter.DESC);
                 }
             }
         }

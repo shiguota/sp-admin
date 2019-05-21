@@ -15,10 +15,21 @@ public class SpStringUtils {
     }
 
     /**
-     *
      * 根据label分割字符串，返回数组
      */
-    public static String[] splitStr(String str,String label){
+    public static String[] splitStr(String str, String label) {
         return str.split(label);
+    }
+
+    /**
+     *
+     * string数组转换Integer数组
+     */
+    public static Integer[] StringToInt(String[] arrs) {
+        Integer[] ints = new Integer[arrs.length];
+        for (int i = 0; i < arrs.length; i++) {
+            ints[i] = Integer.parseInt(arrs[i]);
+        }
+        return ints;
     }
 }

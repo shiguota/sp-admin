@@ -1,6 +1,8 @@
 package com.evo.sp.common;
 
 
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STString;
+
 public class SpConstantInter {
     /*******************************************全局常量**********************************/
 
@@ -24,7 +26,7 @@ public class SpConstantInter {
     public static final String PID = "pid";
     public static final String SORT = "sort";
     public static final String LEVEL = "level";
-    public static final String SYS_DICTIONARY_ID ="sys_dictionary_id";
+    public static final String SYS_DICTIONARY_ID = "sys_dictionary_id";
 
     //用户表
     public static final String SYS_USER_ACCOUNT = "account";
@@ -37,7 +39,7 @@ public class SpConstantInter {
     //组织机构
     public static final String SYS_ORG_NAME = "org_name";
     //组织机构角色表
-    public static final String SYS_ORG_ROLEID="sys_role_id";
+    public static final String SYS_ORG_ROLEID = "sys_role_id";
     //角色权限表
     public static final String SYS_ROLE_PERMISSION_ROLEID = "sys_role_id";
     //菜单权限表
@@ -62,7 +64,7 @@ public class SpConstantInter {
     public static final String SYS_LOG_DELS = "/dels";
 
     /**
-     *字典
+     * 字典
      */
     public static final String SYS_DICTIONNARY = "/sys/dictionary";
     public static final String SYS_DICTIONNARY_SAVE = "/save";
@@ -75,7 +77,6 @@ public class SpConstantInter {
     public static final String SYS_DICTIONNARY_QUERY_BY_PID = "/pid";
 
     /**
-     *
      * 用户
      */
     public static final String SYS_USER = "/sys/user";
@@ -90,17 +91,15 @@ public class SpConstantInter {
     public static final String SYS_USER_QUERY_UNROLE = "unrole";
 
     /**
-     *
      * 用户信息
      */
-        public static final String SYS_USER_INFO = "/sys/user/info";
+    public static final String SYS_USER_INFO = "/sys/user/info";
     public static final String SYS_USER_INFO_SAVE = "/save";
     public static final String SYS_USER_INFO_DEL = "/del";
     public static final String SYS_USER_INFO_MODIFY = "/modify";
     public static final String SYS_USER_INFO_ID = "/id";
 
     /**
-     *
      * 用户角色
      */
     public static final String SYS_USER_ROLE = "/sys/user/role";
@@ -108,7 +107,6 @@ public class SpConstantInter {
     public static final String SYS_USER_ROLE_DEL = "/del";
 
     /**
-     *
      * 角色
      */
     public static final String SYS_ROLE = "/sys/role";
@@ -119,7 +117,6 @@ public class SpConstantInter {
     public static final String SYS_ROLE_AUTHORIZATION = "/authorization";
 
     /**
-     *
      * 权限
      */
     public static final String SYS_PERMISSION = "/sys/permission";
@@ -133,7 +130,6 @@ public class SpConstantInter {
     public static final String SYS_PERMISSION_MENU_USER_DIF_SET = "/menu/user/difset";
 
     /**
-     *
      * 角色权限
      */
     public static final String SYS_ROLE_PERMISSION = "/sys/role/permission";
@@ -143,7 +139,6 @@ public class SpConstantInter {
     public static final String SYS_ROLE_PERMISSION_AUTH = "/auth";
 
     /**
-     *
      * 菜单
      */
     public static final String SYS_MENU = "/sys/menu";
@@ -158,7 +153,6 @@ public class SpConstantInter {
     public static final String SYS_MENU_ID = "/id";
 
     /**
-     *
      * 菜单权限
      */
     public static final String SYS_MENU_PERMISSION = "/sys/menu/permission";
@@ -169,7 +163,6 @@ public class SpConstantInter {
     public static final String SYS_MENU_PERMISSION_BAN_SAVE = "/ban/save";
 
     /**
-     *
      * 区域
      */
     public static final String SYS_AREA = "/sys/arae";
@@ -183,7 +176,6 @@ public class SpConstantInter {
     public static final String SYS_AREA_PID = "pid";
 
     /**
-     *
      * 通知
      */
     public static final String SYS_NOTICE = "/sys/notice";
@@ -192,7 +184,6 @@ public class SpConstantInter {
     public static final String SYS_NOTICE_MODIFY = "/modify";
 
     /**
-     *
      * 组织（机构）
      */
     public static final String SYS_ORGANIZATION = "/sys/organization";
@@ -203,38 +194,116 @@ public class SpConstantInter {
     public static final String SYS_ORGANIZATION_TREE = "/tree";
 
     /**
-     *
      * 组织（机构）角色
      */
     public static final String SYS_ORGANIZATION_ROLE = "/system/organization/role";
 
     /**
-     *
      * 公告
      */
-    public static final String APPLICATION_ANNOUNCEMENT="/application/announcement";
-    public static final String APPLICATION_ANNOUNCEMENT_SAVE="/save";
-    public static final String APPLICATION_ANNOUNCEMENT_MODIFY="/modify";
-    public static final String APPLICATION_ANNOUNCEMENT_DEL="/del";
-    public static final String APPLICATION_ANNOUNCEMENT_PAGE="/page";
-    public static final String APPLICATION_ANNOUNCEMENT_ID="/id";
+    public static final String APPLICATION_ANNOUNCEMENT = "/application/announcement";
+    public static final String APPLICATION_ANNOUNCEMENT_SAVE = "/save";
+    public static final String APPLICATION_ANNOUNCEMENT_MODIFY = "/modify";
+    public static final String APPLICATION_ANNOUNCEMENT_DEL = "/del";
+    public static final String APPLICATION_ANNOUNCEMENT_PAGE = "/page";
+    public static final String APPLICATION_ANNOUNCEMENT_ID = "/id";
     /**
-     *
      * 服务配置
      */
-    public static  final String APPLICATION_SERVER_CONFIG ="/server/config";
-    public static  final String APPLICATION_SERVER_CONFIG_SAVE ="/save";
-    public static  final String APPLICATION_SERVER_CONFIG_MODIFT ="/modify";
-    public static  final String APPLICATION_SERVER_CONFIG_START_END ="/start/or/end";
-    public static  final String APPLICATION_SERVER_CONFIG_QUERY_BY_ID ="querybyid";
-    public static  final String APPLICATION_SERVER_CONFIG_DELS ="dels";
-    public static  final String APPLICATION_SERVER_CONFIG_PAGE ="page";
-    public static  final String APPLICATION_SERVER_CONFIG_PAGE_DIS ="page/dis";
+    public static final String APPLICATION_SERVER_CONFIG = "/server/config";
+    public static final String APPLICATION_SERVER_CONFIG_UPLOAD = "/upload";
+    public static final String APPLICATION_SERVER_CONFIG_SAVE = "/save";
+    public static final String APPLICATION_SERVER_CONFIG_MODIFT = "/modify";
+    public static final String APPLICATION_SERVER_CONFIG_START_END = "/start/or/end";
+    public static final String APPLICATION_SERVER_CONFIG_QUERY_BY_ID = "querybyid";
+    public static final String APPLICATION_SERVER_CONFIG_DELS = "dels";
+    public static final String APPLICATION_SERVER_CONFIG_PAGE = "page";
+    public static final String APPLICATION_SERVER_CONFIG_PAGE_DIS = "page/dis";
+    /**
+     * 绘本
+     */
+    public static final String CONTENT_BOOK = "/content/book";
+    public static final String CONTENT_BOOK_SAVE = "/save";
+    public static final String CONTENT_BOOK_DEL = "/del";
+    public static final String CONTENT_BOOK_MODIFY = "/modify";
+    public static final String CONTENT_BOOK_PAGE = "/page";
+    public static final String CONTENT_BOOK_ID = "/id";
+    /**
+     *
+     * 视频
+     */
+    public static final String CONTENT_VIDEO = "/content.video";
+    public static final String CONTENT_VIDEO_SAVE = "/save";
+    public static final String CONTENT_VIDEO_DEL = "/del";
+    public static final String CONTENT_VIDEO_MODIFY = "/modify";
+    public static final String CONTENT_VIDEO_PAGE = "/page";
+    public static final String CONTENT_VIDEO_ID = "/id";
+    /**
+     *
+     * 音频接口
+     */
+    public static final String RESOURCE_AUDIO = "/resource/audio";
+    public static final String RESOURCE_AUDIO_SAVE = "/save";
+    public static final String RESOURCE_AUDIO_DEL = "/del";
+    public static final String RESOURCE_AUDIO_MODIFY = "/modify";
+    public static final String RESOURCE_AUDIO_PAGE = "/page";
+    public static final String RESOURCE_AUDIO_ID = "/id";
+    
+    /**
+     *
+     * 人物表
+     */
+    public static final String RESOURCE_FIGURE = "/resource/figure";
+    public static final String RESOURCE_FIGURE_SAVE = "/save";
+    public static final String RESOURCE_FIGURE_DEL = "/del";
+    public static final String RESOURCE_FIGURE_MODIFY = "/modify";
+    public static final String RESOURCE_FIGURE_PAGE = "/page";
+    public static final String RESOURCE_FIGURE_ID = "/id";
+    /**
+     *
+     * 图片资源
+     */
+    public static final String RESOURCE_IMG = "/resource/img";
+    public static final String RESOURCE_IMG_SAVE = "/save";
+    public static final String RESOURCE_IMG_DEL = "/del";
+    public static final String RESOURCE_IMG_MODIFY = "/modify";
+    public static final String RESOURCE_IMG_PAGE = "/page";
+    public static final String RESOURCE_IMG_ID = "/id";
+    
+    /**
+     *
+     * 标签
+     */
+    public static final String RESOURCE_VIDEO = "/resource/video";
+    public static final String RESOURCE_VIDEO_SAVE = "/save";
+    public static final String RESOURCE_VIDEO_DEL = "/del";
+    public static final String RESOURCE_VIDEO_MODIFY = "/modify";
+    public static final String RESOURCE_VIDEO_PAGE = "/page";
+    public static final String RESOURCE_VIDEO_ID = "/id";
+    
+    /**
+     *
+     * 版权信息
+     */
+    public static final String RESOURCE_RVIDEO_COPYRIGHT ="/resource/copyright";
+    public static final String RESOURCE_RVIDEO_COPYRIGHT_SAVE ="/save";
+    public static final String RESOURCE_RVIDEO_COPYRIGHT_DEL ="/del";
+    public static final String RESOURCE_RVIDEO_COPYRIGHT_MODIFY ="/modify";
+    public static final String RESOURCE_RVIDEO_COPYRIGHT_PAGE ="/page";
+    public static final String RESOURCE_RVIDEO_COPYRIGHT_ID ="/id";
 
+    /**
+     *
+     * 视频组
+     */
+    public static final String RESOURCE_VIDEO_GROUP = "/video/group";
+    public static final String RESOURCE_VIDEO_GROUP_SAVE = "/save";
+    public static final String RESOURCE_VIDEO_GROUP_DEL = "/del";
+    public static final String RESOURCE_VIDEO_GROUP_MODIFY = "/modify";
+    public static final String RESOURCE_VIDEO_GROUP_PAGE = "/page";
+    public static final String RESOURCE_VIDEO_GROUP_ID = "/id";
 
-
-
-
+    
 
     /*******************************************权限编码**********************************/
 
