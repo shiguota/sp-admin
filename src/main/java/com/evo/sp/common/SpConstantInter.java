@@ -302,8 +302,73 @@ public class SpConstantInter {
     public static final String RESOURCE_VIDEO_GROUP_MODIFY = "/modify";
     public static final String RESOURCE_VIDEO_GROUP_PAGE = "/page";
     public static final String RESOURCE_VIDEO_GROUP_ID = "/id";
+    /**
+     *
+     * 栏目
+     */
+    public static final String CONTENT_COLUMN = "/content/column";
+    public static final String CONTENT_COLUMN_SAVE = "/save";
+    public static final String CONTENT_COLUMN_DEL = "/del";
+    public static final String CONTENT_COLUMN_MODIFY = "/modify";
+    public static final String CONTENT_COLUMN_PAGE = "/page";
+    public static final String CONTENT_COLUMN_ID = "/id";
+    public static final String CONTENT_COLUMN_TREE = "/tree";
 
+    /**
+     *
+     * 应用
+     */
+    public static final String RESOURCE_APP = "/resource/app";
+    public static final String RESOURCE_APP_SAVE = "/save";
+    public static final String RESOURCE_APP_DEL = "/del";
+    public static final String RESOURCE_APP_MODIFY = "/modify";
+    public static final String RESOURCE_APP_PAGE = "/page";
+    public static final String RESOURCE_APP_ID = "/id";
+    public static final String RESOURCE_APP_TREE = "/tree";
+
+    /*
+     *
+     * 视频栏目
+     */
+    public static final String REF_VIDEO_COLUMN = "/ref/video/column";
+    public static final String REF_VIDEO_COLUMN_SAVE = "/save";
+    public static final String REF_VIDEO_COLUMN_DEL = "/del";
+    public static final String REF_VIDEO_COLUMN_MODIFY = "/modify";
+    public static final String REF_VIDEO_COLUMN_PAGE = "/page";
     
+    
+    /**
+     *
+     * 绘本栏目
+     */
+    public static final String REF_BOOK_COLUMN = "/ref/book/column";
+    public static final String REF_BOOK_COLUMN_SAVE = "/save";
+    public static final String REF_BOOK_COLUMN_DEL = "/del";
+    
+    /**
+     *
+     * 应用和栏目
+     */
+    public static final String REF_APP_COLUMN = "/ref/app/column";
+    public static final String REF_APP_COLUMN_SAVE = "/save";
+    public static final String REF_APP_COLUMN_DEL = "/del";
+    
+    /**
+     *
+     * 应用图片
+     */
+    public static final String REF_APP_IMG = "/ref/app/img";
+    public static final String REF_APP_IMG_SAVE = "/save";
+    public static final String REF_APP_IMG_DEL = "/del";
+
+    /**
+     *
+     * 栏目图片
+     */
+    public static final String REF_COLUMN_IMG ="/ref/column/img";
+    public static final String REF_COLUMN_IMG_SAVE ="/save";
+    public static final String REF_COLUMN_IMG_DEL ="/del";
+
 
     /*******************************************权限编码**********************************/
 

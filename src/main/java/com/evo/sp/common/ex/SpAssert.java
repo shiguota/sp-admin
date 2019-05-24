@@ -142,6 +142,16 @@ public abstract class SpAssert {
             }
         }
     }
+    
+    /**
+     *
+     * 校验是否操作成功
+     */
+    public static void operationAssert(boolean b,BaseException e){
+        if (!b) {
+            throw e;
+        }
+    }
 
     /**
      * @Description:测试类，生产环境下需要删除

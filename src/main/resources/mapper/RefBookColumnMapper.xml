@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evo.sp.business.content.mapper.RefBookColumnMapper">
+
+
+    <!--根据绘本id删除-->
+    <delete id="delsByBookId" parameterType="List">
+      DELETE FROM ref_book_column WHERE book_id in
+        <foreach collection="bookIds"  item="item" open="(" separator="," close=")"  >
+            #{item}
+        </foreach>
+    </delete>
+
+    <!--根据栏目id删除-->
+    <delete id="delsBycolumnId" parameterType="List">
+      DELETE FROM ref_book_column WHERE column_id in
+        <foreach collection="columnIds"  item="item" open="(" separator="," close=")"  >
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

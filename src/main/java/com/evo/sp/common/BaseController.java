@@ -2,6 +2,8 @@ package com.evo.sp.common;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.injector.methods.DeleteByMap;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -85,6 +87,23 @@ public class BaseController<T> {
     public Result dels(Collection<? extends Serializable> collection ,IService<T> tiService){
         Result result = null;
         boolean b = tiService.removeByIds(collection);
+        if (b) {
+            result = new Result(b,ResultEnum.REMOVE_SUCCESS.getValue(),ResultEnum.REMOVE_SUCCESS.getName());
+        }else{
+            result = new Result(b,ResultEnum.REMOVE_FAIL.getValue(),ResultEnum.REMOVE_FAIL.getName());
+        }
+        return result;
+    }
+    
+    /**
+     *
+     * 根据条件删除
+     */
+    public Result dels(T t,IService<T> tiService){
+        Result result = null;
+        UpdateWrapper<T> wrapper = new UpdateWrapper<>();
+        wrapper.setEntity(t);
+        boolean b = tiService.remove(wrapper);
         if (b) {
             result = new Result(b,ResultEnum.REMOVE_SUCCESS.getValue(),ResultEnum.REMOVE_SUCCESS.getName());
         }else{

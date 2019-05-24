@@ -2,6 +2,8 @@ package com.evo.sp.common;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.evo.sp.business.content.entity.CColumn;
+import com.evo.sp.business.content.entity.RApp;
 import com.evo.sp.business.system.entity.SysArea;
 import com.evo.sp.business.system.entity.SysDictionary;
 import com.evo.sp.business.system.entity.SysMenu;
@@ -76,6 +78,28 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
                     tree.setTreeId(0 + "-" + 0 + "-" + (i + 1));
                 }
                 tree.setLevel(sysArea.getLevel());
+                trees.add(tree);
+            }else if (list.get(i) instanceof RApp) {      //应用
+                RApp rApp = (RApp) list.get(i);
+                tree.setText(rApp.getName());
+                tree.setId(rApp.getId());
+                if (SpAssert.isNotNull(treeId)) {
+                    tree.setTreeId(treeId + "-" + (i + 1));
+                } else {
+                    tree.setTreeId(0 + "-" + 0 + "-" + (i + 1));
+                }
+                trees.add(tree);
+            }else if (list.get(i) instanceof CColumn) {      //栏目
+                CColumn cColumn = (CColumn) list.get(i);
+                tree.setText(cColumn.getName());
+                tree.setId(cColumn.getId());
+                tree.setParentId(cColumn.getPid());
+                tree.setType(cColumn.getType());
+                if (SpAssert.isNotNull(treeId)) {
+                    tree.setTreeId(treeId + "-" + (i + 1));
+                } else {
+                    tree.setTreeId(0 + "-" + 0 + "-" + (i + 1));
+                }
                 trees.add(tree);
             }
         }

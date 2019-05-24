@@ -5,13 +5,13 @@ import java.io.Serializable;
 /**
 * @Description: 返回数据bean
 * @Author: sgt
-* @Date:  2019-03-27
+* @data:  2019-03-27
 */
 public class Result implements Serializable {
     /**
      * 返回的数据
      */
-    private Object date;
+    private Object data;
 
     /**
      *  错误编码
@@ -29,12 +29,12 @@ public class Result implements Serializable {
      */
     private Object extension;
 
-    public Object getDate() {
-        return date;
+    public Object getdata() {
+        return data;
     }
 
-    public void setDate(Object date) {
-        this.date = date;
+    public void setdata(Object data) {
+        this.data = data;
     }
 
     public Integer getCode() {
@@ -61,10 +61,10 @@ public class Result implements Serializable {
         this.extension = extension;
     }
 
-    public Result(Object date) {
-        this.date = date;
-        if(date instanceof Boolean){
-            if(!(Boolean) date){
+    public Result(Object data) {
+        this.data = data;
+        if(data instanceof Boolean){
+            if(!(Boolean) data){
                 this.code = ResultEnum.OPERATION_FAIL.getValue();
                 this.msg = ResultEnum.OPERATION_FAIL.getName();
             }
@@ -74,26 +74,26 @@ public class Result implements Serializable {
     }
 
     public Result(Integer code, Object msg) {
-        date = false;
+        data = false;
         this.code = code;
         this.msg = msg;
     }
 
-    public Result(Object date, Integer code, Object msg) {
-        this.date = date;
+    public Result(Object data, Integer code, Object msg) {
+        this.data = data;
         this.code = code;
         this.msg = msg;
     }
 
-    public Result(Object date, Object extension) {
-        this.date = date;
+    public Result(Object data, Object extension) {
+        this.data = data;
         this.extension = extension;
         this.code = ResultEnum.OPERATION_SUCCESS.getValue();
         this.msg = ResultEnum.OPERATION_SUCCESS.getName();
     }
 
-    public Result(Object date, Integer code) {
-        this.date = date;
+    public Result(Object data, Integer code) {
+        this.data = data;
         this.code = code;
         this.msg = MSG(code);
 
